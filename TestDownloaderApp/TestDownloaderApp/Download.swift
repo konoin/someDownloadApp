@@ -10,7 +10,6 @@ import Foundation
 final class Download: NSObject {
     let url: URL
     let downloadSession: URLSession
-    var sessionTask: URLSessionDownloadTask?
     var resumeData: Data?
     
     private var continuation: AsyncStream<Event>.Continuation?
@@ -65,6 +64,7 @@ extension Download {
 extension Download: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         continuation?.yield(.success(url: location))
+        continuation?.finish()
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
