@@ -23,7 +23,10 @@ struct EpisodeRow: View {
                     .foregroundColor(.secondary)
                 if progress > 0 && progress < 1.0 {
                     HStack {
-                        Text("\(Int((progress) * 100))%")
+                        VStack {
+                            Text("\(Int((progress) * 100))%")
+                            Text("\(Int(downloadSpeed))")
+                        }
                         ProgressView(value: progress)
                     }
                 }
@@ -50,6 +53,10 @@ private extension EpisodeRow {
 
     var progress: Double {
         episode?.progress ?? 0.0
+    }
+    
+    var downloadSpeed: Double {
+        episode?.speed ?? 0.0
     }
 
     var buttonImageName: String {

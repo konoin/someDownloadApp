@@ -11,6 +11,8 @@ final class MainViewModel: NSObject, ObservableObject {
     @Published var podcast: Podcast?
     @Published var downloads: [URL: Download] = [:]
     
+    private var data: Data?
+    
     private lazy var downloadSession: URLSession = {
         let configuration = URLSessionConfiguration.default
         return URLSession(configuration: configuration, delegate: nil, delegateQueue: .main)
@@ -53,61 +55,32 @@ final class MainViewModel: NSObject, ObservableObject {
 private extension MainViewModel {
     func process(_ event: Download.Event, for episode: Episode) {
         switch event {
-        case let .progress(current, total):
-            podcast?[episode.id]?.update(currentBytes: current, totalBytes: total)
+        case let .progress(current, total, speed):
+            podcast?[episode.id]?.update(currentBytes: current, totalBytes: total, speed: speed)
         case let .success(url):
             saveFile(for: episode, at: url)
         }
     }
     
     func saveFile(for episode: Episode, at url: URL) {
-        guard let directoryURL = podcast?.directoryURL else {
-            print("Directory URL is nil")
-            return
-        }
-        
-        let fileManager = FileManager.default
         
         do {
-            // Убедитесь, что директория существует или создайте ее
-            if !fileManager.fileExists(atPath: directoryURL.path) {
-                try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
-            }
-            
-            // Сформируйте полный путь для сохранения файла
-            let destinationURL = directoryURL.appendingPathComponent("\(episode.id)")
-            
-            // Проверьте, существует ли файл, который вы хотите переместить
-            if fileManager.fileExists(atPath: url.path) {
-                // Попытайтесь переместить файл
-                try fileManager.moveItem(at: url, to: destinationURL)
-                
-                // Печатайте путь, куда был сохранен файл
-                print("File saved at: \(destinationURL.path)")
-            } else {
-                print("Source file does not exist: \(url.path)")
-            }
+            let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let data = try Data(contentsOf: url)
+            let fileURL = dir.appendingPathComponent("\(episode.title).mp3")
+            try data.write(to: fileURL)
+
         } catch {
-            // Обработка ошибок
             print("Error saving file: \(error.localizedDescription)")
         }
     }
     
-    //    func saveFile(for episode: Episode, at url: URL) {
-    //        guard let directoryURL = podcast?.directoryURL else { return }
-    //        let filemanager = FileManager.default
-    //        if !filemanager.fileExists(atPath: directoryURL.path()) {
-    //            try? filemanager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-    //        }
-    //        try? filemanager.moveItem(at: url, to: episode.fileURL)
-    //        print(episode.fileURL)
-    //    }
 }
 
 extension Podcast {
     var directoryURL: URL {
         URL.documentsDirectory
-            .appending(path: "\(id)", directoryHint: .isDirectory)
+            .appending(path: "\(title)", directoryHint: .isDirectory)
     }
 }
 
