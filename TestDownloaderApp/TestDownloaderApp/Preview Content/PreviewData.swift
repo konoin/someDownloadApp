@@ -26,7 +26,7 @@ extension [Episode] {
 extension Episode {
     static var preview: Episode {
         var episode = [Episode].preview[0]
-        episode.update(currentBytes: 90, totalBytes: 100)
+        episode.update(currentBytes: 90, totalBytes: 100, speed: 643.0)
         return episode
     }
 }
