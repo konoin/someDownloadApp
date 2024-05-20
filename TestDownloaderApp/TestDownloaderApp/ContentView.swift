@@ -21,6 +21,7 @@ struct ContentView: View {
                         ForEach(podcast.episodes) { episode in
                             EpisodeRow(episode: episode, viewModel: downloadViewModel) {
                                 toggleDownload(for: episode)
+                                viewModel.testEpisode.append(episode)
                                 downloadViewModel.addDownload(downloadEpisodes: episode)
                             }
                         }
@@ -36,7 +37,7 @@ struct ContentView: View {
                 .task {
                     try? await viewModel.fetchPodcast()
                 }
-                NavigationLink(destination: DownloadList()) {
+                NavigationLink(destination: DownloadList(downloadViewModel: viewModel)) {
                     Image(systemName: "arrow.down.circle")
                         .resizable()
                         .frame(width: 25, height: 25)

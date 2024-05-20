@@ -10,6 +10,8 @@ import Foundation
 final class MainViewModel: NSObject, ObservableObject {
     @Published var podcast: Podcast?
     @Published var downloads: [URL: Download] = [:]
+    @Published var testEpisode: [Episode] = []
+    @Published var finishDownload: [Download: Bool] = [:]
     
     private var data: Data?
     
@@ -43,7 +45,7 @@ final class MainViewModel: NSObject, ObservableObject {
                     print("Failed to download file for episode: \(episode.id)")
                     return
                 }
-                self?.saveFile(for: episode, at: localURL)
+//                self?.saveFile(for: episode, at: localURL)
             }
         }
         
@@ -65,8 +67,10 @@ private extension MainViewModel {
         switch event {
         case let .progress(current, total, speed):
             podcast?[episode.id]?.update(currentBytes: current, totalBytes: total, speed: speed)
+//            testEpisode.append(episode)
         case let .success(url):
             saveFile(for: episode, at: url)
+//            testEpisode.removeAll(where: { $0.id == episode.id })
         }
     }
     
