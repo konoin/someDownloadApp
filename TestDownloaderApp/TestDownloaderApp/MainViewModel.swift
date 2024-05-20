@@ -38,7 +38,15 @@ final class MainViewModel: NSObject, ObservableObject {
         podcast?[episode.id]?.isDownloading = true
         for await event in download.events {
             process(event, for: episode)
+            download.start { [weak self] localURL in
+                guard let localURL = localURL else {
+                    print("Failed to download file for episode: \(episode.id)")
+                    return
+                }
+                self?.saveFile(for: episode, at: localURL)
+            }
         }
+        
         downloads[episode.url] = nil
     }
     
@@ -63,18 +71,18 @@ private extension MainViewModel {
     }
     
     func saveFile(for episode: Episode, at url: URL) {
+        let file = "\(episode.title).mp3"
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = dir.appendingPathComponent(file)
         
         do {
-            let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let data = try Data(contentsOf: url)
-            let fileURL = dir.appendingPathComponent("\(episode.title).mp3")
-            try data.write(to: fileURL)
-
+            let contents = try Data(contentsOf: url)
+            try contents.write(to: fileURL)
+            print("File saved at: \(fileURL.path)")
         } catch {
-            print("Error saving file: \(error.localizedDescription)")
+            print("Error: \(error.localizedDescription)")
         }
     }
-    
 }
 
 extension Podcast {
@@ -92,7 +100,6 @@ extension Episode {
             .appendingPathExtension("mp3")
     }
 }
-
 
 extension URL: Comparable {
     public static func < (lhs: URL, rhs: URL) -> Bool {

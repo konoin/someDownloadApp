@@ -23,7 +23,7 @@ struct EpisodeRow: View {
                     .foregroundColor(.secondary)
                 if progress > 0 && progress < 1.0 {
                     HStack {
-                        VStack {
+                        VStack(alignment: .leading) {
                             Text("\(Int((progress) * 100))%")
                             Text("\(Int(downloadSpeed))")
                         }

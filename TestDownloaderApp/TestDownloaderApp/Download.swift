@@ -48,6 +48,18 @@ final class Download: NSObject {
         }
     }
     
+    func start(completion: @escaping (URL?) -> Void) {
+        task = downloadSession.downloadTask(with: url) { localURL, response, error in
+            guard let localURL = localURL, error == nil else {
+                print("Download error: \(error?.localizedDescription ?? "Unknown error")")
+                completion(nil)
+                return
+            }
+            completion(localURL)
+        }
+        task.resume()
+    }
+    
     func pause() {
         self.task.suspend()
     }
@@ -70,39 +82,21 @@ extension Download: URLSessionDownloadDelegate {
         continuation?.finish()
     }
     
-//    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-//            let now = Date()
-//            if let startTime = startTime {
-//                let timeInterval = now.timeIntervalSince(startTime)
-//                self.totalBytesWritten = totalBytesWritten
-//                let averageSpeed = Double(totalBytesWritten) / timeInterval / 1024.0 // KB per second
-//                
-//                continuation?.yield(.progress(currentBytes: totalBytesWritten, totalBytes: totalBytesExpectedToWrite, speed: averageSpeed))
-//            }
-//        }
-    
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-           let now = Date()
-           if let startTime = startTime {
-               let timeInterval = now.timeIntervalSince(startTime)
-               self.totalBytesWritten = totalBytesWritten
-               let averageSpeed = Double(totalBytesWritten) / timeInterval / (1024.0 * 1024.0) // KB per second
-//               let bytesDownloaded = totalBytesWritten - previousBytesWritten
-//               let speed = Double(bytesDownloaded) / timeInterval / (1024.0 * 1024.0)  // bytes per second
-               
-               // Reset for the next interval
-               self.startTime = now
-               self.previousBytesWritten = totalBytesWritten
-               continuation?.yield(.progress(currentBytes: totalBytesWritten, totalBytes: totalBytesExpectedToWrite, speed: averageSpeed))
-//               continuation?.yield(.progress(currentBytes: totalBytesWritten, totalBytes: totalBytesExpectedToWrite, speed: speed))
-           } else {
-               self.startTime = now
-               self.previousBytesWritten = totalBytesWritten
-               continuation?.yield(.progress(currentBytes: totalBytesWritten, totalBytes: totalBytesExpectedToWrite, speed: 0))
-           }
-       }
-    
-//    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-//        continuation?.yield(.progress(currentBytes: totalBytesWritten, totalBytes: totalBytesExpectedToWrite))
-//    }
+        let now = Date()
+        if let startTime = startTime {
+            let timeInterval = now.timeIntervalSince(startTime)
+            self.totalBytesWritten = totalBytesWritten
+            let averageSpeed = Double(totalBytesWritten) / timeInterval / (1024.0 * 1024.0) 
+            
+            self.startTime = now
+            self.previousBytesWritten = totalBytesWritten
+            continuation?.yield(.progress(currentBytes: totalBytesWritten, totalBytes: totalBytesExpectedToWrite, speed: averageSpeed))
+            
+        } else {
+            self.startTime = now
+            self.previousBytesWritten = totalBytesWritten
+            continuation?.yield(.progress(currentBytes: totalBytesWritten, totalBytes: totalBytesExpectedToWrite, speed: 0))
+        }
+    }
 }

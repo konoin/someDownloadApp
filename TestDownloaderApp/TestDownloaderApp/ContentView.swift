@@ -11,7 +11,6 @@ import Combine
 struct ContentView: View {
     @StateObject var viewModel = MainViewModel()
     @StateObject var downloadViewModel = DownloadViewModel()
-    @State var progress: [Double] = []
     
     var body: some View {
         NavigationView {
