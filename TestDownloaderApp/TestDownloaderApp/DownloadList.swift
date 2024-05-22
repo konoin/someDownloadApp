@@ -9,19 +9,16 @@ import SwiftUI
 
 struct DownloadList: View {
     
-    var downloadViewModel: MainViewModel
-    
     var body: some View {
         VStack {
             List {
-                ForEach(downloadViewModel.testEpisode) { episode in
-                    Text(episode.title)
-                    
-                }
+                
             }
+            .listStyle(.plain)
         }
     }
 }
+
 //#Preview {
 //    DownloadList()
 //}

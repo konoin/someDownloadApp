@@ -48,18 +48,6 @@ final class Download: NSObject {
         }
     }
     
-    func start(completion: @escaping (URL?) -> Void) {
-        task = downloadSession.downloadTask(with: url) { localURL, response, error in
-            guard let localURL = localURL, error == nil else {
-                print("Download error: \(error?.localizedDescription ?? "Unknown error")")
-                completion(nil)
-                return
-            }
-            completion(localURL)
-        }
-        task.resume()
-    }
-    
     func pause() {
         self.task.suspend()
     }

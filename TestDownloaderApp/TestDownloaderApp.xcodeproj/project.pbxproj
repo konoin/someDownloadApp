@@ -20,7 +20,6 @@
 		F35C13A92BF4AD38006E3F89 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13A82BF4AD38006E3F89 /* Download.swift */; };
 		F35C13AB2BF4B6B5006E3F89 /* EpisodeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13AA2BF4B6B5006E3F89 /* EpisodeRow.swift */; };
 		F35C13AD2BF4D6F4006E3F89 /* DownloadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13AC2BF4D6F4006E3F89 /* DownloadList.swift */; };
-		F35C13AF2BF4F0F2006E3F89 /* DownloadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13AE2BF4F0F2006E3F89 /* DownloadViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,7 +37,6 @@
 		F35C13A82BF4AD38006E3F89 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		F35C13AA2BF4B6B5006E3F89 /* EpisodeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeRow.swift; sourceTree = "<group>"; };
 		F35C13AC2BF4D6F4006E3F89 /* DownloadList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadList.swift; sourceTree = "<group>"; };
-		F35C13AE2BF4F0F2006E3F89 /* DownloadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewModel.swift; sourceTree = "<group>"; };
 		F35C13B02BF74E95006E3F89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,7 +116,6 @@
 			children = (
 				F35C13942BF25A09006E3F89 /* MainViewModel.swift */,
 				F35C13A82BF4AD38006E3F89 /* Download.swift */,
-				F35C13AE2BF4F0F2006E3F89 /* DownloadViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -194,7 +191,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F35C13AF2BF4F0F2006E3F89 /* DownloadViewModel.swift in Sources */,
 				F35C13892BF259EE006E3F89 /* ContentView.swift in Sources */,
 				F35C13AD2BF4D6F4006E3F89 /* DownloadList.swift in Sources */,
 				F35C13A92BF4AD38006E3F89 /* Download.swift in Sources */,

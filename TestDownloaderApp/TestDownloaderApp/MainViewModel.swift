@@ -40,15 +40,7 @@ final class MainViewModel: NSObject, ObservableObject {
         podcast?[episode.id]?.isDownloading = true
         for await event in download.events {
             process(event, for: episode)
-            download.start { [weak self] localURL in
-                guard let localURL = localURL else {
-                    print("Failed to download file for episode: \(episode.id)")
-                    return
-                }
-//                self?.saveFile(for: episode, at: localURL)
-            }
         }
-        
         downloads[episode.url] = nil
     }
     
@@ -67,10 +59,8 @@ private extension MainViewModel {
         switch event {
         case let .progress(current, total, speed):
             podcast?[episode.id]?.update(currentBytes: current, totalBytes: total, speed: speed)
-//            testEpisode.append(episode)
         case let .success(url):
             saveFile(for: episode, at: url)
-//            testEpisode.removeAll(where: { $0.id == episode.id })
         }
     }
     

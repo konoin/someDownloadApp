@@ -10,7 +10,6 @@ import Combine
 
 struct ContentView: View {
     @StateObject var viewModel = MainViewModel()
-    @StateObject var downloadViewModel = DownloadViewModel()
     
     var body: some View {
         NavigationView {
@@ -19,16 +18,13 @@ struct ContentView: View {
                     Header(podcast: viewModel.podcast)
                     if let podcast = viewModel.podcast {
                         ForEach(podcast.episodes) { episode in
-                            EpisodeRow(episode: episode, viewModel: downloadViewModel) {
+                            EpisodeRow(episode: episode) {
                                 toggleDownload(for: episode)
-                                viewModel.testEpisode.append(episode)
-                                downloadViewModel.addDownload(downloadEpisodes: episode)
                             }
                         }
                     } else {
                         ForEach(0..<10) { _ in
-                            EpisodeRow(episode: nil, viewModel: downloadViewModel, downloadButtonPressed: {
-                                print("some test")
+                            EpisodeRow(episode: nil, downloadButtonPressed: {
                             })
                         }
                     }
@@ -37,7 +33,7 @@ struct ContentView: View {
                 .task {
                     try? await viewModel.fetchPodcast()
                 }
-                NavigationLink(destination: DownloadList(downloadViewModel: viewModel)) {
+                NavigationLink(destination: DownloadList()) {
                     Image(systemName: "arrow.down.circle")
                         .resizable()
                         .frame(width: 25, height: 25)
@@ -59,8 +55,4 @@ private extension ContentView {
             }
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

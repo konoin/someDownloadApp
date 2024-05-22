@@ -10,7 +10,6 @@ import Combine
 
 struct EpisodeRow: View {
     let episode: Episode?
-    let viewModel: DownloadViewModel?
     let downloadButtonPressed: () -> Void
     
     var body: some View {
@@ -36,7 +35,24 @@ struct EpisodeRow: View {
                 Image(systemName: buttonImageName)
                     .font(.title3)
                     .frame(width: 24.0, height: 24.0)
-            }.buttonStyle(.borderedProminent)
+            }
+            .buttonStyle(.borderedProminent)
+            .contextMenu {
+                Button {
+                    print("is work")
+                } label: {
+                    HStack {
+                        Text("button")
+                        Image(systemName: "gear")
+                    }
+                }
+                Button(action: downloadButtonPressed) {
+                    Image(systemName: buttonImageName)
+                        .font(.title3)
+                        .frame(width: 24.0, height: 24.0)
+                }
+
+            }
         }
         .padding(.top, 8.0)
         .padding(.bottom, 4.0)
@@ -67,11 +83,3 @@ private extension EpisodeRow {
         }
     }
 }
-
-//#Preview {
-//    List {
-//        EpisodeRow(episode: .preview, downloadButtonPressed: {})
-//        EpisodeRow(episode: nil, downloadButtonPressed: {})
-//    }
-//    .listStyle(.plain)
-//}
