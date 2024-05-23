@@ -8,6 +8,7 @@
 import Foundation
 
 final class MainViewModel: NSObject, ObservableObject {
+    
     @Published var podcast: Podcast?
     @Published var downloads: [URL: Download] = [:]
     @Published var testEpisode: [Episode] = []
@@ -59,22 +60,29 @@ private extension MainViewModel {
         switch event {
         case let .progress(current, total, speed):
             podcast?[episode.id]?.update(currentBytes: current, totalBytes: total, speed: speed)
-        case let .success(url):
+        case let .success(url, _):
             saveFile(for: episode, at: url)
         }
     }
     
     func saveFile(for episode: Episode, at url: URL) {
-        let file = "\(episode.title).mp3"
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileURL = dir.appendingPathComponent(file)
-        
+        guard let directoryURL = podcast?.directoryURL else { return }
+        let fileManager = FileManager.default
+        if !fileManager.fileExists(atPath: directoryURL.path) {
+            do {
+                try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+                print("Directory created at: \(directoryURL)")
+            } catch {
+                print("Failed to create directory: \(error.localizedDescription)")
+                return
+            }
+        }
+        let fileURL = directoryURL.appendingPathComponent("\(episode.title).mp3")
         do {
-            let contents = try Data(contentsOf: url)
-            try contents.write(to: fileURL)
-            print("File saved at: \(fileURL.path)")
+            try fileManager.moveItem(at: url, to: fileURL)
+            print("File moved to: \(fileURL)")
         } catch {
-            print("Error: \(error.localizedDescription)")
+            print("Failed to move file: \(error.localizedDescription)")
         }
     }
 }
@@ -83,15 +91,6 @@ extension Podcast {
     var directoryURL: URL {
         URL.documentsDirectory
             .appending(path: "\(title)", directoryHint: .isDirectory)
-    }
-}
-
-extension Episode {
-    var fileURL: URL {
-        URL.documentsDirectory
-            .appending(path: "\(podcastID)")
-            .appending(path: "\(id)")
-            .appendingPathExtension("mp3")
     }
 }
 

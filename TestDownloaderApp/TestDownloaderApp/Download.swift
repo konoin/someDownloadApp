@@ -13,6 +13,8 @@ final class Download: NSObject {
     var resumeData: Data?
     
     private var continuation: AsyncStream<Event>.Continuation?
+    
+    private var checkContinuation: CheckedContinuation<(URL, URLSessionDownloadTask), Never>?
     private var previousBytesWritten: Int64 = 0
     private var totalBytesWritten: Int64 = 0
     private var startTime: Date?
@@ -60,22 +62,42 @@ final class Download: NSObject {
 extension Download {
     enum Event {
         case progress(currentBytes: Int64, totalBytes: Int64, speed: Double)
-        case success(url: URL)
+        case success(url: URL, downloadTask: URLSessionDownloadTask)
     }
 }
 
 extension Download: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        continuation?.yield(.success(url: location))
+        
+        let fileManager = FileManager.default
+        do {
+            // Создаем URL для постоянного местоположения файла
+            let documentsDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            let destinationURL = documentsDirectory.appendingPathComponent(location.lastPathComponent)
+            
+            // Удаляем файл по этому URL, если он уже существует
+            if fileManager.fileExists(atPath: destinationURL.path) {
+                try fileManager.removeItem(at: destinationURL)
+            }
+            
+            // Перемещаем файл из временного местоположения в постоянное
+            try fileManager.moveItem(at: location, to: destinationURL)
+            
+            continuation?.yield(.success(url: destinationURL, downloadTask: downloadTask))
+        } catch {
+            print("Error while moving file: \(error.localizedDescription)")
+        }
         continuation?.finish()
     }
+    
+    
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         let now = Date()
         if let startTime = startTime {
             let timeInterval = now.timeIntervalSince(startTime)
             self.totalBytesWritten = totalBytesWritten
-            let averageSpeed = Double(totalBytesWritten) / timeInterval / (1024.0 * 1024.0) 
+            let averageSpeed = Double(totalBytesWritten) / timeInterval / (1024.0 * 1024.0)
             
             self.startTime = now
             self.previousBytesWritten = totalBytesWritten
