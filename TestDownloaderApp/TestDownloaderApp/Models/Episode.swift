@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Episode: Identifiable {
+struct Episode: Identifiable, Hashable {
     let id: Int
     let podcastID: Int
     let duration: Duration
@@ -25,12 +25,19 @@ struct Episode: Identifiable {
         return Double(currentBytes) / Double(totalBytes)
     }
 
-    
     mutating func update(currentBytes: Int64, totalBytes: Int64, speed: Double) {
         self.currentBytes = currentBytes
         self.totalBytes = totalBytes
         self.speed = speed
     }
+    
+    static func == (lhs: Episode, rhs: Episode) -> Bool {
+         return lhs.id == rhs.id
+     }
+
+     func hash(into hasher: inout Hasher) {
+         hasher.combine(id)
+     }
 }
 
 extension Episode: Decodable {

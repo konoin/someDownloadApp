@@ -10,6 +10,7 @@ import Combine
 
 struct ContentView: View {
     @StateObject var viewModel = MainViewModel()
+    @State private var selectedEpisodes: Set<Episode> = []
     
     var body: some View {
         NavigationView {
@@ -18,14 +19,20 @@ struct ContentView: View {
                     Header(podcast: viewModel.podcast)
                     if let podcast = viewModel.podcast {
                         ForEach(podcast.episodes) { episode in
-                            EpisodeRow(episode: episode) {
-                                toggleDownload(for: episode)
+                            EpisodeRow(
+                                episode: episode,
+                                downloadButtonPressed: { toggleDownload(for: episode) },
+                                addToQueueButtonPressed: { addToQueue(episode) }
+                            )
+                            .background(selectedEpisodes.contains(episode) ? Color.gray.opacity(0.2) : Color.clear)
+                            .onTapGesture {
+                                toggleSelection(for: episode)
                             }
                         }
                     } else {
                         ForEach(0..<10) { _ in
                             EpisodeRow(episode: nil, downloadButtonPressed: {
-                            })
+                            }, addToQueueButtonPressed: {})
                         }
                     }
                 }
@@ -41,6 +48,24 @@ struct ContentView: View {
             }
         }
     }
+    
+    private func toggleSelection(for episode: Episode) {
+          if selectedEpisodes.contains(episode) {
+              selectedEpisodes.remove(episode)
+          } else {
+              selectedEpisodes.insert(episode)
+          }
+      }
+
+      private func addToQueue(_ episode: Episode) {
+          viewModel.addEpisodeToQueue(episode)
+      }
+
+      private func addSelectedEpisodesToQueue() {
+          for episode in selectedEpisodes {
+              viewModel.addEpisodeToQueue(episode)
+          }
+      }
 }
 
 private extension ContentView {

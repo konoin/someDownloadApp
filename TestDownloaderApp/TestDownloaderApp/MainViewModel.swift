@@ -11,9 +11,10 @@ final class MainViewModel: NSObject, ObservableObject {
     
     @Published var podcast: Podcast?
     @Published var downloads: [URL: Download] = [:]
-    @Published var testEpisode: [Episode] = []
     @Published var finishDownload: [Download: Bool] = [:]
     
+    private var isDownloading: Bool = false
+    private var downloadQueue: [Episode] = []
     private var data: Data?
     
     private lazy var downloadSession: URLSession = {
@@ -43,6 +44,45 @@ final class MainViewModel: NSObject, ObservableObject {
             process(event, for: episode)
         }
         downloads[episode.url] = nil
+    }
+    
+    @MainActor
+    func addEpisodeToQueue(_ episode: Episode) {
+        downloadQueue.append(episode)
+        processQueue()
+    }
+    
+    @MainActor
+    private func processQueue() {
+        guard !isDownloading, !downloadQueue.isEmpty else { return }
+        
+        isDownloading = true
+        let episode = downloadQueue.removeFirst()
+        
+        Task {
+            do {
+                try await download(episode)
+            } catch {
+                print("Failed to download:", error.localizedDescription)
+            }
+            
+            isDownloading = false
+            processQueue()
+        }
+    }
+    
+    @MainActor
+    func downloadNextEpisodeInQueue() async {
+        guard !downloadQueue.isEmpty else { return }
+        
+        while !downloadQueue.isEmpty {
+            let nextEpisode = downloadQueue.removeFirst()
+            do {
+                try await download(nextEpisode)
+            } catch {
+                print("Failed to download episode: \(nextEpisode.title), error: \(error)")
+            }
+        }
     }
     
     func pauseDownload(for episode: Episode) {

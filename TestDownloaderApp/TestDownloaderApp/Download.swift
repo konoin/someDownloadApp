@@ -71,16 +71,12 @@ extension Download: URLSessionDownloadDelegate {
         
         let fileManager = FileManager.default
         do {
-            // Создаем URL для постоянного местоположения файла
             let documentsDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             let destinationURL = documentsDirectory.appendingPathComponent(location.lastPathComponent)
             
-            // Удаляем файл по этому URL, если он уже существует
             if fileManager.fileExists(atPath: destinationURL.path) {
                 try fileManager.removeItem(at: destinationURL)
             }
-            
-            // Перемещаем файл из временного местоположения в постоянное
             try fileManager.moveItem(at: location, to: destinationURL)
             
             continuation?.yield(.success(url: destinationURL, downloadTask: downloadTask))
@@ -90,14 +86,12 @@ extension Download: URLSessionDownloadDelegate {
         continuation?.finish()
     }
     
-    
-    
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         let now = Date()
         if let startTime = startTime {
             let timeInterval = now.timeIntervalSince(startTime)
-            self.totalBytesWritten = totalBytesWritten
-            let averageSpeed = Double(totalBytesWritten) / timeInterval / (1024.0 * 1024.0)
+            let bytesDelta = totalBytesWritten - previousBytesWritten
+            let averageSpeed = Double(bytesDelta) / timeInterval / (1024.0 * 1024.0)
             
             self.startTime = now
             self.previousBytesWritten = totalBytesWritten

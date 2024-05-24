@@ -11,6 +11,7 @@ import Combine
 struct EpisodeRow: View {
     let episode: Episode?
     let downloadButtonPressed: () -> Void
+    let addToQueueButtonPressed: () -> Void
     
     var body: some View {
         HStack(alignment: .top, spacing: 16.0) {
@@ -24,7 +25,7 @@ struct EpisodeRow: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Text("\(Int((progress) * 100))%")
-                            Text("\(Int(downloadSpeed))")
+                            Text("\(String(format: "%.1f", downloadSpeed)) MB/s")
                         }
                         ProgressView(value: progress)
                     }
@@ -38,20 +39,20 @@ struct EpisodeRow: View {
             }
             .buttonStyle(.borderedProminent)
             .contextMenu {
-                Button {
-                    print("is work")
-                } label: {
+                Button(action: addToQueueButtonPressed) {
                     HStack {
-                        Text("button")
-                        Image(systemName: "gear")
+                        Text("Add to Queue")
+                        Image(systemName: "plus")
                     }
                 }
                 Button(action: downloadButtonPressed) {
-                    Image(systemName: buttonImageName)
-                        .font(.title3)
-                        .frame(width: 24.0, height: 24.0)
+                    HStack {
+                        Text("Download")
+                        Image(systemName: buttonImageName)
+                            .font(.title3)
+                            .frame(width: 24.0, height: 24.0)
+                    }
                 }
-
             }
         }
         .padding(.top, 8.0)
