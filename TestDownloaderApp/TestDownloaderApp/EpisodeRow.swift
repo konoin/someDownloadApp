@@ -9,6 +9,8 @@ import SwiftUI
 import Combine
 
 struct EpisodeRow: View {
+    
+    let viewModel: MainViewModel
     let episode: Episode?
     let downloadButtonPressed: () -> Void
     let addToQueueButtonPressed: () -> Void
@@ -32,25 +34,37 @@ struct EpisodeRow: View {
                 }
             }
             Spacer()
-            Button(action: downloadButtonPressed) {
-                Image(systemName: buttonImageName)
-                    .font(.title3)
-                    .frame(width: 24.0, height: 24.0)
-            }
-            .buttonStyle(.borderedProminent)
-            .contextMenu {
-                Button(action: addToQueueButtonPressed) {
-                    HStack {
-                        Text("Add to Queue")
-                        Image(systemName: "plus")
-                    }
+
+            if let episodeTitle = episode?.title, let isDownload = viewModel.downloadEpisodes[episodeTitle] {
+                VStack {
+                    Image(systemName: "checkmark.circle.fill")
+                        .frame(maxWidth: 24, maxHeight: 24)
+                        .foregroundColor(.white)
+                        .padding(12)
                 }
+                .background(.blue)
+                .cornerRadius(16)
+            } else {
                 Button(action: downloadButtonPressed) {
-                    HStack {
-                        Text("Download")
-                        Image(systemName: buttonImageName)
-                            .font(.title3)
-                            .frame(width: 24.0, height: 24.0)
+                    Image(systemName: buttonImageName)
+                        .font(.title3)
+                        .frame(width: 24.0, height: 24.0)
+                }
+                .buttonStyle(.borderedProminent)
+                .contextMenu {
+                    Button(action: addToQueueButtonPressed) {
+                        HStack {
+                            Text("Add to Queue")
+                            Image(systemName: "plus")
+                        }
+                    }
+                    Button(action: downloadButtonPressed) {
+                        HStack {
+                            Text("Download")
+                            Image(systemName: buttonImageName)
+                                .font(.title3)
+                                .frame(width: 24.0, height: 24.0)
+                        }
                     }
                 }
             }

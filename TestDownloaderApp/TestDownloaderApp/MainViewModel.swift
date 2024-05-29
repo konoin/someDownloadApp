@@ -12,6 +12,9 @@ final class MainViewModel: NSObject, ObservableObject {
     @Published var podcast: Podcast?
     @Published var downloads: [URL: Download] = [:]
     @Published var finishDownload: [Download: Bool] = [:]
+    @Published var progress: [Episode: Double] = [:]
+    @Published var downloadEpisodes: [String: Bool] = [:]
+    
     
     private var isDownloading: Bool = false
     private var downloadQueue: [Episode] = []
@@ -43,6 +46,7 @@ final class MainViewModel: NSObject, ObservableObject {
         for await event in download.events {
             process(event, for: episode)
         }
+        
         downloads[episode.url] = nil
     }
     
@@ -100,12 +104,17 @@ private extension MainViewModel {
         switch event {
         case let .progress(current, total, speed):
             podcast?[episode.id]?.update(currentBytes: current, totalBytes: total, speed: speed)
+            progress[episode] = Double(current) / Double(total)
+            
         case let .success(url, _):
             saveFile(for: episode, at: url)
+            
+            saveUserDefaults()
         }
     }
     
     func saveFile(for episode: Episode, at url: URL) {
+        downloadEpisodes[episode.title] = true
         guard let directoryURL = podcast?.directoryURL else { return }
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: directoryURL.path) {
@@ -137,5 +146,26 @@ extension Podcast {
 extension URL: Comparable {
     public static func < (lhs: URL, rhs: URL) -> Bool {
         return lhs.absoluteString < rhs.absoluteString
+    }
+}
+
+extension MainViewModel {
+    func saveUserDefaults() {
+        let defaults = UserDefaults.standard
+        defaults.set(downloadEpisodes, forKey: "episodes")
+        
+        print("Success")
+    }
+    
+    func downloadUserDefaults() {
+        let defaults = UserDefaults.standard
+        if let loaded = defaults.dictionary(forKey: "episodes") as? [String: Bool] {
+            downloadEpisodes = loaded
+            print("load success:", downloadEpisodes)
+        } else {
+            downloadEpisodes = [:]
+            print("fail")
+        }
+            
     }
 }

@@ -11,6 +11,8 @@ import Combine
 struct ContentView: View {
     @StateObject var viewModel = MainViewModel()
     @State private var selectedEpisodes: Set<Episode> = []
+    @State var queueEpisodes: [Episode] = []
+    @State var parallelEpisodes: [Episode] = []
     
     var body: some View {
         NavigationView {
@@ -20,7 +22,7 @@ struct ContentView: View {
                     if let podcast = viewModel.podcast {
                         ForEach(podcast.episodes) { episode in
                             EpisodeRow(
-                                episode: episode,
+                                viewModel: viewModel, episode: episode,
                                 downloadButtonPressed: { toggleDownload(for: episode) },
                                 addToQueueButtonPressed: { addToQueue(episode) }
                             )
@@ -31,7 +33,7 @@ struct ContentView: View {
                         }
                     } else {
                         ForEach(0..<10) { _ in
-                            EpisodeRow(episode: nil, downloadButtonPressed: {
+                            EpisodeRow(viewModel: viewModel, episode: nil, downloadButtonPressed: {
                             }, addToQueueButtonPressed: {})
                         }
                     }
@@ -40,7 +42,10 @@ struct ContentView: View {
                 .task {
                     try? await viewModel.fetchPodcast()
                 }
-                NavigationLink(destination: DownloadList()) {
+                .onAppear {
+                    viewModel.downloadUserDefaults()
+                }
+                NavigationLink(destination: DownloadList(queueEpisodes: $queueEpisodes, parallelEpisodes: $parallelEpisodes, progress: viewModel.progress)) {
                     Image(systemName: "arrow.down.circle")
                         .resizable()
                         .frame(width: 25, height: 25)
@@ -59,6 +64,7 @@ struct ContentView: View {
 
       private func addToQueue(_ episode: Episode) {
           viewModel.addEpisodeToQueue(episode)
+          queueEpisodes.append(episode)
       }
 
       private func addSelectedEpisodesToQueue() {
