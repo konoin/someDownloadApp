@@ -10,15 +10,18 @@ import Combine
 
 struct EpisodeRow: View {
     
+    @State var hideParallelButton: Bool = false
+    @State var hideSequantelButton: Bool = false
+    
     let viewModel: MainViewModel
-    let episode: Episode?
+    let episode: Episode
     let downloadButtonPressed: () -> Void
     let addToQueueButtonPressed: () -> Void
     
     var body: some View {
         HStack(alignment: .top, spacing: 16.0) {
             VStack(alignment: .leading, spacing: 8.0) {
-                Text(episode?.title ?? "Episode title")
+                Text(episode.title)
                     .font(.headline)
                 Text(details ?? "Episode details")
                     .font(.subheadline)
@@ -27,15 +30,26 @@ struct EpisodeRow: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Text("\(Int((progress) * 100))%")
+                                .font(.system(size: 13))
+                                .frame(width: 80, height: 15, alignment: .leading) // Фиксированный frame
+
+//                                .frame(minWidth: 100, maxWidth: 100)
                             Text("\(String(format: "%.1f", downloadSpeed)) MB/s")
+                                .font(.system(size: 13))
+                                .frame(width: 80, height: 15, alignment: .leading) // Фиксированный frame
+
+//                                .frame(minWidth: 100, maxWidth: 100)
                         }
+                        
                         ProgressView(value: progress)
+                        Spacer()
                     }
+                    .frame(maxWidth: .infinity)
                 }
             }
             Spacer()
-
-            if let episodeTitle = episode?.title, let isDownload = viewModel.downloadEpisodes[episodeTitle] {
+            
+            if viewModel.downloadEpisodes[episode.title] != nil {
                 VStack {
                     Image(systemName: "checkmark.circle.fill")
                         .frame(maxWidth: 24, maxHeight: 24)
@@ -45,56 +59,80 @@ struct EpisodeRow: View {
                 .background(.blue)
                 .cornerRadius(16)
             } else {
-                Button(action: downloadButtonPressed) {
-                    Image(systemName: buttonImageName)
-                        .font(.title3)
-                        .frame(width: 24.0, height: 24.0)
-                }
-                .buttonStyle(.borderedProminent)
-                .contextMenu {
-                    Button(action: addToQueueButtonPressed) {
-                        HStack {
-                            Text("Add to Queue")
-                            Image(systemName: "plus")
+                HStack {
+                    if !hideParallelButton {
+                        Button {
+                            downloadButtonPressed()
+                            hideSequantelButton = true
+                        } label: {
+                            VStack {
+                                Image(systemName: buttonImageName())
+                                    .font(.title3)
+                                    .frame(width: 24.0, height: 24.0)
+                                Text("Parallel")
+                                    .font(.system(size: 12))
+                            }
                         }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(hideParallelButton)
                     }
-                    Button(action: downloadButtonPressed) {
-                        HStack {
-                            Text("Download")
-                            Image(systemName: buttonImageName)
-                                .font(.title3)
-                                .frame(width: 24.0, height: 24.0)
+                    
+                    if !hideSequantelButton {
+                        Button {
+                            addToQueueButtonPressed()
+                            hideParallelButton = true
+                        } label: {
+                            VStack {
+                                Image(systemName: buttonImageName())
+                                    .font(.title3)
+                                    .frame(width: 24.0, height: 24.0)
+                                Text("Sequential")
+                                    .font(.system(size: 12))
+                            }
                         }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(hideSequantelButton)
                     }
                 }
             }
         }
         .padding(.top, 8.0)
         .padding(.bottom, 4.0)
-        .redacted(reason: episode == nil ? .placeholder : [])
     }
+}
+
+#Preview {
+    EpisodeRow(hideParallelButton: false, hideSequantelButton: false, viewModel: MainViewModel(), episode: Episode.preview) {
+        print("")
+    } addToQueueButtonPressed: {
+        print("")
+    }
+
 }
 
 private extension EpisodeRow {
     var details: String? {
-        guard let episode else { return nil }
         return episode.date.formatted(date: .long, time: .omitted)
         + " - " + episode.duration.formatted()
     }
-
+    
     var progress: Double {
-        episode?.progress ?? 0.0
+        episode.progress
     }
     
     var downloadSpeed: Double {
-        episode?.speed ?? 0.0
+        episode.speed
     }
-
-    var buttonImageName: String {
-        switch (progress, episode?.isDownloading ?? false) {
-            case (1.0, _): return "checkmark.circle.fill"
-            case (_, true): return "pause.fill"
-            default: return "tray.and.arrow.down"
+    
+    func buttonImageName() -> String {
+        
+        switch (progress, episode.isDownloading, episode.isSequentil) {
+        case (1.0, _, _): return "checkmark.circle.fill"
+        case (_, true, _): return "pause.fill"
+        case (_, true, false) where progress > 0: return "pause.fill"
+        case (_, _, true): return "stopwatch"
+        default: return "tray.and.arrow.down"
         }
+        
     }
 }

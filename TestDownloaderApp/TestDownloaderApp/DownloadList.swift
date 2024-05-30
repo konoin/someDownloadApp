@@ -11,6 +11,7 @@ struct DownloadList: View {
     
     @Binding var queueEpisodes: [Episode]
     @Binding var parallelEpisodes: [Episode]
+
     
     var progress: [Episode: Double] = [:]
     
@@ -18,21 +19,29 @@ struct DownloadList: View {
         VStack {
             List {
                 Section("queue") {
-                    ForEach(queueEpisodes) { episode in
-                        VStack(alignment: .leading) {
-                            Text(episode.title)
-                            ProgressView(value: progress[episode])
+                    if queueEpisodes.isEmpty {
+                        Text("queue is empty")
+                    } else {
+                        ForEach(queueEpisodes) { episode in
+                            VStack(alignment: .leading) {
+                                Text(episode.title)
+                                ProgressView(value: progress[episode])
+                            }
+                            .padding()
                         }
-                        .padding()
                     }
                 }
                 Section("parallel") {
-                    ForEach(parallelEpisodes) { episode in
-                        VStack(alignment: .leading) {
-                            Text(episode.title)
-                            ProgressView(value: progress[episode])
+                    if parallelEpisodes.isEmpty {
+                        Text("parallel is empty")
+                    } else {
+                        ForEach(parallelEpisodes) { episode in
+                            VStack(alignment: .leading) {
+                                Text(episode.title)
+                                ProgressView(value: progress[episode])
+                            }
+                            .padding()
                         }
-                        .padding()
                     }
                 }
             }

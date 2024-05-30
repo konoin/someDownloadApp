@@ -9,6 +9,8 @@ import SwiftUI
 import Combine
 
 struct ContentView: View {
+    
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
     @StateObject var viewModel = MainViewModel()
     @State private var selectedEpisodes: Set<Episode> = []
     @State var queueEpisodes: [Episode] = []
@@ -23,8 +25,12 @@ struct ContentView: View {
                         ForEach(podcast.episodes) { episode in
                             EpisodeRow(
                                 viewModel: viewModel, episode: episode,
-                                downloadButtonPressed: { toggleDownload(for: episode) },
-                                addToQueueButtonPressed: { addToQueue(episode) }
+                                downloadButtonPressed: {
+                                    addToParallel(episode)
+                                    toggleDownload(for: episode) },
+                                addToQueueButtonPressed: {
+                                    togleSequential(for: episode)
+                                }
                             )
                             .background(selectedEpisodes.contains(episode) ? Color.gray.opacity(0.2) : Color.clear)
                             .onTapGesture {
@@ -33,18 +39,26 @@ struct ContentView: View {
                         }
                     } else {
                         ForEach(0..<10) { _ in
-                            EpisodeRow(viewModel: viewModel, episode: nil, downloadButtonPressed: {
+                            EpisodeRow(viewModel: viewModel, episode: Episode.preview, downloadButtonPressed: {
                             }, addToQueueButtonPressed: {})
                         }
                     }
                 }
                 .listStyle(.plain)
+                
                 .task {
                     try? await viewModel.fetchPodcast()
                 }
                 .onAppear {
                     viewModel.downloadUserDefaults()
                 }
+                .safeAreaInset(edge: .top, content: {
+                    Color.white.frame(maxHeight: safeAreaInsets.top)
+                })
+                
+                .ignoresSafeArea()
+                .scrollIndicators(.hidden)
+                
                 NavigationLink(destination: DownloadList(queueEpisodes: $queueEpisodes, parallelEpisodes: $parallelEpisodes, progress: viewModel.progress)) {
                     Image(systemName: "arrow.down.circle")
                         .resizable()
@@ -53,26 +67,12 @@ struct ContentView: View {
             }
         }
     }
-    
-    private func toggleSelection(for episode: Episode) {
-          if selectedEpisodes.contains(episode) {
-              selectedEpisodes.remove(episode)
-          } else {
-              selectedEpisodes.insert(episode)
-          }
-      }
-
-      private func addToQueue(_ episode: Episode) {
-          viewModel.addEpisodeToQueue(episode)
-          queueEpisodes.append(episode)
-      }
-
-      private func addSelectedEpisodesToQueue() {
-          for episode in selectedEpisodes {
-              viewModel.addEpisodeToQueue(episode)
-          }
-      }
 }
+
+#Preview {
+    ContentView()
+}
+
 
 private extension ContentView {
     func toggleDownload(for episode: Episode) {
@@ -84,6 +84,39 @@ private extension ContentView {
             } else {
                 Task { try? await viewModel.download(episode) }
             }
+        }
+    }
+    
+    private func togleSequential( for episode: Episode) {
+        if episode.isDownloading {
+            viewModel.pauseDownload(for: episode)
+        } else {
+            if episode.progress > 0 {
+                viewModel.resumeDownload(for: episode)
+            } else {
+                addToQueue(episode)
+            }
+        }
+    }
+    
+    private func toggleSelection(for episode: Episode) {
+        if selectedEpisodes.contains(episode) {
+            selectedEpisodes.remove(episode)
+        } else {
+            selectedEpisodes.insert(episode)
+        }
+    }
+    
+    private func addToParallel(_ episode: Episode) {
+        if !parallelEpisodes.contains(episode) {
+            parallelEpisodes.append(episode)
+        }
+    }
+    
+    private func addToQueue(_ episode: Episode) {
+        viewModel.addEpisodeToQueue(episode)
+        if !queueEpisodes.contains(episode) {
+            queueEpisodes.append(episode)
         }
     }
 }

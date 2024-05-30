@@ -14,10 +14,12 @@ final class MainViewModel: NSObject, ObservableObject {
     @Published var finishDownload: [Download: Bool] = [:]
     @Published var progress: [Episode: Double] = [:]
     @Published var downloadEpisodes: [String: Bool] = [:]
-    
+    @Published var dowloadParallelEpisode: [String: Bool] = [:]
+    @Published var dowloadSequentialEpisode: [String: Bool] = [:]
+    @Published var dowloadFinishedEpisode: [String: Bool] = [:]
+    @Published var downloadQueue: [Episode] = []
     
     private var isDownloading: Bool = false
-    private var downloadQueue: [Episode] = []
     private var data: Data?
     
     private lazy var downloadSession: URLSession = {
@@ -39,7 +41,6 @@ final class MainViewModel: NSObject, ObservableObject {
     @MainActor
     func download(_ episode: Episode) async throws {
         guard downloads[episode.url] == nil else { return }
-        
         let download = Download(url: episode.url, downloadSession: downloadSession)
         downloads[episode.url] = download
         podcast?[episode.id]?.isDownloading = true
@@ -53,12 +54,16 @@ final class MainViewModel: NSObject, ObservableObject {
     @MainActor
     func addEpisodeToQueue(_ episode: Episode) {
         downloadQueue.append(episode)
+        if downloadQueue.contains(episode) {
+            podcast?[episode.id]?.isSequentil = true
+        }
         processQueue()
     }
     
     @MainActor
     private func processQueue() {
-        guard !isDownloading, !downloadQueue.isEmpty else { return }
+        guard !isDownloading, !downloadQueue.isEmpty else {
+            return }
         
         isDownloading = true
         let episode = downloadQueue.removeFirst()
@@ -72,20 +77,6 @@ final class MainViewModel: NSObject, ObservableObject {
             
             isDownloading = false
             processQueue()
-        }
-    }
-    
-    @MainActor
-    func downloadNextEpisodeInQueue() async {
-        guard !downloadQueue.isEmpty else { return }
-        
-        while !downloadQueue.isEmpty {
-            let nextEpisode = downloadQueue.removeFirst()
-            do {
-                try await download(nextEpisode)
-            } catch {
-                print("Failed to download episode: \(nextEpisode.title), error: \(error)")
-            }
         }
     }
     
@@ -103,12 +94,11 @@ private extension MainViewModel {
     func process(_ event: Download.Event, for episode: Episode) {
         switch event {
         case let .progress(current, total, speed):
+            podcast?[episode.id]?.isSequentil = false
             podcast?[episode.id]?.update(currentBytes: current, totalBytes: total, speed: speed)
             progress[episode] = Double(current) / Double(total)
-            
         case let .success(url, _):
             saveFile(for: episode, at: url)
-            
             saveUserDefaults()
         }
     }
@@ -153,17 +143,24 @@ extension MainViewModel {
     func saveUserDefaults() {
         let defaults = UserDefaults.standard
         defaults.set(downloadEpisodes, forKey: "episodes")
-        
+        defaults.set(dowloadParallelEpisode, forKey: "parallel")
+        defaults.set(dowloadSequentialEpisode, forKey: "sequential")
         print("Success")
     }
     
     func downloadUserDefaults() {
         let defaults = UserDefaults.standard
-        if let loaded = defaults.dictionary(forKey: "episodes") as? [String: Bool] {
+        if let loaded = defaults.dictionary(forKey: "episodes") as? [String: Bool],
+           let parallel = defaults.dictionary(forKey: "parallel") as? [String: Bool],
+           let sequential = defaults.dictionary(forKey: "sequential") as? [String: Bool] {
             downloadEpisodes = loaded
+            dowloadParallelEpisode = parallel
+            dowloadSequentialEpisode = sequential
             print("load success:", downloadEpisodes)
         } else {
             downloadEpisodes = [:]
+            dowloadParallelEpisode = [:]
+            dowloadSequentialEpisode = [:]
             print("fail")
         }
             
