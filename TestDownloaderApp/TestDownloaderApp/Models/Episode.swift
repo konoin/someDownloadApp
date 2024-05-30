@@ -19,6 +19,7 @@ struct Episode: Identifiable, Hashable {
     private(set) var totalBytes: Int64 = 0
     private(set) var speed: Double = 0.0
     var isSequentil: Bool = false
+    var downloadState: DownloadState = .idle
 
     var progress: Double {
         guard totalBytes > 0 else { return 0.0 }

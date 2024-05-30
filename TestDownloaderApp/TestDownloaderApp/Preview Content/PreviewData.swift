@@ -79,3 +79,36 @@ extension EnvironmentValues {
         self[SafeAreaInsetsKey.self]
     }
 }
+
+
+enum DownloadState {
+    case inProgress
+    case inQueue
+    case downloaded
+    case idle
+    case paused
+}
+
+struct DownloadStateTransformer {
+    
+    private let downloadState: DownloadState
+    
+    init(downloadState: DownloadState) {
+        self.downloadState = downloadState
+    }
+    
+    var image: String {
+        switch downloadState {
+        case .inProgress:
+            return "pause.fill"
+        case .inQueue:
+            return "stopwatch"
+        case .downloaded:
+            return "paperplane"
+        case .idle:
+            return "tray.and.arrow.down"
+        case .paused:
+            return "play"
+        }
+    }
+}

@@ -13,6 +13,7 @@ struct EpisodeRow: View {
     @State var hideParallelButton: Bool = false
     @State var hideSequantelButton: Bool = false
     
+//    let downloadStateTransformer = DownloadStateTransformer(downloadState: <#DownloadState#>)
     let viewModel: MainViewModel
     let episode: Episode
     let downloadButtonPressed: () -> Void
@@ -31,14 +32,10 @@ struct EpisodeRow: View {
                         VStack(alignment: .leading) {
                             Text("\(Int((progress) * 100))%")
                                 .font(.system(size: 13))
-                                .frame(width: 80, height: 15, alignment: .leading) // Фиксированный frame
-
-//                                .frame(minWidth: 100, maxWidth: 100)
+                                .frame(width: 80, height: 15, alignment: .leading)
                             Text("\(String(format: "%.1f", downloadSpeed)) MB/s")
                                 .font(.system(size: 13))
-                                .frame(width: 80, height: 15, alignment: .leading) // Фиксированный frame
-
-//                                .frame(minWidth: 100, maxWidth: 100)
+                                .frame(width: 80, height: 15, alignment: .leading)
                         }
                         
                         ProgressView(value: progress)
@@ -69,7 +66,7 @@ struct EpisodeRow: View {
                                 Image(systemName: buttonImageName())
                                     .font(.title3)
                                     .frame(width: 24.0, height: 24.0)
-                                Text("Parallel")
+                                    Text("Parallel")
                                     .font(.system(size: 12))
                             }
                         }
@@ -125,14 +122,6 @@ private extension EpisodeRow {
     }
     
     func buttonImageName() -> String {
-        
-        switch (progress, episode.isDownloading, episode.isSequentil) {
-        case (1.0, _, _): return "checkmark.circle.fill"
-        case (_, true, _): return "pause.fill"
-        case (_, true, false) where progress > 0: return "pause.fill"
-        case (_, _, true): return "stopwatch"
-        default: return "tray.and.arrow.down"
-        }
-        
+        DownloadStateTransformer(downloadState: episode.downloadState).image
     }
 }

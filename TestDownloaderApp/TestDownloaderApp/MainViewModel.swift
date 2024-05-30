@@ -44,6 +44,7 @@ final class MainViewModel: NSObject, ObservableObject {
         let download = Download(url: episode.url, downloadSession: downloadSession)
         downloads[episode.url] = download
         podcast?[episode.id]?.isDownloading = true
+        podcast?[episode.id]?.downloadState = .downloaded
         for await event in download.events {
             process(event, for: episode)
         }
@@ -55,7 +56,7 @@ final class MainViewModel: NSObject, ObservableObject {
     func addEpisodeToQueue(_ episode: Episode) {
         downloadQueue.append(episode)
         if downloadQueue.contains(episode) {
-            podcast?[episode.id]?.isSequentil = true
+            podcast?[episode.id]?.downloadState = .inQueue
         }
         processQueue()
     }
@@ -83,18 +84,20 @@ final class MainViewModel: NSObject, ObservableObject {
     func pauseDownload(for episode: Episode) {
         downloads[episode.url]?.pause()
         podcast?[episode.id]?.isDownloading = false
+        podcast?[episode.id]?.downloadState = .paused
     }
     
     func resumeDownload(for episode: Episode) {
         downloads[episode.url]?.resume()
         podcast?[episode.id]?.isDownloading = true
+        podcast?[episode.id]?.downloadState = .inProgress
     }
 }
 private extension MainViewModel {
     func process(_ event: Download.Event, for episode: Episode) {
         switch event {
         case let .progress(current, total, speed):
-            podcast?[episode.id]?.isSequentil = false
+            podcast?[episode.id]?.downloadState = .inProgress
             podcast?[episode.id]?.update(currentBytes: current, totalBytes: total, speed: speed)
             progress[episode] = Double(current) / Double(total)
         case let .success(url, _):
@@ -105,6 +108,7 @@ private extension MainViewModel {
     
     func saveFile(for episode: Episode, at url: URL) {
         downloadEpisodes[episode.title] = true
+        podcast?[episode.id]?.downloadState = .downloaded
         guard let directoryURL = podcast?.directoryURL else { return }
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: directoryURL.path) {
