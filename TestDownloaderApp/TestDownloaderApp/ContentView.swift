@@ -16,6 +16,7 @@ struct ContentView: View {
     @StateObject private var viewModel: MainViewModel
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
+    
     private var items: FetchedResults<History>
     
     init() {
@@ -61,6 +62,9 @@ struct ContentView: View {
                 
                 .task {
                     try? await viewModel.fetchPodcast()
+                }
+                
+                .onAppear {
                     viewModel.checkFile()
                 }
                 .safeAreaInset(edge: .top, content: {

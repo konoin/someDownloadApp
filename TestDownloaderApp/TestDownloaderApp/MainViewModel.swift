@@ -161,7 +161,9 @@ extension URL: Comparable {
 
 extension MainViewModel {
     func saveDownloadState(episode: Episode) {
-        if !historyItems.contains(where: { $0.title == episode.title }) {
+        if let history = historyItems.first(where: { $0.id == NSNumber(value: Int64(episode.id)) }) {
+            dataService.update(entity: history, downloaded: false, deleted: true)
+        } else {
             dataService.create(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date(), deleted: false)
         }
     }
