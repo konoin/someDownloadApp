@@ -73,6 +73,12 @@ private extension UIEdgeInsets {
     }
 }
 
+extension FileManager {
+    class func fileExists(filePath: String) -> Bool {
+        var isDirectory = ObjCBool(false)
+        return self.default.fileExists(atPath: filePath, isDirectory: &isDirectory)
+    }
+}
 
 extension EnvironmentValues {
     var safeAreaInsets: EdgeInsets {
@@ -87,6 +93,7 @@ enum DownloadState {
     case downloaded
     case idle
     case paused
+    case sendRequest
 }
 
 struct DownloadStateTransformer {
@@ -103,12 +110,20 @@ struct DownloadStateTransformer {
             return "pause.fill"
         case .inQueue:
             return "stopwatch"
-        case .downloaded:
+        case .sendRequest:
             return "paperplane"
         case .idle:
             return "tray.and.arrow.down"
         case .paused:
             return "play"
+        case .downloaded:
+            return "checkmark.circle.fill"
         }
+    }
+}
+
+extension Array where Element == History {
+    func isEpisodeDownloaded(title: String) -> Bool {
+        return self.first(where: { $0.title == title })?.downloaded ?? false
     }
 }

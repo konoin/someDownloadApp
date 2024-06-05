@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+import CoreData
 
 final class MainViewModel: NSObject, ObservableObject {
     
@@ -13,11 +15,18 @@ final class MainViewModel: NSObject, ObservableObject {
     @Published var downloads: [URL: Download] = [:]
     @Published var finishDownload: [Download: Bool] = [:]
     @Published var progress: [Episode: Double] = [:]
-    @Published var downloadEpisodes: [String: Bool] = [:]
     @Published var dowloadParallelEpisode: [String: Bool] = [:]
     @Published var dowloadSequentialEpisode: [String: Bool] = [:]
     @Published var dowloadFinishedEpisode: [String: Bool] = [:]
     @Published var downloadQueue: [Episode] = []
+    
+    @Published var historyItems: [History]
+    
+    init(historyItems: [History]) {
+        self.historyItems = historyItems
+    }
+    
+    let dataService = PersistenceController.shared
     
     private var isDownloading: Bool = false
     private var data: Data?
@@ -44,7 +53,7 @@ final class MainViewModel: NSObject, ObservableObject {
         let download = Download(url: episode.url, downloadSession: downloadSession)
         downloads[episode.url] = download
         podcast?[episode.id]?.isDownloading = true
-        podcast?[episode.id]?.downloadState = .downloaded
+        podcast?[episode.id]?.downloadState = .sendRequest
         for await event in download.events {
             process(event, for: episode)
         }
@@ -101,13 +110,18 @@ private extension MainViewModel {
             podcast?[episode.id]?.update(currentBytes: current, totalBytes: total, speed: speed)
             progress[episode] = Double(current) / Double(total)
         case let .success(url, _):
+            saveDownloadState(episode: episode)
             saveFile(for: episode, at: url)
-            saveUserDefaults()
         }
     }
     
     func saveFile(for episode: Episode, at url: URL) {
-        downloadEpisodes[episode.title] = true
+        for historyItem in historyItems {
+            if historyItem.title == episode.title {
+//            if historyItem.id == NSNumber(value: Int64(episode.id)) {
+                dataService.update(entity: historyItem, title: episode.title, downloaded: true, deleted: false)
+            }
+        }
         podcast?[episode.id]?.downloadState = .downloaded
         guard let directoryURL = podcast?.directoryURL else { return }
         let fileManager = FileManager.default
@@ -120,7 +134,9 @@ private extension MainViewModel {
                 return
             }
         }
-        let fileURL = directoryURL.appendingPathComponent("\(episode.title).mp3")
+        
+        let sanitizedEpisodeName = episode.title.replacingOccurrences(of: " ", with: "")
+        let fileURL = directoryURL.appendingPathComponent("\(sanitizedEpisodeName).mp3")
         do {
             try fileManager.moveItem(at: url, to: fileURL)
             print("File moved to: \(fileURL)")
@@ -144,29 +160,50 @@ extension URL: Comparable {
 }
 
 extension MainViewModel {
-    func saveUserDefaults() {
-        let defaults = UserDefaults.standard
-        defaults.set(downloadEpisodes, forKey: "episodes")
-        defaults.set(dowloadParallelEpisode, forKey: "parallel")
-        defaults.set(dowloadSequentialEpisode, forKey: "sequential")
-        print("Success")
+    func saveDownloadState(episode: Episode) {
+        if !historyItems.contains(where: { $0.title == episode.title }) {
+            dataService.create(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date(), deleted: false)
+        }
     }
     
-    func downloadUserDefaults() {
-        let defaults = UserDefaults.standard
-        if let loaded = defaults.dictionary(forKey: "episodes") as? [String: Bool],
-           let parallel = defaults.dictionary(forKey: "parallel") as? [String: Bool],
-           let sequential = defaults.dictionary(forKey: "sequential") as? [String: Bool] {
-            downloadEpisodes = loaded
-            dowloadParallelEpisode = parallel
-            dowloadSequentialEpisode = sequential
-            print("load success:", downloadEpisodes)
-        } else {
-            downloadEpisodes = [:]
-            dowloadParallelEpisode = [:]
-            dowloadSequentialEpisode = [:]
-            print("fail")
-        }
+    func checkFile() {
+        guard let testEpisodes = podcast?.episodes else { return }
+        guard let folderPath = podcast?.directoryURL else { return }
+        
+        for episode in testEpisodes {
+            let sanitizedEpisodeName = episode.title.replacingOccurrences(of: " ", with: "")
+            let filePath = folderPath.appendingPathComponent("\(sanitizedEpisodeName).mp3").path
             
+            print("Checking file at path:", filePath)
+            for historyItem in self.historyItems {
+                if historyItem.title == episode.title && historyItem.downloaded {
+                    if FileManager.default.fileExists(atPath: filePath) {
+                        print("File exists for episode: \(episode.title)")
+                    } else {
+                        for history in historyItems {
+                            if history.id == NSNumber(value: Int64(episode.id)) {
+                                dataService.update(entity: history, downloaded: false, deleted: true)
+                            }
+                        }
+                    }
+                } else {
+                    print("Episode not marked for download: \(episode.title)")
+                }
+            }
+        }
+    }
+    
+    func openFilePicker() {
+        guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.item])
+        documentPicker.delegate = UIApplication.shared.windows.first?.rootViewController as? UIDocumentPickerDelegate
+        documentPicker.allowsMultipleSelection = false
+        let casefileUrl = documentsUrl.appendingPathComponent("Casefile True Crime")
+        documentPicker.directoryURL = casefileUrl
+        
+        if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
+            rootViewController.present(documentPicker, animated: true, completion: nil)
+        }
     }
 }

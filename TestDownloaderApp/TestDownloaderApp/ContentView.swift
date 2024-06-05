@@ -11,7 +11,18 @@ import Combine
 struct ContentView: View {
     
     @Environment(\.safeAreaInsets) private var safeAreaInsets
-    @StateObject var viewModel = MainViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @StateObject private var viewModel: MainViewModel
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
+    private var items: FetchedResults<History>
+    
+    init() {
+        let historyArray: [History] = []
+        _viewModel = StateObject(wrappedValue: MainViewModel(historyItems: historyArray))
+    }
+    
     @State private var selectedEpisodes: Set<Episode> = []
     @State var queueEpisodes: [Episode] = []
     @State var parallelEpisodes: [Episode] = []
@@ -32,6 +43,7 @@ struct ContentView: View {
                                     togleSequential(for: episode)
                                 }
                             )
+                            .environment(\.managedObjectContext, viewContext)
                             .background(selectedEpisodes.contains(episode) ? Color.gray.opacity(0.2) : Color.clear)
                             .onTapGesture {
                                 toggleSelection(for: episode)
@@ -41,6 +53,7 @@ struct ContentView: View {
                         ForEach(0..<10) { _ in
                             EpisodeRow(viewModel: viewModel, episode: Episode.preview, downloadButtonPressed: {
                             }, addToQueueButtonPressed: {})
+                            .environment(\.managedObjectContext, viewContext)
                         }
                     }
                 }
@@ -48,23 +61,44 @@ struct ContentView: View {
                 
                 .task {
                     try? await viewModel.fetchPodcast()
-                }
-                .onAppear {
-                    viewModel.downloadUserDefaults()
+                    viewModel.checkFile()
                 }
                 .safeAreaInset(edge: .top, content: {
                     Color.white.frame(maxHeight: safeAreaInsets.top)
                 })
-                
                 .ignoresSafeArea()
                 .scrollIndicators(.hidden)
-                
-                NavigationLink(destination: DownloadList(queueEpisodes: $queueEpisodes, parallelEpisodes: $parallelEpisodes, progress: viewModel.progress)) {
-                    Image(systemName: "arrow.down.circle")
-                        .resizable()
-                        .frame(width: 25, height: 25)
+                HStack {
+                    NavigationLink{
+                        DownloadList(queueEpisodes: $queueEpisodes, parallelEpisodes: $parallelEpisodes, progress: viewModel.progress)
+                    } label: {
+                        VStack {
+                            Image(systemName: "gear")
+                                .resizable()
+                                .frame(width: 25, height: 25)
+                            Text("Speed info")
+                        }
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    
+                    NavigationLink {
+                        HistoryView(mainViewModel: viewModel)
+                            .environment(\.managedObjectContext, viewContext)
+                    } label: {
+                        VStack {
+                            Image(systemName: "arrow.down.circle")
+                                .resizable()
+                                .frame(width: 25, height: 25)
+                            Text("History")
+                        }
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    
                 }
             }
+        }
+        .onAppear {
+            viewModel.historyItems = Array(items)
         }
     }
 }
@@ -75,6 +109,7 @@ struct ContentView: View {
 
 
 private extension ContentView {
+    
     func toggleDownload(for episode: Episode) {
         if episode.isDownloading {
             viewModel.pauseDownload(for: episode)
