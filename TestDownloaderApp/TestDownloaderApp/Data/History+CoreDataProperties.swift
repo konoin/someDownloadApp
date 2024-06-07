@@ -20,7 +20,6 @@ extension History {
     @NSManaged public var id: NSNumber?
     @NSManaged public var title: String?
     @NSManaged public var downloaded: Bool
-    @NSManaged public var finder: Bool
 
 }
 

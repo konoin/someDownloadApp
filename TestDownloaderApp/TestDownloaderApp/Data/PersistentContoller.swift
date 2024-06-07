@@ -14,10 +14,19 @@ class PersistenceController: NSObject {
     
     override init() {
         super.init()
+        
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appending(path: "TestDownloaderApp.sqlite")
+           
+           // Change URL to allow for compatibility with older version in Swift
+           let description = NSPersistentStoreDescription(url: paths)
+           container.persistentStoreDescriptions = [description]
+        
         container.loadPersistentStores { _, _ in
             
         }
     }
+    
+    
     
     func saveChanges() {
         let context = container.viewContext
@@ -31,7 +40,7 @@ class PersistenceController: NSObject {
         }
     }
     
-    func create(title: String, id: Int64, downloaded: Bool, date: Date, deleted: Bool) {
+    func create(title: String, id: Int64, downloaded: Bool, date: Date) {
         // create a NSManagedObject, will be saved to DB later
         let entity = History(context: container.viewContext)
         // attach value to the entity’s attributes
@@ -39,7 +48,6 @@ class PersistenceController: NSObject {
         entity.id = NSNumber(value: id)
         entity.downloaded = downloaded
         entity.date = date
-        entity.finder = deleted
         
         // save changes to DB
         saveChanges()
@@ -70,7 +78,7 @@ class PersistenceController: NSObject {
         return results
     }
     
-    func update(entity: History, title: String? = nil, downloaded: Bool? = nil, id: Int64? = nil, date: Date? = nil, deleted: Bool? = nil) {
+    func update(entity: History, title: String? = nil, downloaded: Bool? = nil, id: Int64? = nil, date: Date? = nil) {
         // create a temp var to tell if an attribute is changed
         var hasChanges: Bool = false
 
@@ -79,10 +87,12 @@ class PersistenceController: NSObject {
             entity.title = title!
             hasChanges = true
         }
+        
         if downloaded != nil {
             entity.downloaded = downloaded!
             hasChanges = true
         }
+        
         if id != nil {
             entity.id = NSNumber(value: id!)
             hasChanges = true
@@ -93,10 +103,6 @@ class PersistenceController: NSObject {
             hasChanges = true
         }
 
-        if deleted != nil {
-            entity.finder = deleted!
-            hasChanges = true
-        }
         // save changes if any
         if hasChanges {
             saveChanges()

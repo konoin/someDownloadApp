@@ -118,8 +118,7 @@ private extension MainViewModel {
     func saveFile(for episode: Episode, at url: URL) {
         for historyItem in historyItems {
             if historyItem.title == episode.title {
-//            if historyItem.id == NSNumber(value: Int64(episode.id)) {
-                dataService.update(entity: historyItem, title: episode.title, downloaded: true, deleted: false)
+                dataService.update(entity: historyItem, title: episode.title, downloaded: false)
             }
         }
         podcast?[episode.id]?.downloadState = .downloaded
@@ -162,9 +161,9 @@ extension URL: Comparable {
 extension MainViewModel {
     func saveDownloadState(episode: Episode) {
         if let history = historyItems.first(where: { $0.id == NSNumber(value: Int64(episode.id)) }) {
-            dataService.update(entity: history, downloaded: false, deleted: true)
+            dataService.update(entity: history, downloaded: true)
         } else {
-            dataService.create(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date(), deleted: false)
+            dataService.create(title: episode.title, id: Int64(episode.id), downloaded: false, date: Date())
         }
     }
     
@@ -184,7 +183,7 @@ extension MainViewModel {
                     } else {
                         for history in historyItems {
                             if history.id == NSNumber(value: Int64(episode.id)) {
-                                dataService.update(entity: history, downloaded: false, deleted: true)
+                                dataService.update(entity: history, downloaded: true)
                             }
                         }
                     }
