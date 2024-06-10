@@ -21,27 +21,30 @@ struct HistoryView: View {
                 Text("History is empty")
             } else {
                 ForEach(items, id: \.self) { item in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(item.title ?? "not working")
-                            Text("\(item.date?.formatted(date: .long, time: .shortened) ?? Date().formatted(date: .long, time: .shortened))")
-                        }
-                        Spacer()
-                        if item.downloaded {
-                            Button {
-                                mainViewModel?.openFilePicker()
-                            } label: {
-                                Text("Show in Files")
+                    VStack(alignment: .leading) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(item.title ?? "not working")
+                                Text("\(item.date?.formatted(date: .long, time: .shortened) ?? Date().formatted(date: .long, time: .shortened))")
+                            }
+                            Spacer()
+                            if item.downloaded {
+                                Button {
+                                    mainViewModel?.openFilePicker()
+                                } label: {
+                                    Text("Show in Files")
+                                        .padding()
+                                        .background(Color.green.opacity(0.4))
+                                        .cornerRadius(16)
+                                }
+                            } else {
+                                Text("is deleted")
                                     .padding()
-                                    .background(Color.green.opacity(0.4))
+                                    .background(Color.red.opacity(0.4))
                                     .cornerRadius(16)
                             }
-                        } else {
-                            Text("is deleted")
-                                .padding()
-                                .background(Color.red.opacity(0.4))
-                                .cornerRadius(16)
                         }
+                        Text(item.file?.fileLocation ?? "file was deleted")
                     }
                 }
             }

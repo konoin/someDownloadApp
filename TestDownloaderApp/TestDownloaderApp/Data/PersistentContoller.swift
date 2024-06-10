@@ -22,7 +22,7 @@ class PersistenceController: NSObject {
            container.persistentStoreDescriptions = [description]
         
         container.loadPersistentStores { _, _ in
-            
+            self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
         }
     }
     
@@ -38,14 +38,19 @@ class PersistenceController: NSObject {
         }
     }
     
-    func create(title: String, id: Int64, downloaded: Bool, date: Date) {
+    func create(title: String, id: Int64, downloaded: Bool, date: Date, fileUrl: String) {
         // create a NSManagedObject, will be saved to DB later
         let entity = History(context: container.viewContext)
+        entity.file = FileUrl(context: container.viewContext)
+        
         // attach value to the entity’s attributes
         entity.title = title
         entity.id = id
         entity.downloaded = downloaded
         entity.date = date
+
+        entity.file?.fileLocation = fileUrl
+
         // save changes to DB
         saveChanges()
     }
@@ -75,7 +80,7 @@ class PersistenceController: NSObject {
         return results
     }
     
-    func update(entity: History, title: String? = nil, downloaded: Bool? = nil, id: Int64? = nil, date: Date? = nil) {
+    func update(entity: History, title: String? = nil, downloaded: Bool? = nil, id: Int64? = nil, date: Date? = nil, fileUrl: String? = nil) {
         // create a temp var to tell if an attribute is changed
         var hasChanges: Bool = false
 
@@ -97,6 +102,11 @@ class PersistenceController: NSObject {
         
         if date != nil {
             entity.date = date!
+            hasChanges = true
+        }
+    
+        if fileUrl != nil {
+            entity.file?.fileLocation = fileUrl!
             hasChanges = true
         }
 
