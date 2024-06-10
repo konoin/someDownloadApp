@@ -118,7 +118,7 @@ private extension MainViewModel {
     func saveFile(for episode: Episode, at url: URL) {
         for historyItem in historyItems {
             if historyItem.title == episode.title {
-                dataService.update(entity: historyItem, title: episode.title, downloaded: false)
+                dataService.update(entity: historyItem, title: episode.title, downloaded: true)
             }
         }
         podcast?[episode.id]?.downloadState = .downloaded
@@ -160,10 +160,10 @@ extension URL: Comparable {
 
 extension MainViewModel {
     func saveDownloadState(episode: Episode) {
-        if let history = historyItems.first(where: { $0.id == NSNumber(value: Int64(episode.id)) }) {
+        if let history = historyItems.first(where: { $0.id == Int64(episode.id) }) {
             dataService.update(entity: history, downloaded: true)
         } else {
-            dataService.create(title: episode.title, id: Int64(episode.id), downloaded: false, date: Date())
+            dataService.create(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date())
         }
     }
     
@@ -175,6 +175,8 @@ extension MainViewModel {
             let sanitizedEpisodeName = episode.title.replacingOccurrences(of: " ", with: "")
             let filePath = folderPath.appendingPathComponent("\(sanitizedEpisodeName).mp3").path
             
+            
+            
             print("Checking file at path:", filePath)
             for historyItem in self.historyItems {
                 if historyItem.title == episode.title && historyItem.downloaded {
@@ -182,8 +184,8 @@ extension MainViewModel {
                         print("File exists for episode: \(episode.title)")
                     } else {
                         for history in historyItems {
-                            if history.id == NSNumber(value: Int64(episode.id)) {
-                                dataService.update(entity: history, downloaded: true)
+                            if history.id == Int64(episode.id) {
+                                dataService.update(entity: history, downloaded: false)
                             }
                         }
                     }

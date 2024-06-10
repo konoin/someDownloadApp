@@ -86,7 +86,6 @@ extension EnvironmentValues {
     }
 }
 
-
 enum DownloadState {
     case inProgress
     case inQueue

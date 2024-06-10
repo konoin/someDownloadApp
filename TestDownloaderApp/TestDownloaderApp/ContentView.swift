@@ -12,8 +12,10 @@ struct ContentView: View {
     
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.scenePhase) private var scenePhase
     
     @StateObject private var viewModel: MainViewModel
+    @StateObject private var fetchResultManager = FetchedResultsManager(context: PersistenceController.shared.container.viewContext)
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
     
@@ -36,7 +38,7 @@ struct ContentView: View {
                     if let podcast = viewModel.podcast {
                         ForEach(podcast.episodes) { episode in
                             EpisodeRow(
-                                viewModel: viewModel, episode: episode,
+                                items: items, viewModel: viewModel, episode: episode,
                                 downloadButtonPressed: {
                                     addToParallel(episode)
                                     toggleDownload(for: episode) },
@@ -44,7 +46,6 @@ struct ContentView: View {
                                     togleSequential(for: episode)
                                 }
                             )
-                            .environment(\.managedObjectContext, viewContext)
                             .background(selectedEpisodes.contains(episode) ? Color.gray.opacity(0.2) : Color.clear)
                             .onTapGesture {
                                 toggleSelection(for: episode)
@@ -52,7 +53,7 @@ struct ContentView: View {
                         }
                     } else {
                         ForEach(0..<10) { _ in
-                            EpisodeRow(viewModel: viewModel, episode: Episode.preview, downloadButtonPressed: {
+                            EpisodeRow(items: items, viewModel: viewModel, episode: Episode.preview, downloadButtonPressed: {
                             }, addToQueueButtonPressed: {})
                             .environment(\.managedObjectContext, viewContext)
                         }
@@ -113,6 +114,14 @@ struct ContentView: View {
 
 
 private extension ContentView {
+    
+    func fetchUpdatedData() {
+        do {
+//            try viewContext.fetch(.init(entityName: "DownloadHistory"))
+        } catch {
+            print("Failed to fetch updated data: \(error)")
+        }
+    }
     
     func toggleDownload(for episode: Episode) {
         if episode.isDownloading {

@@ -13,10 +13,7 @@ struct EpisodeRow: View {
     @State var hideParallelButton: Bool = false
     @State var hideSequantelButton: Bool = false
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
-    private var items: FetchedResults<History>
+    var items: FetchedResults<History>
     
     let viewModel: MainViewModel
     let episode: Episode

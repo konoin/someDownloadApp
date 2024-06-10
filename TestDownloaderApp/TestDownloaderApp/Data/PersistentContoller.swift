@@ -26,8 +26,6 @@ class PersistenceController: NSObject {
         }
     }
     
-    
-    
     func saveChanges() {
         let context = container.viewContext
 
@@ -45,10 +43,9 @@ class PersistenceController: NSObject {
         let entity = History(context: container.viewContext)
         // attach value to the entity’s attributes
         entity.title = title
-        entity.id = NSNumber(value: id)
+        entity.id = id
         entity.downloaded = downloaded
         entity.date = date
-        
         // save changes to DB
         saveChanges()
     }
@@ -94,7 +91,7 @@ class PersistenceController: NSObject {
         }
         
         if id != nil {
-            entity.id = NSNumber(value: id!)
+            entity.id = id!
             hasChanges = true
         }
         

@@ -2,7 +2,7 @@
 //  History+CoreDataProperties.swift
 //  TestDownloaderApp
 //
-//  Created by Mikita Palyka on 31.05.24.
+//  Created by Mikita Palyka on 7.06.24.
 //
 //
 
@@ -17,9 +17,9 @@ extension History {
     }
 
     @NSManaged public var date: Date?
-    @NSManaged public var id: NSNumber?
-    @NSManaged public var title: String?
     @NSManaged public var downloaded: Bool
+    @NSManaged public var id: Int64
+    @NSManaged public var title: String?
 
 }
 
