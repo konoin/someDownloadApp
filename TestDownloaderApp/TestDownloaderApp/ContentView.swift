@@ -11,7 +11,21 @@ import Combine
 struct ContentView: View {
     
     @Environment(\.safeAreaInsets) private var safeAreaInsets
-    @StateObject var viewModel = MainViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.scenePhase) private var scenePhase
+    
+    @StateObject private var viewModel: MainViewModel
+    @StateObject private var fetchResultManager = FetchedResultsManager(context: PersistenceController.shared.container.viewContext)
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
+    
+    private var items: FetchedResults<History>
+    
+    init() {
+        let historyArray: [History] = []
+        _viewModel = StateObject(wrappedValue: MainViewModel(historyItems: historyArray))
+    }
+    
     @State private var selectedEpisodes: Set<Episode> = []
     @State var queueEpisodes: [Episode] = []
     @State var parallelEpisodes: [Episode] = []
@@ -24,7 +38,7 @@ struct ContentView: View {
                     if let podcast = viewModel.podcast {
                         ForEach(podcast.episodes) { episode in
                             EpisodeRow(
-                                viewModel: viewModel, episode: episode,
+                                items: items, viewModel: viewModel, episode: episode,
                                 downloadButtonPressed: {
                                     addToParallel(episode)
                                     toggleDownload(for: episode) },
@@ -39,8 +53,9 @@ struct ContentView: View {
                         }
                     } else {
                         ForEach(0..<10) { _ in
-                            EpisodeRow(viewModel: viewModel, episode: Episode.preview, downloadButtonPressed: {
+                            EpisodeRow(items: items, viewModel: viewModel, episode: Episode.preview, downloadButtonPressed: {
                             }, addToQueueButtonPressed: {})
+                            .environment(\.managedObjectContext, viewContext)
                         }
                     }
                 }
@@ -49,22 +64,46 @@ struct ContentView: View {
                 .task {
                     try? await viewModel.fetchPodcast()
                 }
+                
                 .onAppear {
-                    viewModel.downloadUserDefaults()
+                    viewModel.checkFile()
                 }
                 .safeAreaInset(edge: .top, content: {
                     Color.white.frame(maxHeight: safeAreaInsets.top)
                 })
-                
                 .ignoresSafeArea()
                 .scrollIndicators(.hidden)
-                
-                NavigationLink(destination: DownloadList(queueEpisodes: $queueEpisodes, parallelEpisodes: $parallelEpisodes, progress: viewModel.progress)) {
-                    Image(systemName: "arrow.down.circle")
-                        .resizable()
-                        .frame(width: 25, height: 25)
+                HStack {
+                    NavigationLink{
+                        DownloadList(queueEpisodes: $queueEpisodes, parallelEpisodes: $parallelEpisodes, progress: viewModel.progress)
+                    } label: {
+                        VStack {
+                            Image(systemName: "gear")
+                                .resizable()
+                                .frame(width: 25, height: 25)
+                            Text("Speed info")
+                        }
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    
+                    NavigationLink {
+                        HistoryView(mainViewModel: viewModel)
+                            .environment(\.managedObjectContext, viewContext)
+                    } label: {
+                        VStack {
+                            Image(systemName: "arrow.down.circle")
+                                .resizable()
+                                .frame(width: 25, height: 25)
+                            Text("History")
+                        }
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    
                 }
             }
+        }
+        .onAppear {
+            viewModel.historyItems = Array(items)
         }
     }
 }
@@ -75,6 +114,15 @@ struct ContentView: View {
 
 
 private extension ContentView {
+    
+    func fetchUpdatedData() {
+        do {
+//            try viewContext.fetch(.init(entityName: "DownloadHistory"))
+        } catch {
+            print("Failed to fetch updated data: \(error)")
+        }
+    }
+    
     func toggleDownload(for episode: Episode) {
         if episode.isDownloading {
             viewModel.pauseDownload(for: episode)

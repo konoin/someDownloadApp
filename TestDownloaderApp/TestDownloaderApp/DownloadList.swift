@@ -12,7 +12,6 @@ struct DownloadList: View {
     @Binding var queueEpisodes: [Episode]
     @Binding var parallelEpisodes: [Episode]
 
-    
     var progress: [Episode: Double] = [:]
     
     var body: some View {
@@ -48,7 +47,3 @@ struct DownloadList: View {
         }
     }
 }
-
-//#Preview {
-//    DownloadList()
-//}

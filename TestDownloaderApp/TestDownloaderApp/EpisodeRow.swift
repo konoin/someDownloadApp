@@ -13,7 +13,8 @@ struct EpisodeRow: View {
     @State var hideParallelButton: Bool = false
     @State var hideSequantelButton: Bool = false
     
-//    let downloadStateTransformer = DownloadStateTransformer(downloadState: <#DownloadState#>)
+    var items: FetchedResults<History>
+    
     let viewModel: MainViewModel
     let episode: Episode
     let downloadButtonPressed: () -> Void
@@ -46,7 +47,7 @@ struct EpisodeRow: View {
             }
             Spacer()
             
-            if viewModel.downloadEpisodes[episode.title] != nil {
+            if convertItems(items: items).isEpisodeDownloaded(title: episode.title) {
                 VStack {
                     Image(systemName: "checkmark.circle.fill")
                         .frame(maxWidth: 24, maxHeight: 24)
@@ -95,19 +96,19 @@ struct EpisodeRow: View {
         }
         .padding(.top, 8.0)
         .padding(.bottom, 4.0)
+        .onAppear {
+            hideParallelButton = false
+            hideSequantelButton = false
+        }
     }
-}
-
-#Preview {
-    EpisodeRow(hideParallelButton: false, hideSequantelButton: false, viewModel: MainViewModel(), episode: Episode.preview) {
-        print("")
-    } addToQueueButtonPressed: {
-        print("")
-    }
-
 }
 
 private extension EpisodeRow {
+    
+    func convertItems(items: FetchedResults<History>) -> [History] {
+         return Array(items)
+    }
+    
     var details: String? {
         return episode.date.formatted(date: .long, time: .omitted)
         + " - " + episode.duration.formatted()
