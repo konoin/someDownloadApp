@@ -13,8 +13,6 @@ struct HistoryView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
     private var items: FetchedResults<History>
     
-    var mainViewModel: MainViewModel?
-    
     var body: some View {
         List {
             if items.isEmpty {
@@ -27,9 +25,9 @@ struct HistoryView: View {
                             Text("\(item.date?.formatted(date: .long, time: .shortened) ?? Date().formatted(date: .long, time: .shortened))")
                         }
                         Spacer()
-                        if item.downloaded {
+                        if item.fileURL != nil {
                             Button {
-                                mainViewModel?.openFilePicker()
+//                                mainViewModel?.openFilePicker()
                             } label: {
                                 Text("Show in Files")
                                     .padding()
@@ -47,9 +45,6 @@ struct HistoryView: View {
             }
         }
         .listStyle(.plain)
-        .onAppear {
-            mainViewModel?.checkFile()
-        }
     }
 }
 

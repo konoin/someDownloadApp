@@ -15,7 +15,6 @@ struct EpisodeRow: View {
     
     var items: FetchedResults<History>
     
-    let viewModel: MainViewModel
     let episode: Episode
     let downloadButtonPressed: () -> Void
     let addToQueueButtonPressed: () -> Void

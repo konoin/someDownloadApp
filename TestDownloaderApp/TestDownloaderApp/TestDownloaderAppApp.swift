@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
+import CoreData
 
 @main
 struct TestDownloaderAppApp: App {
-
     let persistentController = PersistenceController.shared
-
+    let downloadFactory = ViewModelFactory()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(fetchViewModel: downloadFactory.makeFetchViewModel(), saveViewModel: downloadFactory.makeSaveViewModel())
+                .environmentObject(downloadFactory)
                 .environment(\.managedObjectContext, persistentController.container.viewContext)
         }
     }

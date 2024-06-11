@@ -55,3 +55,10 @@ extension Podcast: Decodable {
         self.episodes = episodes
     }
 }
+
+extension Podcast {
+    var directoryURL: URL {
+        URL.documentsDirectory
+            .appending(path: "\(title)", directoryHint: .isDirectory)
+    }
+}
