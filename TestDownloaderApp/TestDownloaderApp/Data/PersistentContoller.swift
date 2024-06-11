@@ -15,15 +15,18 @@ class PersistenceController: NSObject {
     override init() {
         super.init()
         
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appending(path: "TestDownloaderApp.sqlite")
-           
-           // Change URL to allow for compatibility with older version in Swift
-           let description = NSPersistentStoreDescription(url: paths)
-           container.persistentStoreDescriptions = [description]
-        
-        container.loadPersistentStores { _, _ in
-            
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("TestDownloaderApp.sqlite")
+        let description = NSPersistentStoreDescription(url: paths)
+        container.persistentStoreDescriptions = [description]
+
+        container.loadPersistentStores { storeDescription, error in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
         }
+        
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
     
     func saveChanges() {

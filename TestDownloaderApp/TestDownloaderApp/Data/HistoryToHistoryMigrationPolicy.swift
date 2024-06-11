@@ -1,5 +1,5 @@
 //
-//  MigrationPolicy.swift
+//  HistoryToHistoryMigrationPolicy.swift
 //  TestDownloaderApp
 //
 //  Created by Mikita Palyka on 11.06.24.
