@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F31462612C1879620055A255 /* History+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314625D2C1879620055A255 /* History+CoreDataClass.swift */; };
+		F31462622C1879620055A255 /* History+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314625E2C1879620055A255 /* History+CoreDataProperties.swift */; };
+		F31462632C1879620055A255 /* EpisodeFileURL+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314625F2C1879620055A255 /* EpisodeFileURL+CoreDataClass.swift */; };
+		F31462642C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */; };
+		F31462682C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F31462672C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel */; };
 		F35C13872BF259ED006E3F89 /* TestDownloaderAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13862BF259ED006E3F89 /* TestDownloaderAppApp.swift */; };
 		F35C13892BF259EE006E3F89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13882BF259EE006E3F89 /* ContentView.swift */; };
 		F35C138B2BF259EF006E3F89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F35C138A2BF259EF006E3F89 /* Assets.xcassets */; };
@@ -24,11 +29,15 @@
 		F37A23362C09AEAD002FB475 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A23352C09AEAD002FB475 /* HistoryView.swift */; };
 		F37A233A2C0EF5D2002FB475 /* PersistentContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A23392C0EF5D2002FB475 /* PersistentContoller.swift */; };
 		F38474292C13439B009DF8C9 /* FetchedResultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38474282C13439B009DF8C9 /* FetchedResultsManager.swift */; };
-		F39407632C12F49D00209B09 /* History+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F394075F2C12F49D00209B09 /* History+CoreDataClass.swift */; };
-		F39407642C12F49D00209B09 /* History+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39407602C12F49D00209B09 /* History+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F314625C2C1878DA0055A255 /* DownloadHistory3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DownloadHistory3.xcdatamodel; sourceTree = "<group>"; };
+		F314625D2C1879620055A255 /* History+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F314625E2C1879620055A255 /* History+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F314625F2C1879620055A255 /* EpisodeFileURL+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeFileURL+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeFileURL+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F31462672C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingV2ToV3.xcmappingmodel; sourceTree = "<group>"; };
 		F35C13832BF259ED006E3F89 /* TestDownloaderApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDownloaderApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F35C13862BF259ED006E3F89 /* TestDownloaderAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDownloaderAppApp.swift; sourceTree = "<group>"; };
 		F35C13882BF259EE006E3F89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -49,8 +58,6 @@
 		F37A23392C0EF5D2002FB475 /* PersistentContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContoller.swift; sourceTree = "<group>"; };
 		F37A233B2C11D802002FB475 /* DownloadHistory2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DownloadHistory2.xcdatamodel; sourceTree = "<group>"; };
 		F38474282C13439B009DF8C9 /* FetchedResultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultsManager.swift; sourceTree = "<group>"; };
-		F394075F2C12F49D00209B09 /* History+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+CoreDataClass.swift"; sourceTree = "<group>"; };
-		F39407602C12F49D00209B09 /* History+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,9 +146,12 @@
 		F37A232C2C09A2B6002FB475 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				F394075F2C12F49D00209B09 /* History+CoreDataClass.swift */,
-				F39407602C12F49D00209B09 /* History+CoreDataProperties.swift */,
+				F314625D2C1879620055A255 /* History+CoreDataClass.swift */,
+				F314625E2C1879620055A255 /* History+CoreDataProperties.swift */,
+				F314625F2C1879620055A255 /* EpisodeFileURL+CoreDataClass.swift */,
+				F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */,
 				F37A23292C09A2A8002FB475 /* DownloadHistory.xcdatamodeld */,
+				F31462672C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel */,
 				F37A23392C0EF5D2002FB475 /* PersistentContoller.swift */,
 			);
 			path = Data;
@@ -220,17 +230,20 @@
 			files = (
 				F35C13892BF259EE006E3F89 /* ContentView.swift in Sources */,
 				F35C13AD2BF4D6F4006E3F89 /* DownloadList.swift in Sources */,
+				F31462612C1879620055A255 /* History+CoreDataClass.swift in Sources */,
+				F31462622C1879620055A255 /* History+CoreDataProperties.swift in Sources */,
+				F31462632C1879620055A255 /* EpisodeFileURL+CoreDataClass.swift in Sources */,
+				F31462642C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift in Sources */,
 				F38474292C13439B009DF8C9 /* FetchedResultsManager.swift in Sources */,
 				F35C13A92BF4AD38006E3F89 /* Download.swift in Sources */,
 				F35C13A12BF4A10F006E3F89 /* Episode.swift in Sources */,
 				F35C13AB2BF4B6B5006E3F89 /* EpisodeRow.swift in Sources */,
 				F37A233A2C0EF5D2002FB475 /* PersistentContoller.swift in Sources */,
+				F31462682C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel in Sources */,
 				F35C13872BF259ED006E3F89 /* TestDownloaderAppApp.swift in Sources */,
 				F37A23362C09AEAD002FB475 /* HistoryView.swift in Sources */,
 				F35C13A62BF4AB05006E3F89 /* Header.swift in Sources */,
 				F35C13952BF25A09006E3F89 /* MainViewModel.swift in Sources */,
-				F39407632C12F49D00209B09 /* History+CoreDataClass.swift in Sources */,
-				F39407642C12F49D00209B09 /* History+CoreDataProperties.swift in Sources */,
 				F37A232B2C09A2A8002FB475 /* DownloadHistory.xcdatamodeld in Sources */,
 				F35C13A32BF4A918006E3F89 /* PreviewData.swift in Sources */,
 				F35C139F2BF4A0A4006E3F89 /* Podcast.swift in Sources */,
@@ -454,10 +467,11 @@
 		F37A23292C09A2A8002FB475 /* DownloadHistory.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F314625C2C1878DA0055A255 /* DownloadHistory3.xcdatamodel */,
 				F37A233B2C11D802002FB475 /* DownloadHistory2.xcdatamodel */,
 				F37A232A2C09A2A8002FB475 /* DownloadHistory.xcdatamodel */,
 			);
-			currentVersion = F37A233B2C11D802002FB475 /* DownloadHistory2.xcdatamodel */;
+			currentVersion = F314625C2C1878DA0055A255 /* DownloadHistory3.xcdatamodel */;
 			path = DownloadHistory.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

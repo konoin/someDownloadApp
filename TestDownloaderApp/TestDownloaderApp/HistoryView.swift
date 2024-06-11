@@ -26,7 +26,7 @@ struct HistoryView: View {
                             Text(item.title ?? "not working")
                             Text("\(item.date?.formatted(date: .long, time: .shortened) ?? Date().formatted(date: .long, time: .shortened))")
                             if (item.fileURL != nil) {
-                                Text(item.fileURL ?? "file url missing")
+                                Text(item.fileURL?.fileURL ?? "file url missing")
                             } else {
                                 Text("Deleted")
                             }

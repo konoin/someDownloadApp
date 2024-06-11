@@ -41,12 +41,14 @@ class PersistenceController: NSObject {
     func create(title: String, id: Int64, downloaded: Bool, date: Date, fileURL: String) {
         // create a NSManagedObject, will be saved to DB later
         let entity = History(context: container.viewContext)
+        let fileUrl = EpisodeFileURL(context: container.viewContext)
         // attach value to the entity’s attributes
         entity.title = title
         entity.id = id
         entity.downloaded = downloaded
         entity.date = date
-        entity.fileURL = fileURL
+        fileUrl.fileURL = fileURL
+        entity.fileURL = fileUrl
         // save changes to DB
         saveChanges()
     }
@@ -102,7 +104,8 @@ class PersistenceController: NSObject {
         }
         
         if fileURL != nil {
-            entity.fileURL = fileURL!
+            entity.fileURL?.fileURL = fileURL!
+//            entity.fileURL = episodeFileURL
             hasChanges = true
         }
 
