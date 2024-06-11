@@ -12,6 +12,7 @@
 		F31462632C1879620055A255 /* EpisodeFileURL+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314625F2C1879620055A255 /* EpisodeFileURL+CoreDataClass.swift */; };
 		F31462642C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */; };
 		F31462682C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F31462672C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel */; };
+		F314626A2C1880C50055A255 /* MigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462692C1880C50055A255 /* MigrationPolicy.swift */; };
 		F35C13872BF259ED006E3F89 /* TestDownloaderAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13862BF259ED006E3F89 /* TestDownloaderAppApp.swift */; };
 		F35C13892BF259EE006E3F89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13882BF259EE006E3F89 /* ContentView.swift */; };
 		F35C138B2BF259EF006E3F89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F35C138A2BF259EF006E3F89 /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 		F314625F2C1879620055A255 /* EpisodeFileURL+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeFileURL+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeFileURL+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F31462672C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingV2ToV3.xcmappingmodel; sourceTree = "<group>"; };
+		F31462692C1880C50055A255 /* MigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationPolicy.swift; sourceTree = "<group>"; };
 		F35C13832BF259ED006E3F89 /* TestDownloaderApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDownloaderApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F35C13862BF259ED006E3F89 /* TestDownloaderAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDownloaderAppApp.swift; sourceTree = "<group>"; };
 		F35C13882BF259EE006E3F89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				F37A23292C09A2A8002FB475 /* DownloadHistory.xcdatamodeld */,
 				F31462672C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel */,
 				F37A23392C0EF5D2002FB475 /* PersistentContoller.swift */,
+				F31462692C1880C50055A255 /* MigrationPolicy.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				F31462682C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel in Sources */,
 				F35C13872BF259ED006E3F89 /* TestDownloaderAppApp.swift in Sources */,
 				F37A23362C09AEAD002FB475 /* HistoryView.swift in Sources */,
+				F314626A2C1880C50055A255 /* MigrationPolicy.swift in Sources */,
 				F35C13A62BF4AB05006E3F89 /* Header.swift in Sources */,
 				F35C13952BF25A09006E3F89 /* MainViewModel.swift in Sources */,
 				F37A232B2C09A2A8002FB475 /* DownloadHistory.xcdatamodeld in Sources */,
