@@ -25,6 +25,11 @@ struct HistoryView: View {
                         VStack(alignment: .leading) {
                             Text(item.title ?? "not working")
                             Text("\(item.date?.formatted(date: .long, time: .shortened) ?? Date().formatted(date: .long, time: .shortened))")
+                            if (item.fileURL != nil) {
+                                Text(item.fileURL ?? "file url missing")
+                            } else {
+                                Text("Deleted")
+                            }
                         }
                         Spacer()
                         if item.downloaded {

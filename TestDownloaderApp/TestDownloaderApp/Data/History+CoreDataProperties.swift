@@ -18,6 +18,7 @@ extension History {
 
     @NSManaged public var date: Date?
     @NSManaged public var downloaded: Bool
+    @NSManaged public var fileURL: String?
     @NSManaged public var id: Int64
     @NSManaged public var title: String?
 

@@ -163,8 +163,15 @@ extension MainViewModel {
         if let history = historyItems.first(where: { $0.id == Int64(episode.id) }) {
             dataService.update(entity: history, downloaded: true)
         } else {
-            dataService.create(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date())
+            dataService.create(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date(), fileURL: generateFileUrl(episode: episode))
         }
+    }
+    
+    func generateFileUrl(episode: Episode) -> String {
+        guard let folderPath = podcast?.directoryURL else { return ""}
+        let sanitizedEpisodeName = episode.title.replacingOccurrences(of: " ", with: "")
+        let filePath = folderPath.appendingPathComponent("\(sanitizedEpisodeName).mp3").path
+        return filePath
     }
     
     func checkFile() {
@@ -185,7 +192,7 @@ extension MainViewModel {
                     } else {
                         for history in historyItems {
                             if history.id == Int64(episode.id) {
-                                dataService.update(entity: history, downloaded: false)
+                                dataService.update(entity: history, downloaded: false, fileURL: "deleted")
                             }
                         }
                     }
