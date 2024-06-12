@@ -22,9 +22,6 @@ final class HistoryToHistoryMigrationPolicy: NSEntityMigrationPolicy {
             episodeFileURL.setValue(sourceFileURL, forKey: "fileURL")
         
             episodeFileURL.setValue(dInstance, forKey: "history")
-             
-             let fileURLs = dInstance.mutableSetValue(forKey: "episodeFileURLs")
-             fileURLs.add(episodeFileURL)
         }
     }
 }
