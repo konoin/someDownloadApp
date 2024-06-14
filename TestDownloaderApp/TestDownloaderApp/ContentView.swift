@@ -9,13 +9,10 @@ import SwiftUI
 import Combine
 
 struct ContentView: View {
-    
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.scenePhase) private var scenePhase
     
     @StateObject private var viewModel: MainViewModel
-    @StateObject private var fetchResultManager = FetchedResultsManager(context: PersistenceController.shared.container.viewContext)
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
     
@@ -37,8 +34,7 @@ struct ContentView: View {
                     Header(podcast: viewModel.podcast)
                     if let podcast = viewModel.podcast {
                         ForEach(podcast.episodes) { episode in
-                            EpisodeRow(
-                                items: items, viewModel: viewModel, episode: episode,
+                            EpisodeRow(items: items, episode: episode,
                                 downloadButtonPressed: {
                                     addToParallel(episode)
                                     toggleDownload(for: episode) },
@@ -53,7 +49,7 @@ struct ContentView: View {
                         }
                     } else {
                         ForEach(0..<10) { _ in
-                            EpisodeRow(items: items, viewModel: viewModel, episode: Episode.preview, downloadButtonPressed: {
+                            EpisodeRow(items: items, episode: Episode.preview, downloadButtonPressed: {
                             }, addToQueueButtonPressed: {})
                             .environment(\.managedObjectContext, viewContext)
                         }
@@ -75,7 +71,7 @@ struct ContentView: View {
                 .scrollIndicators(.hidden)
                 HStack {
                     NavigationLink{
-                        DownloadList(queueEpisodes: $queueEpisodes, parallelEpisodes: $parallelEpisodes, progress: viewModel.progress)
+                        DownloadList(queueEpisodes: $queueEpisodes, parallelEpisodes: $parallelEpisodes)
                     } label: {
                         VStack {
                             Image(systemName: "gear")
@@ -114,15 +110,7 @@ struct ContentView: View {
 
 
 private extension ContentView {
-    
-    func fetchUpdatedData() {
-        do {
-//            try viewContext.fetch(.init(entityName: "DownloadHistory"))
-        } catch {
-            print("Failed to fetch updated data: \(error)")
-        }
-    }
-    
+
     func toggleDownload(for episode: Episode) {
         if episode.isDownloading {
             viewModel.pauseDownload(for: episode)
@@ -130,7 +118,7 @@ private extension ContentView {
             if episode.progress > 0 {
                 viewModel.resumeDownload(for: episode)
             } else {
-                Task { try? await viewModel.download(episode) }
+                Task { try? await viewModel.downloadEpisode(episode) }
             }
         }
     }
