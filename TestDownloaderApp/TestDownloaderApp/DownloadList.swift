@@ -12,8 +12,6 @@ struct DownloadList: View {
     @Binding var queueEpisodes: [Episode]
     @Binding var parallelEpisodes: [Episode]
 
-    var progress: [Episode: Double] = [:]
-    
     var body: some View {
         VStack {
             List {
@@ -24,7 +22,7 @@ struct DownloadList: View {
                         ForEach(queueEpisodes) { episode in
                             VStack(alignment: .leading) {
                                 Text(episode.title)
-                                ProgressView(value: progress[episode])
+                                ProgressView(value: episode.progress)
                             }
                             .padding()
                         }
@@ -37,7 +35,7 @@ struct DownloadList: View {
                         ForEach(parallelEpisodes) { episode in
                             VStack(alignment: .leading) {
                                 Text(episode.title)
-                                ProgressView(value: progress[episode])
+                                ProgressView(value: episode.progress)
                             }
                             .padding()
                         }

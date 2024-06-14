@@ -126,3 +126,16 @@ extension Array where Element == History {
         return self.first(where: { $0.title == title })?.downloaded ?? false
     }
 }
+
+extension Podcast {
+    var directoryURL: URL {
+        URL.documentsDirectory
+            .appending(path: "\(title)", directoryHint: .isDirectory)
+    }
+}
+
+extension URL: Comparable {
+    public static func < (lhs: URL, rhs: URL) -> Bool {
+        return lhs.absoluteString < rhs.absoluteString
+    }
+}

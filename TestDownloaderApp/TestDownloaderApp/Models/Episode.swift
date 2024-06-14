@@ -21,16 +21,13 @@ struct Episode: Identifiable, Hashable {
     var isSequentil: Bool = false
     var downloadState: DownloadState = .idle
 
-    var progress: Double {
-        guard totalBytes > 0 else { return 0.0 }
-        
-        return Double(currentBytes) / Double(totalBytes)
-    }
+    var progress: Double = 0.0
 
     mutating func update(currentBytes: Int64, totalBytes: Int64, speed: Double) {
         self.currentBytes = currentBytes
         self.totalBytes = totalBytes
         self.speed = speed
+        self.progress = Double(currentBytes) / Double(totalBytes)
     }
     
     static func == (lhs: Episode, rhs: Episode) -> Bool {

@@ -15,7 +15,6 @@ struct EpisodeRow: View {
     
     var items: FetchedResults<History>
     
-    let viewModel: MainViewModel
     let episode: Episode
     let downloadButtonPressed: () -> Void
     let addToQueueButtonPressed: () -> Void
@@ -72,7 +71,7 @@ struct EpisodeRow: View {
                             }
                         }
                         .buttonStyle(.borderedProminent)
-                        .disabled(hideParallelButton)
+//                        .disabled(hideParallelButton)
                     }
                     
                     if !hideSequantelButton {
@@ -89,7 +88,7 @@ struct EpisodeRow: View {
                             }
                         }
                         .buttonStyle(.borderedProminent)
-                        .disabled(hideSequantelButton)
+//                        .disabled(hideSequantelButton)
                     }
                 }
             }
