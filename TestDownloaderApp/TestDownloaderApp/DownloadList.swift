@@ -48,16 +48,6 @@ struct DownloadList: View {
 }
 
 extension DownloadList {
-//    func convertQueueEpisodes() -> [Episode] {
-//        var newArray: [Episode] = []
-//        for queueEpisode in self.queueEpisodes {
-//            if ((mainViewModel.podcast?.episodes.contains(where: { $0.title == queueEpisode.title })) != nil) {
-//                newArray.append(queueEpisode)
-//            }
-//        }
-//        return newArray
-//    }
-//    
     func convertParallelEpisodes() -> [Episode] {
         var newArray: [Episode] = []
         for parallelEpisode in self.parallelEpisodes {
