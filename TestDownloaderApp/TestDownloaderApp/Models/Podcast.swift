@@ -27,7 +27,7 @@ struct Podcast {
     }
 }
 
-extension Podcast: Decodable {
+extension Podcast: Decodable, Hashable, Equatable {
     enum CodingKeys: String, CodingKey {
         case id = "collectionId"
         case title = "collectionName"

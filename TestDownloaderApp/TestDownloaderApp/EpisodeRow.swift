@@ -10,94 +10,56 @@ import Combine
 
 struct EpisodeRow: View {
     
-    @State var hideParallelButton: Bool = false
-    @State var hideSequantelButton: Bool = false
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
     
     var items: FetchedResults<History>
     
-    let episode: Episode
+    var episode: Episode
     let downloadButtonPressed: () -> Void
     let addToQueueButtonPressed: () -> Void
     
     var body: some View {
-        HStack(alignment: .top, spacing: 16.0) {
-            VStack(alignment: .leading, spacing: 8.0) {
-                Text(episode.title)
-                    .font(.headline)
-                Text(details ?? "Episode details")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                if progress > 0 && progress < 1.0 {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("\(Int((progress) * 100))%")
-                                .font(.system(size: 13))
-                                .frame(width: 80, height: 15, alignment: .leading)
-                            Text("\(String(format: "%.1f", downloadSpeed)) MB/s")
-                                .font(.system(size: 13))
-                                .frame(width: 80, height: 15, alignment: .leading)
-                        }
-                        
-                        ProgressView(value: progress)
-                        Spacer()
+        VStack {
+            HStack(alignment: .top, spacing: 16.0) {
+                VStack(alignment: .leading, spacing: 8.0) {
+                    Text(episode.title)
+                        .font(.headline)
+                    Text(details ?? "Episode details")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+                
+                if convertItems(items: items).isEpisodeDownloaded(title: episode.title) {
+                    VStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .frame(maxWidth: 24, maxHeight: 24)
+                            .foregroundColor(.white)
+                            .padding(12)
                     }
-                    .frame(maxWidth: .infinity)
+                    .background(.blue)
+                    .cornerRadius(16)
+                } else {
+                    DownloadButtons(downloadButtonPressed: downloadButtonPressed, addToQueueButtonPressed: addToQueueButtonPressed, episode: episode)
                 }
             }
-            Spacer()
             
-            if convertItems(items: items).isEpisodeDownloaded(title: episode.title) {
-                VStack {
-                    Image(systemName: "checkmark.circle.fill")
-                        .frame(maxWidth: 24, maxHeight: 24)
-                        .foregroundColor(.white)
-                        .padding(12)
-                }
-                .background(.blue)
-                .cornerRadius(16)
-            } else {
+            if progress > 0 && progress < 1.0 {
                 HStack {
-                    if !hideParallelButton {
-                        Button {
-                            downloadButtonPressed()
-                            hideSequantelButton = true
-                        } label: {
-                            VStack {
-                                Image(systemName: buttonImageName())
-                                    .font(.title3)
-                                    .frame(width: 24.0, height: 24.0)
-                                    Text("Parallel")
-                                    .font(.system(size: 12))
-                            }
-                        }
-                        .buttonStyle(.borderedProminent)
-//                        .disabled(hideParallelButton)
+                    VStack(alignment: .leading) {
+                        Text("\(Int((progress) * 100))%")
+                            .font(.system(size: 13))
+                            .frame(width: 80, height: 15, alignment: .leading)
+                        Text("\(String(format: "%.1f", downloadSpeed)) MB/s")
+                            .font(.system(size: 13))
+                            .frame(width: 80, height: 15, alignment: .leading)
                     }
                     
-                    if !hideSequantelButton {
-                        Button {
-                            addToQueueButtonPressed()
-                            hideParallelButton = true
-                        } label: {
-                            VStack {
-                                Image(systemName: buttonImageName())
-                                    .font(.title3)
-                                    .frame(width: 24.0, height: 24.0)
-                                Text("Sequential")
-                                    .font(.system(size: 12))
-                            }
-                        }
-                        .buttonStyle(.borderedProminent)
-//                        .disabled(hideSequantelButton)
-                    }
+                    ProgressView(value: progress)
+                    Spacer()
                 }
+                .frame(maxWidth: .infinity)
             }
-        }
-        .padding(.top, 8.0)
-        .padding(.bottom, 4.0)
-        .onAppear {
-            hideParallelButton = false
-            hideSequantelButton = false
         }
     }
 }
@@ -105,7 +67,7 @@ struct EpisodeRow: View {
 private extension EpisodeRow {
     
     func convertItems(items: FetchedResults<History>) -> [History] {
-         return Array(items)
+        return Array(items)
     }
     
     var details: String? {
@@ -122,6 +84,75 @@ private extension EpisodeRow {
     }
     
     func buttonImageName() -> String {
+        DownloadStateTransformer(downloadState: episode.downloadState).image
+    }
+}
+
+enum DownloadQueue {
+    case idle
+    case parallel
+    case sequential
+}
+
+
+struct DownloadButtons: View {
+    
+    @EnvironmentObject var mainViewModel: MainViewModel
+    
+    let downloadButtonPressed: () -> Void
+    let addToQueueButtonPressed: () -> Void
+    var episode: Episode
+    
+    var body: some View {
+        switch episode.downloadQueue {
+        case .idle:
+            HStack {
+                Button {
+                    downloadButtonPressed()
+                } label: {
+                    VStack {
+                        Image(systemName: buttonImageName())
+                            .font(.title3)
+                            .frame(width: 24.0, height: 24.0)
+                        Text("Parallel")
+                            .font(.system(size: 10))
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                
+                Button {
+                    addToQueueButtonPressed()
+                } label: {
+                    VStack {
+                        Image(systemName: buttonImageName())
+                            .font(.title3)
+                            .frame(width: 24.0, height: 24.0)
+                        Text("Sequential")
+                            .font(.system(size: 10))
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .padding(.top, 8.0)
+            .padding(.bottom, 4.0)
+            
+        case .parallel, .sequential:
+            Button {
+                episode.downloadQueue == .parallel ? downloadButtonPressed() : addToQueueButtonPressed()
+            } label: {
+                VStack {
+                    Image(systemName: buttonImageName())
+                        .font(.title3)
+                        .frame(width: 24.0, height: 24.0)
+                    Text(episode.downloadQueue == .parallel ? "Parallel" : "Sequential")
+                        .font(.system(size: 10))
+                }
+            }
+            .buttonStyle(.borderedProminent)
+        }
+    }
+    
+    private func buttonImageName() -> String {
         DownloadStateTransformer(downloadState: episode.downloadState).image
     }
 }

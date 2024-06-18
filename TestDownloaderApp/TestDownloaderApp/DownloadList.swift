@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct DownloadList: View {
+    @EnvironmentObject var mainViewModel: MainViewModel
     
-    @Binding var queueEpisodes: [Episode]
-    @Binding var parallelEpisodes: [Episode]
-
+//    var queueEpisodes: [Episode]
+    var parallelEpisodes: [Episode]
+    
     var body: some View {
         VStack {
             List {
                 Section("queue") {
-                    if queueEpisodes.isEmpty {
+                    if mainViewModel.queueEpisodes.isEmpty {
                         Text("queue is empty")
                     } else {
-                        ForEach(queueEpisodes) { episode in
+                        ForEach(mainViewModel.queueEpisodes) { episode in
                             VStack(alignment: .leading) {
                                 Text(episode.title)
                                 ProgressView(value: episode.progress)
@@ -29,10 +30,10 @@ struct DownloadList: View {
                     }
                 }
                 Section("parallel") {
-                    if parallelEpisodes.isEmpty {
+                    if convertParallelEpisodes().isEmpty {
                         Text("parallel is empty")
                     } else {
-                        ForEach(parallelEpisodes) { episode in
+                        ForEach(convertParallelEpisodes()) { episode in
                             VStack(alignment: .leading) {
                                 Text(episode.title)
                                 ProgressView(value: episode.progress)
@@ -43,5 +44,27 @@ struct DownloadList: View {
                 }
             }
         }
+    }
+}
+
+extension DownloadList {
+//    func convertQueueEpisodes() -> [Episode] {
+//        var newArray: [Episode] = []
+//        for queueEpisode in self.queueEpisodes {
+//            if ((mainViewModel.podcast?.episodes.contains(where: { $0.title == queueEpisode.title })) != nil) {
+//                newArray.append(queueEpisode)
+//            }
+//        }
+//        return newArray
+//    }
+//    
+    func convertParallelEpisodes() -> [Episode] {
+        var newArray: [Episode] = []
+        for parallelEpisode in self.parallelEpisodes {
+            if ((mainViewModel.podcast?.episodes.contains(where: { $0.title == parallelEpisode.title })) != nil) {
+                newArray.append(parallelEpisode)
+            }
+        }
+        return newArray
     }
 }

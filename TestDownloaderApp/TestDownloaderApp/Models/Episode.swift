@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Episode: Identifiable, Hashable {
+struct Episode: Identifiable, Hashable, Equatable {
     let id: Int
     let podcastID: Int
     let duration: Duration
@@ -20,6 +20,7 @@ struct Episode: Identifiable, Hashable {
     private(set) var speed: Double = 0.0
     var isSequentil: Bool = false
     var downloadState: DownloadState = .idle
+    var downloadQueue: DownloadQueue = .idle 
 
     var progress: Double = 0.0
 
@@ -31,11 +32,12 @@ struct Episode: Identifiable, Hashable {
     }
     
     static func == (lhs: Episode, rhs: Episode) -> Bool {
-         return lhs.id == rhs.id
+         return lhs.downloadQueue == rhs.downloadQueue && lhs.id == rhs.id
      }
 
      func hash(into hasher: inout Hasher) {
          hasher.combine(id)
+         hasher.combine(downloadQueue)
      }
 }
 

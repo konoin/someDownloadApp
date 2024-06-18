@@ -9,6 +9,10 @@
 import Foundation
 import CoreData
 
+@objc(History)
+public class History: NSManagedObject {
+
+}
 
 extension History {
 
@@ -26,4 +30,13 @@ extension History {
 
 extension History : Identifiable {
 
+}
+
+
+extension History {
+    static func allIdeasFetchRequest() -> NSFetchRequest<History> {
+        let request: NSFetchRequest<History> = History.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        return request
+    }
 }

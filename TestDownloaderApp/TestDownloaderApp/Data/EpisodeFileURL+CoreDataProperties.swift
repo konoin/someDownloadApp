@@ -10,6 +10,11 @@ import Foundation
 import CoreData
 
 
+@objc(EpisodeFileURL)
+public class EpisodeFileURL: NSManagedObject {
+
+}
+
 extension EpisodeFileURL {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<EpisodeFileURL> {
