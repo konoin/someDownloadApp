@@ -36,11 +36,3 @@ struct Header: View {
         }
     }
 }
-
-#Preview {
-    List {
-        Header(podcast: .preview)
-        Header(podcast: nil)
-    }
-    .listStyle(.plain)
-}

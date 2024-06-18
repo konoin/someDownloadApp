@@ -10,18 +10,22 @@ import CoreData
 class PersistenceController: NSObject {
     
     static let shared = PersistenceController()
-    let container: NSPersistentContainer = NSPersistentContainer(name: "DownloadHistory")
+    let container: NSPersistentContainer
     
     override init() {
+        container = NSPersistentContainer(name: "DownloadHistory")
         super.init()
         
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("TestDownloaderApp.sqlite")
         let description = NSPersistentStoreDescription(url: paths)
         container.persistentStoreDescriptions = [description]
-
+        
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
+                print("Unresolved error \(error), \(error.userInfo)")
                 fatalError("Unresolved error \(error), \(error.userInfo)")
+            } else {
+                print("Persistent store loaded successfully: \(storeDescription)")
             }
         }
         
@@ -35,6 +39,7 @@ class PersistenceController: NSObject {
         if context.hasChanges {
             do {
                 try context.save()
+                print("Changes saved successfully.")
             } catch {
                 print("Could not save changes to Core Data.", error.localizedDescription)
             }
@@ -42,77 +47,68 @@ class PersistenceController: NSObject {
     }
     
     func create(title: String, id: Int64, downloaded: Bool, date: Date, fileURL: String) {
-        // create a NSManagedObject, will be saved to DB later
-        let entity = History(context: container.viewContext)
-        let fileUrl = EpisodeFileURL(context: container.viewContext)
-        // attach value to the entity’s attributes
+        let context = container.viewContext
+        let entity = History(context: context)
+        let fileUrl = EpisodeFileURL(context: context)
+
         entity.title = title
         entity.id = id
         entity.downloaded = downloaded
         entity.date = date
         fileUrl.fileURL = fileURL
         entity.fileURL = fileUrl
-        // save changes to DB
+        
         saveChanges()
     }
     
     func read(predicateFormat: String? = nil, fetchLimit: Int? = nil) -> [History] {
-        // create a temp array to save fetched notes
         var results: [History] = []
-        // initialize the fetch request
         let request = NSFetchRequest<History>(entityName: "History")
-
-        // define filter and/or limit if needed
-        if predicateFormat != nil {
-            request.predicate = NSPredicate(format: predicateFormat!)
+        
+        if let predicateFormat = predicateFormat {
+            request.predicate = NSPredicate(format: predicateFormat)
         }
-        if fetchLimit != nil {
-            request.fetchLimit = fetchLimit!
+        if let fetchLimit = fetchLimit {
+            request.fetchLimit = fetchLimit
         }
 
-        // fetch with the request
         do {
             results = try container.viewContext.fetch(request)
         } catch {
             print("Could not fetch notes from Core Data.")
         }
 
-        // return results
         return results
     }
     
     func update(entity: History, title: String? = nil, downloaded: Bool? = nil, id: Int64? = nil, date: Date? = nil, fileURL: String? = nil) {
-        // create a temp var to tell if an attribute is changed
-        var hasChanges: Bool = false
+        var hasChanges = false
 
-        // update the attributes if a value is passed into the function
-        if title != nil {
-            entity.title = title!
+        if let title = title {
+            entity.title = title
             hasChanges = true
         }
         
-        if downloaded != nil {
-            entity.downloaded = downloaded!
+        if let downloaded = downloaded {
+            entity.downloaded = downloaded
             hasChanges = true
         }
         
-        if id != nil {
-            entity.id = id!
+        if let id = id {
+            entity.id = id
             hasChanges = true
         }
         
-        if date != nil {
-            entity.date = date!
+        if let date = date {
+            entity.date = date
             hasChanges = true
         }
         
-        if fileURL != nil {
-            entity.fileURL?.fileURL = fileURL!
-//            entity.fileURL = episodeFileURL
+        if let fileURL = fileURL {
+            entity.fileURL?.fileURL = fileURL
             hasChanges = true
         }
 
-        // save changes if any
         if hasChanges {
             saveChanges()
         }
@@ -123,4 +119,3 @@ class PersistenceController: NSObject {
         saveChanges()
     }
 }
-

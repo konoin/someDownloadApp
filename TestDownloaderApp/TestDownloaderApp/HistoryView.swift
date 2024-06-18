@@ -9,15 +9,17 @@ import SwiftUI
 
 struct HistoryView: View {
     
+    @StateObject private var filePicker = FilePickerManager()
     @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var mainViewModel: MainViewModel
+    @Environment(\.scenePhase) private var scenePhase
+    
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
     private var items: FetchedResults<History>
     
-    var mainViewModel: MainViewModel?
-    
     var body: some View {
         List {
-            if items.isEmpty {
+            if (items.isEmpty) {
                 Text("History is empty")
             } else {
                 ForEach(items, id: \.self) { item in
@@ -34,7 +36,7 @@ struct HistoryView: View {
                         Spacer()
                         if item.downloaded {
                             Button {
-                                mainViewModel?.openFilePicker()
+                                filePicker.openFilePicker()
                             } label: {
                                 Text("Show in Files")
                                     .padding()
@@ -53,8 +55,11 @@ struct HistoryView: View {
         }
         .listStyle(.plain)
         .onAppear {
-            mainViewModel?.checkFile()
+            mainViewModel.checkFile(historyItems: Array(items))
         }
+        .onChange(of: scenePhase) { newPhase in
+            mainViewModel.checkFile(historyItems: Array(items))
+         }
     }
 }
 

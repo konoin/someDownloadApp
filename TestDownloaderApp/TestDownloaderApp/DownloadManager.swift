@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 final class DownlaodManager: ObservableObject {
     @Published var podcast: Podcast?
@@ -14,21 +13,12 @@ final class DownlaodManager: ObservableObject {
     private var downloads: [URL: Download] = [:]
     private var downloadQueue: [Episode] = []
     private var isDownloading: Bool = false
-    private var cancellables: Set<AnyCancellable> = []
+    var historyItems: [History]?
+    let dataService = PersistenceController.shared
     
-    var historyItems: [History]
-    var episodeFileManager: EpisodeFileManager?
-    
-    init(podcast: Published<Podcast?>.Publisher, historyItems: [History]) {
-        self.historyItems = historyItems
+    init() {
         let configuration = URLSessionConfiguration.default
         self.downloadSession = URLSession(configuration: configuration, delegate: nil, delegateQueue: .main)
-        
-        podcast
-            .receive(on: DispatchQueue.main)
-            .assign(to: \.podcast, on: self)
-            .store(in: &cancellables)
-        self.episodeFileManager = EpisodeFileManager(historyItems: historyItems, podcast: self.podcast)
     }
     
     @MainActor
@@ -38,17 +28,20 @@ final class DownlaodManager: ObservableObject {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         podcast = try decoder.decode(Podcast.self, from: data)
-        
+        if let items = historyItems {
+            checkFile(historyItams: items)
+        }
         return podcast
     }
     
     @MainActor
-    func download(_ episode: Episode) async throws {
+    func download(_ episode: Episode, downloadQueue: DownloadQueue) async throws {
         guard downloads[episode.url] == nil else { return }
         let download = Download(url: episode.url, downloadSession: downloadSession)
         downloads[episode.url] = download
         podcast?[episode.id]?.isDownloading = true
         podcast?[episode.id]?.downloadState = .sendRequest
+        podcast?[episode.id]?.downloadQueue = downloadQueue
         for await event in download.events {
             process(event, for: episode)
         }
@@ -57,17 +50,18 @@ final class DownlaodManager: ObservableObject {
     }
     
     @MainActor
-    func addEpisodeToQueue(_ episode: Episode) {
+    func addEpisodeToQueue(_ episode: Episode, queue: DownloadQueue) {
         downloadQueue.append(episode)
         if downloadQueue.contains(episode) {
             podcast?[episode.id]?.downloadState = .inQueue
+            podcast?[episode.id]?.downloadQueue = queue
         }
-        processQueue()
+        processQueue(queue: queue)
     }
     
     
     @MainActor
-    private func processQueue() {
+    private func processQueue(queue: DownloadQueue) {
         guard !isDownloading, !downloadQueue.isEmpty else {
             return }
         
@@ -76,13 +70,13 @@ final class DownlaodManager: ObservableObject {
         
         Task {
             do {
-                try await download(episode)
+                try await download(episode, downloadQueue: queue)
             } catch {
                 print("Failed to download:", error.localizedDescription)
             }
             
             isDownloading = false
-            processQueue()
+            processQueue(queue: queue)
         }
     }
     
@@ -104,9 +98,93 @@ final class DownlaodManager: ObservableObject {
             podcast?[episode.id]?.downloadState = .inProgress
             podcast?[episode.id]?.update(currentBytes: current, totalBytes: total, speed: speed)
         case let .success(url, _):
-            episodeFileManager?.saveDownloadState(episode: episode)
-            episodeFileManager?.saveFile(for: episode, at: url)
+            saveDownloadState(episode: episode)
+            saveFile(for: episode, at: url)
         }
     }
     
+    func saveFile(for episode: Episode, at url: URL) {
+        guard let historyItems = historyItems else { return }
+        
+        for historyItem in historyItems {
+            if historyItem.title == episode.title {
+                dataService.update(entity: historyItem, title: episode.title, downloaded: true)
+            }
+        }
+        
+        podcast?[episode.id]?.downloadState = .downloaded
+        guard let directoryURL = podcast?.directoryURL else { return }
+        
+        let fileManager = FileManager.default
+        if !fileManager.fileExists(atPath: directoryURL.path) {
+            do {
+                try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+                print("Directory created at: \(directoryURL)")
+            } catch {
+                print("Failed to create directory: \(error.localizedDescription)")
+                return
+            }
+        }
+        
+        let sanitizedEpisodeName = episode.title.replacingOccurrences(of: " ", with: "")
+        let fileURL = directoryURL.appendingPathComponent("\(sanitizedEpisodeName).mp3")
+        do {
+            try fileManager.moveItem(at: url, to: fileURL)
+            print("File moved to: \(fileURL)")
+        } catch {
+            print("Failed to move file: \(error.localizedDescription)")
+        }
+        
+    }
+    
+    func saveDownloadState(episode: Episode) {
+        guard let historyItems = historyItems else { return }
+        
+        if let history = historyItems.first(where: { $0.id == Int64(episode.id) }) {
+            dataService.update(entity: history, downloaded: true, fileURL: generateFileUrl(episode: episode))
+        } else {
+            dataService.create(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date(), fileURL: generateFileUrl(episode: episode))
+        }
+    }
+    
+    func generateFileUrl(episode: Episode) -> String {
+        guard let folderPath = podcast?.directoryURL else { return ""}
+        let sanitizedEpisodeName = episode.title.replacingOccurrences(of: " ", with: "")
+        let filePath = folderPath.appendingPathComponent("\(sanitizedEpisodeName).mp3").path
+        return filePath
+    }
+    
+    func checkFile(historyItams: [History]) {
+        guard let testEpisodes = podcast?.episodes else { return }
+        guard let folderPath = podcast?.directoryURL else { return }
+//        guard let historyItems = historyItems else { return }
+        
+        for episode in testEpisodes {
+            let sanitizedEpisodeName = episode.title.replacingOccurrences(of: " ", with: "")
+            let filePath = folderPath.appendingPathComponent("\(sanitizedEpisodeName).mp3").path
+            
+            
+            
+            print("Checking file at path:", filePath)
+            for historyItem in historyItams {
+                if historyItem.title == episode.title && historyItem.downloaded {
+                    if FileManager.default.fileExists(atPath: filePath) {
+                        print("File exists for episode: \(episode.title)")
+                    } else {
+                        for history in historyItams {
+                            if history.id == Int64(episode.id) {
+                                podcast?[episode.id]?.downloadState = .idle
+                                podcast?[episode.id]?.downloadQueue = .idle
+                                dataService.update(entity: history, downloaded: false, fileURL: "deleted")
+                            }
+                        }
+                    }
+                } else {
+                    print("Episode not marked for download: \(episode.title)")
+                    podcast?[episode.id]?.downloadState = .idle
+                    podcast?[episode.id]?.downloadQueue = .idle
+                }
+            }
+        }
+    }
 }

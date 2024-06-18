@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class FilePickerManager: NSObject {
+final class FilePickerManager: NSObject, ObservableObject {
     func openFilePicker() {
         guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
         

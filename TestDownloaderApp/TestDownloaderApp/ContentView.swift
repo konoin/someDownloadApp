@@ -11,17 +11,12 @@ import Combine
 struct ContentView: View {
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.scenePhase) private var scenePhase
     
-    @StateObject private var viewModel: MainViewModel
+    @EnvironmentObject var mainViewModel: MainViewModel
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
-    
-    private var items: FetchedResults<History>
-    
-    init() {
-        let historyArray: [History] = []
-        _viewModel = StateObject(wrappedValue: MainViewModel(historyItems: historyArray))
-    }
+    var items: FetchedResults<History>
     
     @State private var selectedEpisodes: Set<Episode> = []
     @State var queueEpisodes: [Episode] = []
@@ -31,38 +26,28 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 List {
-                    Header(podcast: viewModel.podcast)
-                    if let podcast = viewModel.podcast {
+                    Header(podcast: mainViewModel.podcast)
+                    if let podcast = mainViewModel.podcast {
                         ForEach(podcast.episodes) { episode in
-                            EpisodeRow(items: items, episode: episode,
-                                downloadButtonPressed: {
-                                    addToParallel(episode)
-                                    toggleDownload(for: episode) },
+                            EpisodeRow(episode: episode,
+                                       downloadButtonPressed: {
+                                addToParallel(episode)
+                                toggleDownload(for: episode)},
                                 addToQueueButtonPressed: {
                                     togleSequential(for: episode)
                                 }
                             )
-                            .background(selectedEpisodes.contains(episode) ? Color.gray.opacity(0.2) : Color.clear)
-                            .onTapGesture {
-                                toggleSelection(for: episode)
-                            }
+                            .environmentObject(mainViewModel)
                         }
                     } else {
-                        ForEach(0..<10) { _ in
-                            EpisodeRow(items: items, episode: Episode.preview, downloadButtonPressed: {
-                            }, addToQueueButtonPressed: {})
-                            .environment(\.managedObjectContext, viewContext)
-                        }
+                        
                     }
                 }
                 .listStyle(.plain)
                 
-                .task {
-                    try? await viewModel.fetchPodcast()
-                }
-                
                 .onAppear {
-                    viewModel.checkFile()
+                    mainViewModel.updateHistoryItems(with: items)
+                    mainViewModel.checkFile(historyItems: Array(items))
                 }
                 .safeAreaInset(edge: .top, content: {
                     Color.white.frame(maxHeight: safeAreaInsets.top)
@@ -71,7 +56,8 @@ struct ContentView: View {
                 .scrollIndicators(.hidden)
                 HStack {
                     NavigationLink{
-                        DownloadList(queueEpisodes: $queueEpisodes, parallelEpisodes: $parallelEpisodes)
+                        DownloadList(parallelEpisodes: parallelEpisodes)
+                            .environmentObject(mainViewModel)
                     } label: {
                         VStack {
                             Image(systemName: "gear")
@@ -83,8 +69,9 @@ struct ContentView: View {
                     .frame(minWidth: 0, maxWidth: .infinity)
                     
                     NavigationLink {
-                        HistoryView(mainViewModel: viewModel)
+                        HistoryView()
                             .environment(\.managedObjectContext, viewContext)
+                            .environmentObject(mainViewModel)
                     } label: {
                         VStack {
                             Image(systemName: "arrow.down.circle")
@@ -98,37 +85,43 @@ struct ContentView: View {
                 }
             }
         }
-        .onAppear {
-            viewModel.historyItems = Array(items)
-        }
+        .onChange(of: scenePhase) { newPhase in
+            switch newPhase {
+            case .inactive:
+                mainViewModel.checkFile(historyItems: Array(items))
+            case .active:
+                mainViewModel.checkFile(historyItems: Array(items))
+            case .background:
+                mainViewModel.checkFile(historyItems: Array(items))
+            }
+            
+            
+         }
     }
 }
-
-#Preview {
-    ContentView()
-}
-
 
 private extension ContentView {
 
     func toggleDownload(for episode: Episode) {
         if episode.isDownloading {
-            viewModel.pauseDownload(for: episode)
+            mainViewModel.pauseDownload(for: episode)
         } else {
             if episode.progress > 0 {
-                viewModel.resumeDownload(for: episode)
+                mainViewModel.resumeDownload(for: episode)
             } else {
-                Task { try? await viewModel.downloadEpisode(episode) }
+                Task {
+                    try? await mainViewModel.downloadEpisode(episode, downloadQueue: .parallel)
+                }
             }
         }
     }
     
     private func togleSequential( for episode: Episode) {
         if episode.isDownloading {
-            viewModel.pauseDownload(for: episode)
+            mainViewModel.pauseDownload(for: episode)
         } else {
             if episode.progress > 0 {
-                viewModel.resumeDownload(for: episode)
+                mainViewModel.resumeDownload(for: episode)
             } else {
                 addToQueue(episode)
             }
@@ -150,9 +143,9 @@ private extension ContentView {
     }
     
     private func addToQueue(_ episode: Episode) {
-        viewModel.addEpisodeToQueue(episode)
-        if !queueEpisodes.contains(episode) {
-            queueEpisodes.append(episode)
+        mainViewModel.addEpisodeToQueue(episode, queue: .sequential)
+        if !mainViewModel.queueEpisodes.contains(episode) {
+            mainViewModel.queueEpisodes.append(episode)
         }
     }
 }
