@@ -113,6 +113,7 @@ final class DownlaodManager: ObservableObject {
         }
         
         podcast?[episode.id]?.downloadState = .downloaded
+        
         guard let directoryURL = podcast?.directoryURL else { return }
         
         let fileManager = FileManager.default
@@ -173,6 +174,8 @@ final class DownlaodManager: ObservableObject {
                     } else {
                         for history in historyItams {
                             if history.id == Int64(episode.id) {
+                                podcast?[episode.id]?.isDownloading = false
+                                podcast?[episode.id]?.progress = 0.0
                                 podcast?[episode.id]?.downloadState = .idle
                                 podcast?[episode.id]?.downloadQueue = .idle
                                 dataService.update(entity: history, downloaded: false, fileURL: "deleted")
@@ -181,8 +184,6 @@ final class DownlaodManager: ObservableObject {
                     }
                 } else {
                     print("Episode not marked for download: \(episode.title)")
-                    podcast?[episode.id]?.downloadState = .idle
-                    podcast?[episode.id]?.downloadQueue = .idle
                 }
             }
         }

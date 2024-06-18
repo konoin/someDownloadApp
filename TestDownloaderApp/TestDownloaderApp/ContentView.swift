@@ -46,9 +46,11 @@ struct ContentView: View {
                 .listStyle(.plain)
                 
                 .onAppear {
+                    print("_______________________________________")
                     mainViewModel.updateHistoryItems(with: items)
                     mainViewModel.checkFile(historyItems: Array(items))
                 }
+                
                 .safeAreaInset(edge: .top, content: {
                     Color.white.frame(maxHeight: safeAreaInsets.top)
                 })
@@ -85,6 +87,7 @@ struct ContentView: View {
                 }
             }
         }
+
         .onChange(of: scenePhase) { newPhase in
             switch newPhase {
             case .inactive:
@@ -101,7 +104,6 @@ struct ContentView: View {
 }
 
 private extension ContentView {
-
     func toggleDownload(for episode: Episode) {
         if episode.isDownloading {
             mainViewModel.pauseDownload(for: episode)
