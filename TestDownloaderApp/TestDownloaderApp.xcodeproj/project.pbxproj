@@ -7,12 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F309C14D2C22DEE0000392AC /* TestDownloaderAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F309C14C2C22DEE0000392AC /* TestDownloaderAppTests.swift */; };
+		F309C1532C22DF18000392AC /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13942BF25A09006E3F89 /* MainViewModel.swift */; };
+		F309C1542C22DF1B000392AC /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13A82BF4AD38006E3F89 /* Download.swift */; };
+		F309C1552C22DF1E000392AC /* FilePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462712C1B182B0055A255 /* FilePickerManager.swift */; };
+		F309C1562C22DF20000392AC /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462732C1B1FF40055A255 /* DownloadManager.swift */; };
+		F309C1572C22DF51000392AC /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C139E2BF4A0A4006E3F89 /* Podcast.swift */; };
+		F309C1582C22DF54000392AC /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13A02BF4A10F006E3F89 /* Episode.swift */; };
+		F309C1592C22DF56000392AC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13882BF259EE006E3F89 /* ContentView.swift */; };
+		F309C15A2C22DF5A000392AC /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13A52BF4AB05006E3F89 /* Header.swift */; };
+		F309C15B2C22DF5C000392AC /* EpisodeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13AA2BF4B6B5006E3F89 /* EpisodeRow.swift */; };
+		F309C15C2C22DF5E000392AC /* DownloadList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13AC2BF4D6F4006E3F89 /* DownloadList.swift */; };
+		F309C15D2C22DF61000392AC /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A23352C09AEAD002FB475 /* HistoryView.swift */; };
+		F309C15E2C22DF64000392AC /* HistoryToHistoryMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462692C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift */; };
+		F309C15F2C22DF67000392AC /* PersistentContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A23392C0EF5D2002FB475 /* PersistentContoller.swift */; };
+		F309C1602C22DF6D000392AC /* EpisodeFileURL+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */; };
+		F309C1612C22DF70000392AC /* History+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314625E2C1879620055A255 /* History+CoreDataProperties.swift */; };
+		F309C1622C22DF73000392AC /* TestDownloaderAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13862BF259ED006E3F89 /* TestDownloaderAppApp.swift */; };
+		F309C1632C22DF81000392AC /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13A22BF4A917006E3F89 /* PreviewData.swift */; };
+		F309C16B2C230E5F000392AC /* UITestDownloaderAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F309C16A2C230E5F000392AC /* UITestDownloaderAppTests.swift */; };
+		F309C16D2C230E5F000392AC /* UITestDownloaderAppTestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F309C16C2C230E5F000392AC /* UITestDownloaderAppTestsLaunchTests.swift */; };
+		F309C1752C240F5C000392AC /* MockDownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F309C1742C240F5C000392AC /* MockDownloadSession.swift */; };
+		F309C1762C240F6A000392AC /* MockDownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F309C1742C240F5C000392AC /* MockDownloadSession.swift */; };
+		F3115ECA2C3ABF1500A71B28 /* MainViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3115EC92C3ABF1500A71B28 /* MainViewModelProtocol.swift */; };
+		F3115ECB2C3AC4CB00A71B28 /* MainViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3115EC92C3ABF1500A71B28 /* MainViewModelProtocol.swift */; };
 		F31462622C1879620055A255 /* History+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314625E2C1879620055A255 /* History+CoreDataProperties.swift */; };
 		F31462642C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */; };
 		F31462682C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F31462672C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel */; };
 		F314626A2C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462692C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift */; };
 		F31462722C1B182B0055A255 /* FilePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462712C1B182B0055A255 /* FilePickerManager.swift */; };
 		F31462742C1B1FF40055A255 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462732C1B1FF40055A255 /* DownloadManager.swift */; };
+		F35B68062C3406BA0090AB36 /* MockDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35B68042C3406BA0090AB36 /* MockDownloadManager.swift */; };
+		F35B680B2C3724AD0090AB36 /* TEST_PODCAST.json in Resources */ = {isa = PBXBuildFile; fileRef = F35B680A2C3724AD0090AB36 /* TEST_PODCAST.json */; };
+		F35B680C2C3724AD0090AB36 /* TEST_PODCAST.json in Resources */ = {isa = PBXBuildFile; fileRef = F35B680A2C3724AD0090AB36 /* TEST_PODCAST.json */; };
 		F35C13872BF259ED006E3F89 /* TestDownloaderAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13862BF259ED006E3F89 /* TestDownloaderAppApp.swift */; };
 		F35C13892BF259EE006E3F89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13882BF259EE006E3F89 /* ContentView.swift */; };
 		F35C138B2BF259EF006E3F89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F35C138A2BF259EF006E3F89 /* Assets.xcassets */; };
@@ -31,7 +58,31 @@
 		F37A233A2C0EF5D2002FB475 /* PersistentContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A23392C0EF5D2002FB475 /* PersistentContoller.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F309C14E2C22DEE0000392AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F35C137B2BF259ED006E3F89 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F35C13822BF259ED006E3F89;
+			remoteInfo = TestDownloaderApp;
+		};
+		F309C16E2C230E5F000392AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F35C137B2BF259ED006E3F89 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F35C13822BF259ED006E3F89;
+			remoteInfo = TestDownloaderApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		F309C14A2C22DEE0000392AC /* TestDownloaderAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestDownloaderAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F309C14C2C22DEE0000392AC /* TestDownloaderAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDownloaderAppTests.swift; sourceTree = "<group>"; };
+		F309C1682C230E5F000392AC /* UITestDownloaderAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITestDownloaderAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F309C16A2C230E5F000392AC /* UITestDownloaderAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestDownloaderAppTests.swift; sourceTree = "<group>"; };
+		F309C16C2C230E5F000392AC /* UITestDownloaderAppTestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestDownloaderAppTestsLaunchTests.swift; sourceTree = "<group>"; };
+		F309C1742C240F5C000392AC /* MockDownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDownloadSession.swift; sourceTree = "<group>"; };
+		F3115EC92C3ABF1500A71B28 /* MainViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModelProtocol.swift; sourceTree = "<group>"; };
 		F314625C2C1878DA0055A255 /* DownloadHistory3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DownloadHistory3.xcdatamodel; sourceTree = "<group>"; };
 		F314625E2C1879620055A255 /* History+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeFileURL+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -39,6 +90,8 @@
 		F31462692C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryToHistoryMigrationPolicy.swift; sourceTree = "<group>"; };
 		F31462712C1B182B0055A255 /* FilePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickerManager.swift; sourceTree = "<group>"; };
 		F31462732C1B1FF40055A255 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		F35B68042C3406BA0090AB36 /* MockDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDownloadManager.swift; sourceTree = "<group>"; };
+		F35B680A2C3724AD0090AB36 /* TEST_PODCAST.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TEST_PODCAST.json; sourceTree = "<group>"; };
 		F35C13832BF259ED006E3F89 /* TestDownloaderApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestDownloaderApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F35C13862BF259ED006E3F89 /* TestDownloaderAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDownloaderAppApp.swift; sourceTree = "<group>"; };
 		F35C13882BF259EE006E3F89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +114,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F309C1472C22DEE0000392AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F309C1652C230E5F000392AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F35C13802BF259ED006E3F89 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -71,10 +138,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F309C14B2C22DEE0000392AC /* TestDownloaderAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				F309C1732C240F48000392AC /* Test */,
+				F309C14C2C22DEE0000392AC /* TestDownloaderAppTests.swift */,
+				F35B68042C3406BA0090AB36 /* MockDownloadManager.swift */,
+			);
+			path = TestDownloaderAppTests;
+			sourceTree = "<group>";
+		};
+		F309C1692C230E5F000392AC /* UITestDownloaderAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				F309C16A2C230E5F000392AC /* UITestDownloaderAppTests.swift */,
+				F309C16C2C230E5F000392AC /* UITestDownloaderAppTestsLaunchTests.swift */,
+			);
+			path = UITestDownloaderAppTests;
+			sourceTree = "<group>";
+		};
+		F309C1732C240F48000392AC /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				F309C1742C240F5C000392AC /* MockDownloadSession.swift */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
+		F3115EC82C3ABEED00A71B28 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				F3115EC92C3ABF1500A71B28 /* MainViewModelProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		F35C137A2BF259ED006E3F89 = {
 			isa = PBXGroup;
 			children = (
 				F35C13852BF259ED006E3F89 /* TestDownloaderApp */,
+				F309C14B2C22DEE0000392AC /* TestDownloaderAppTests */,
+				F309C1692C230E5F000392AC /* UITestDownloaderAppTests */,
 				F35C13842BF259ED006E3F89 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -83,6 +187,8 @@
 			isa = PBXGroup;
 			children = (
 				F35C13832BF259ED006E3F89 /* TestDownloaderApp.app */,
+				F309C14A2C22DEE0000392AC /* TestDownloaderAppTests.xctest */,
+				F309C1682C230E5F000392AC /* UITestDownloaderAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,6 +196,7 @@
 		F35C13852BF259ED006E3F89 /* TestDownloaderApp */ = {
 			isa = PBXGroup;
 			children = (
+				F3115EC82C3ABEED00A71B28 /* Protocols */,
 				F35C13B02BF74E95006E3F89 /* Info.plist */,
 				F35C13862BF259ED006E3F89 /* TestDownloaderAppApp.swift */,
 				F37A232C2C09A2B6002FB475 /* Data */,
@@ -105,6 +212,7 @@
 		F35C138C2BF259EF006E3F89 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				F35B680A2C3724AD0090AB36 /* TEST_PODCAST.json */,
 				F35C138D2BF259EF006E3F89 /* Preview Assets.xcassets */,
 				F35C139B2BF4A00E006E3F89 /* JSON.json */,
 				F35C13A22BF4A917006E3F89 /* PreviewData.swift */,
@@ -160,6 +268,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F309C1492C22DEE0000392AC /* TestDownloaderAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F309C1522C22DEE0000392AC /* Build configuration list for PBXNativeTarget "TestDownloaderAppTests" */;
+			buildPhases = (
+				F309C1462C22DEE0000392AC /* Sources */,
+				F309C1472C22DEE0000392AC /* Frameworks */,
+				F309C1482C22DEE0000392AC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F309C14F2C22DEE0000392AC /* PBXTargetDependency */,
+			);
+			name = TestDownloaderAppTests;
+			productName = TestDownloaderAppTests;
+			productReference = F309C14A2C22DEE0000392AC /* TestDownloaderAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F309C1672C230E5F000392AC /* UITestDownloaderAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F309C1702C230E5F000392AC /* Build configuration list for PBXNativeTarget "UITestDownloaderAppTests" */;
+			buildPhases = (
+				F309C1642C230E5F000392AC /* Sources */,
+				F309C1652C230E5F000392AC /* Frameworks */,
+				F309C1662C230E5F000392AC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F309C16F2C230E5F000392AC /* PBXTargetDependency */,
+			);
+			name = UITestDownloaderAppTests;
+			productName = UITestDownloaderAppTests;
+			productReference = F309C1682C230E5F000392AC /* UITestDownloaderAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		F35C13822BF259ED006E3F89 /* TestDownloaderApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F35C13912BF259EF006E3F89 /* Build configuration list for PBXNativeTarget "TestDownloaderApp" */;
@@ -184,9 +328,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
+					F309C1492C22DEE0000392AC = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = F35C13822BF259ED006E3F89;
+					};
+					F309C1672C230E5F000392AC = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = F35C13822BF259ED006E3F89;
+					};
 					F35C13822BF259ED006E3F89 = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -206,16 +358,34 @@
 			projectRoot = "";
 			targets = (
 				F35C13822BF259ED006E3F89 /* TestDownloaderApp */,
+				F309C1492C22DEE0000392AC /* TestDownloaderAppTests */,
+				F309C1672C230E5F000392AC /* UITestDownloaderAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F309C1482C22DEE0000392AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F35B680C2C3724AD0090AB36 /* TEST_PODCAST.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F309C1662C230E5F000392AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F35C13812BF259ED006E3F89 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F35C138E2BF259EF006E3F89 /* Preview Assets.xcassets in Resources */,
+				F35B680B2C3724AD0090AB36 /* TEST_PODCAST.json in Resources */,
 				F35C138B2BF259EF006E3F89 /* Assets.xcassets in Resources */,
 				F35C139C2BF4A00E006E3F89 /* JSON.json in Resources */,
 			);
@@ -224,12 +394,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F309C1462C22DEE0000392AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F309C1612C22DF70000392AC /* History+CoreDataProperties.swift in Sources */,
+				F309C15B2C22DF5C000392AC /* EpisodeRow.swift in Sources */,
+				F309C1752C240F5C000392AC /* MockDownloadSession.swift in Sources */,
+				F309C1602C22DF6D000392AC /* EpisodeFileURL+CoreDataProperties.swift in Sources */,
+				F309C15D2C22DF61000392AC /* HistoryView.swift in Sources */,
+				F309C1542C22DF1B000392AC /* Download.swift in Sources */,
+				F309C15A2C22DF5A000392AC /* Header.swift in Sources */,
+				F309C1562C22DF20000392AC /* DownloadManager.swift in Sources */,
+				F309C1592C22DF56000392AC /* ContentView.swift in Sources */,
+				F309C1582C22DF54000392AC /* Episode.swift in Sources */,
+				F309C15F2C22DF67000392AC /* PersistentContoller.swift in Sources */,
+				F309C1572C22DF51000392AC /* Podcast.swift in Sources */,
+				F3115ECB2C3AC4CB00A71B28 /* MainViewModelProtocol.swift in Sources */,
+				F309C15E2C22DF64000392AC /* HistoryToHistoryMigrationPolicy.swift in Sources */,
+				F309C1622C22DF73000392AC /* TestDownloaderAppApp.swift in Sources */,
+				F309C15C2C22DF5E000392AC /* DownloadList.swift in Sources */,
+				F309C1632C22DF81000392AC /* PreviewData.swift in Sources */,
+				F309C14D2C22DEE0000392AC /* TestDownloaderAppTests.swift in Sources */,
+				F35B68062C3406BA0090AB36 /* MockDownloadManager.swift in Sources */,
+				F309C1532C22DF18000392AC /* MainViewModel.swift in Sources */,
+				F309C1552C22DF1E000392AC /* FilePickerManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F309C1642C230E5F000392AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F309C16B2C230E5F000392AC /* UITestDownloaderAppTests.swift in Sources */,
+				F309C16D2C230E5F000392AC /* UITestDownloaderAppTestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F35C137F2BF259ED006E3F89 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F35C13892BF259EE006E3F89 /* ContentView.swift in Sources */,
 				F31462742C1B1FF40055A255 /* DownloadManager.swift in Sources */,
+				F309C1762C240F6A000392AC /* MockDownloadSession.swift in Sources */,
 				F35C13AD2BF4D6F4006E3F89 /* DownloadList.swift in Sources */,
 				F31462722C1B182B0055A255 /* FilePickerManager.swift in Sources */,
 				F31462622C1879620055A255 /* History+CoreDataProperties.swift in Sources */,
@@ -239,6 +447,7 @@
 				F35C13AB2BF4B6B5006E3F89 /* EpisodeRow.swift in Sources */,
 				F37A233A2C0EF5D2002FB475 /* PersistentContoller.swift in Sources */,
 				F31462682C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel in Sources */,
+				F3115ECA2C3ABF1500A71B28 /* MainViewModelProtocol.swift in Sources */,
 				F35C13872BF259ED006E3F89 /* TestDownloaderAppApp.swift in Sources */,
 				F37A23362C09AEAD002FB475 /* HistoryView.swift in Sources */,
 				F314626A2C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift in Sources */,
@@ -252,7 +461,94 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F309C14F2C22DEE0000392AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F35C13822BF259ED006E3F89 /* TestDownloaderApp */;
+			targetProxy = F309C14E2C22DEE0000392AC /* PBXContainerItemProxy */;
+		};
+		F309C16F2C230E5F000392AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F35C13822BF259ED006E3F89 /* TestDownloaderApp */;
+			targetProxy = F309C16E2C230E5F000392AC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		F309C1502C22DEE0000392AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CPF5464MWY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = test.gcd.add.TestDownloaderAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestDownloaderApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestDownloaderApp";
+			};
+			name = Debug;
+		};
+		F309C1512C22DEE0000392AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CPF5464MWY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = test.gcd.add.TestDownloaderAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestDownloaderApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestDownloaderApp";
+			};
+			name = Release;
+		};
+		F309C1712C230E5F000392AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CPF5464MWY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = test.gcd.add.UITestDownloaderAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TestDownloaderApp;
+			};
+			name = Debug;
+		};
+		F309C1722C230E5F000392AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CPF5464MWY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = test.gcd.add.UITestDownloaderAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = TestDownloaderApp;
+			};
+			name = Release;
+		};
 		F35C138F2BF259EF006E3F89 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -443,6 +739,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F309C1522C22DEE0000392AC /* Build configuration list for PBXNativeTarget "TestDownloaderAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F309C1502C22DEE0000392AC /* Debug */,
+				F309C1512C22DEE0000392AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F309C1702C230E5F000392AC /* Build configuration list for PBXNativeTarget "UITestDownloaderAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F309C1712C230E5F000392AC /* Debug */,
+				F309C1722C230E5F000392AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F35C137E2BF259ED006E3F89 /* Build configuration list for PBXProject "TestDownloaderApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

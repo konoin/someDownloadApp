@@ -15,17 +15,37 @@ extension Podcast {
         decoder.dateDecodingStrategy = .iso8601
         return try! decoder.decode(Podcast.self, from: data)
     }
+    
+    static var test: Podcast {
+        let url = Bundle.main.url(forResource: "TEST_PODCAST", withExtension: "json")!
+        let data = try! Data(contentsOf: url)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return try! decoder.decode(Podcast.self, from: data)
+    }
 }
 
 extension [Episode] {
     static var preview: [Episode] {
         Podcast.preview.episodes
     }
+    
+    static var test: [Episode] {
+        Podcast.test.episodes
+    }
 }
+
+
 
 extension Episode {
     static var preview: Episode {
         var episode = [Episode].preview[0]
+        episode.update(currentBytes: 90, totalBytes: 100, speed: 643.0)
+        return episode
+    }
+    
+    static var test: Episode {
+        var episode = [Episode].test[0]
         episode.update(currentBytes: 90, totalBytes: 100, speed: 643.0)
         return episode
     }
@@ -131,11 +151,5 @@ extension Podcast {
     var directoryURL: URL {
         URL.documentsDirectory
             .appending(path: "\(title)", directoryHint: .isDirectory)
-    }
-}
-
-extension URL: Comparable {
-    public static func < (lhs: URL, rhs: URL) -> Bool {
-        return lhs.absoluteString < rhs.absoluteString
     }
 }

@@ -9,7 +9,7 @@ import CoreData
 import Combine
 import SwiftUI
 
-final class MainViewModel: NSObject, ObservableObject {
+final class MainViewModel: NSObject, ObservableObject, MainViewModelProtocol {
     @Published var podcast: Podcast?
     @Published var historyItems: [History] = []
     @Published var queueEpisodes: [Episode] = []
@@ -18,8 +18,8 @@ final class MainViewModel: NSObject, ObservableObject {
     
     private var cancellables: Set<AnyCancellable> = []
     
-    private lazy var downloadManager: DownlaodManager = {
-        let manager = DownlaodManager()
+    private lazy var downloadManager: DownloadManager = {
+        let manager = DownloadManager()
         manager.$podcast
             .receive(on: DispatchQueue.main)
             .assign(to: \.podcast, on: self)

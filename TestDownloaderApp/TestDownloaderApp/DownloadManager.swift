@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class DownlaodManager: ObservableObject {
+class DownloadManager: ObservableObject {
     @Published var podcast: Podcast?
     private var downloadSession: URLSession
     private var downloads: [URL: Download] = [:]
@@ -158,7 +158,6 @@ final class DownlaodManager: ObservableObject {
     func checkFile(historyItams: [History]) {
         guard let testEpisodes = podcast?.episodes else { return }
         guard let folderPath = podcast?.directoryURL else { return }
-//        guard let historyItems = historyItems else { return }
         
         for episode in testEpisodes {
             let sanitizedEpisodeName = episode.title.replacingOccurrences(of: " ", with: "")
