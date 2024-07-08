@@ -1,0 +1,409 @@
+{
+  "resultCount": 11,
+  "results": [
+    {
+      "wrapperType": "track",
+      "kind": "podcast",
+      "artistId": 1533870296,
+      "collectionId": 998568017,
+      "trackId": 998568017,
+      "artistName": "Casefile Presents",
+      "collectionName": "Casefile True Crime",
+      "trackName": "Casefile True Crime",
+      "collectionCensoredName": "Casefile True Crime",
+      "trackCensoredName": "Casefile True Crime",
+      "artistViewUrl": "https://podcasts.apple.com/us/artist/casefile-presents/1533870296?uo=4",
+      "collectionViewUrl": "https://podcasts.apple.com/us/podcast/casefile-true-crime/id998568017?uo=4",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/casefile-true-crime/id998568017?uo=4",
+      "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/f0/d3/62/f0d36290-b222-397c-f1a5-02623a69b3f0/mza_9983181717749715502.jpg/30x30bb.jpg",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/f0/d3/62/f0d36290-b222-397c-f1a5-02623a69b3f0/mza_9983181717749715502.jpg/60x60bb.jpg",
+      "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/f0/d3/62/f0d36290-b222-397c-f1a5-02623a69b3f0/mza_9983181717749715502.jpg/100x100bb.jpg",
+      "collectionPrice": 0,
+      "trackPrice": 0,
+      "collectionHdPrice": 0,
+      "releaseDate": "2024-07-06T06:16:00Z",
+      "collectionExplicitness": "notExplicit",
+      "trackExplicitness": "explicit",
+      "trackCount": 394,
+      "trackTimeMillis": 4568,
+      "country": "USA",
+      "currency": "USD",
+      "primaryGenreName": "True Crime",
+      "contentAdvisoryRating": "Explicit",
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/f0/d3/62/f0d36290-b222-397c-f1a5-02623a69b3f0/mza_9983181717749715502.jpg/600x600bb.jpg",
+      "genreIds": [
+        "1488",
+        "26",
+        "1324",
+        "1543"
+      ],
+      "genres": [
+        "True Crime",
+        "Podcasts",
+        "Society & Culture",
+        "Documentary"
+      ]
+    },
+    {
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/44/86/23/448623df-1fb7-b828-ea01-90a1ed0d7b39/mza_3528742417891863789.jpg/600x600bb.jpg",
+      "collectionViewUrl": "https://itunes.apple.com/us/podcast/casefile-true-crime/id998568017?mt=2&uo=4",
+      "trackTimeMillis": 4568000,
+      "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/44/86/23/448623df-1fb7-b828-ea01-90a1ed0d7b39/mza_3528742417891863789.jpg/160x160bb.jpg",
+      "closedCaptioning": "none",
+      "artistIds": [
+        1533870296
+      ],
+      "collectionId": 998568017,
+      "collectionName": "Casefile True Crime",
+      "episodeFileExtension": "mp3",
+      "episodeContentType": "audio",
+      "genres": [
+        {
+          "name": "True Crime",
+          "id": "1488"
+        }
+      ],
+      "episodeGuid": "6295bb02-8f6e-4330-90ae-47a787282a5b",
+      "description": "In October of 2011, an advertisement was posted on the website Craigslist. It read: Wanted: Caretaker For Farm. Simply watch over a 688 acre patch of hilly farmland and feed a few cows. You get 300 a week and a nice 2 bedroom trailer. Someone older and single preferred but will consider all. Relocation a must. You must have a clean record and be trustworthy—this is a permanent position.\n\n---\n\nNarration – Anonymous Host\nResearch & writing – Erin Munro\nCreative direction – Milly Raso\nProduction and music – Mike Migas\nMusic – Andrew D.B. Joslyn\n\nSign up for Casefile Premium:\n\n\nApple Premium\nSpotify Premium\nPatreon\n\nFor all credits and sources, please visit casefilepodcast.com/case-291-david-pauley-ralph-geiger-timothy-kern",
+      "shortDescription": "",
+      "trackId": 1000660573473,
+      "trackName": "Case 291: David Pauley, Ralph Geiger & Timothy Kern",
+      "releaseDate": "2024-07-06T06:16:00Z",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "previewUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8534711.mp3?modified=1720116190&sid=4940872&source=rss",
+      "episodeUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8534711.mp3?modified=1720116190&sid=4940872&source=rss",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/44/86/23/448623df-1fb7-b828-ea01-90a1ed0d7b39/mza_3528742417891863789.jpg/60x60bb.jpg",
+      "artistViewUrl": "https://itunes.apple.com/us/artist/casefile-presents/1533870296?mt=2&uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/case-291-david-pauley-ralph-geiger-timothy-kern/id998568017?i=1000660573473&uo=4",
+      "country": "USA",
+      "kind": "podcast-episode",
+      "wrapperType": "podcastEpisode"
+    },
+    {
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/78/2d/b1/782db16b-43e6-92c5-5cf9-263a827b4c9e/mza_11965861906517286605.jpg/600x600bb.jpg",
+      "collectionViewUrl": "https://itunes.apple.com/us/podcast/casefile-true-crime/id998568017?mt=2&uo=4",
+      "trackTimeMillis": 3745000,
+      "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/78/2d/b1/782db16b-43e6-92c5-5cf9-263a827b4c9e/mza_11965861906517286605.jpg/160x160bb.jpg",
+      "closedCaptioning": "none",
+      "artistIds": [
+        1533870296
+      ],
+      "collectionId": 998568017,
+      "collectionName": "Casefile True Crime",
+      "episodeFileExtension": "mp3",
+      "episodeContentType": "audio",
+      "genres": [
+        {
+          "name": "True Crime",
+          "id": "1488"
+        }
+      ],
+      "episodeGuid": "134cb8a9-8986-41f9-9205-0735c6f1fb05",
+      "description": "** Content warnings: Child victims ***\n\nWhen a Holden belonging to Glenroy man Elmer Crawford was found at the bottom of the Loch Ard Gorge in July 1970, immediate concerns were raised for the safety of Elmer, his wife Theresa and their three children, Katherine, James and Karen. But when rescue workers gained access to the vehicle, the true extent of the mystery really unfolded.\n\n---\n\nNarration – Anonymous Host\nResearch & writing – Vikki Petraitis\nCreative direction – Milly Raso\nProduction and music – Mike Migas\nMusic – Andrew D.B. Joslyn\n\nSign up for Casefile Premium:\n\n\nApple Premium\nSpotify Premium\nPatreon\n\nFor all credits and sources, please visit casefilepodcast.com/case-290-the-crawford-family",
+      "shortDescription": "",
+      "trackId": 1000660289187,
+      "trackName": "Case 290: The Crawford Family",
+      "releaseDate": "2024-06-29T06:33:00Z",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "previewUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8531482.mp3?modified=1719593383&sid=4940872&source=rss",
+      "episodeUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8531482.mp3?modified=1719593383&sid=4940872&source=rss",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/78/2d/b1/782db16b-43e6-92c5-5cf9-263a827b4c9e/mza_11965861906517286605.jpg/60x60bb.jpg",
+      "artistViewUrl": "https://itunes.apple.com/us/artist/casefile-presents/1533870296?mt=2&uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/case-290-the-crawford-family/id998568017?i=1000660289187&uo=4",
+      "country": "USA",
+      "kind": "podcast-episode",
+      "wrapperType": "podcastEpisode"
+    },
+    {
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/7b/db/09/7bdb0920-df48-1209-ead7-18c628795aa0/mza_5153090457644173448.jpg/600x600bb.jpg",
+      "collectionViewUrl": "https://itunes.apple.com/us/podcast/casefile-true-crime/id998568017?mt=2&uo=4",
+      "trackTimeMillis": 4032000,
+      "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/7b/db/09/7bdb0920-df48-1209-ead7-18c628795aa0/mza_5153090457644173448.jpg/160x160bb.jpg",
+      "closedCaptioning": "none",
+      "artistIds": [
+        1533870296
+      ],
+      "collectionId": 998568017,
+      "collectionName": "Casefile True Crime",
+      "episodeFileExtension": "mp3",
+      "episodeContentType": "audio",
+      "genres": [
+        {
+          "name": "True Crime",
+          "id": "1488"
+        }
+      ],
+      "episodeGuid": "tag:audioboom.com,2024-06-22:/posts/8528347",
+      "description": "When Mersea Island couple Stephen and Carol Baxter were found dead in their favourite recliner chairs in April 2023, there were no visible injuries or an obvious cause of death. Their house was immaculate, and nothing appeared to be missing. The case was initially ruled “unexplained, but not suspicious” until a few unusual discoveries were made.\n\n---\n\nNarration – Anonymous Host\nResearch & writing – Milly Raso\nCreative direction – Milly Raso\nProduction and music – Mike Migas\nMusic – Andrew D.B. Joslyn\n\nSign up for Casefile Premium:\n\n\nApple Premium\nSpotify Premium\nPatreon\n\nFor all credits and sources, please visit https://casefilepodcast.com/case-289-stephen-carol-baxter",
+      "shortDescription": "",
+      "trackId": 1000660690307,
+      "trackName": "Case 289: Stephen & Carol Baxter",
+      "releaseDate": "2024-06-22T07:09:53Z",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "previewUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8528347.mp3?modified=1719391217&sid=4940872&source=rss",
+      "episodeUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8528347.mp3?modified=1719391217&sid=4940872&source=rss",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/7b/db/09/7bdb0920-df48-1209-ead7-18c628795aa0/mza_5153090457644173448.jpg/60x60bb.jpg",
+      "artistViewUrl": "https://itunes.apple.com/us/artist/casefile-presents/1533870296?mt=2&uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/case-289-stephen-carol-baxter/id998568017?i=1000660690307&uo=4",
+      "country": "USA",
+      "kind": "podcast-episode",
+      "wrapperType": "podcastEpisode"
+    },
+    {
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/63/26/a7/6326a7d0-2ea3-d779-8ff5-42b3721c4df4/mza_18306376809461819779.jpg/600x600bb.jpg",
+      "collectionViewUrl": "https://itunes.apple.com/us/podcast/casefile-true-crime/id998568017?mt=2&uo=4",
+      "trackTimeMillis": 235000,
+      "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/63/26/a7/6326a7d0-2ea3-d779-8ff5-42b3721c4df4/mza_18306376809461819779.jpg/160x160bb.jpg",
+      "closedCaptioning": "none",
+      "artistIds": [
+        1533870296
+      ],
+      "collectionId": 998568017,
+      "collectionName": "Casefile True Crime",
+      "episodeFileExtension": "mp3",
+      "episodeContentType": "audio",
+      "genres": [
+        {
+          "name": "True Crime",
+          "id": "1488"
+        }
+      ],
+      "episodeGuid": "tag:audioboom.com,2024-06-16:/posts/8524937",
+      "description": "Troubled Waters is a 10-part ground-breaking podcast exploring the untold story of Louisa Ioannidis' tragic and mysterious death in 2011. Louisa Ioannidis was only 24. Beautiful, courageous, and vulnerable, yet her untimely death barely received a two-line report in a small local newspaper. Her body was discovered by passers-by in a local creek, clad in a pink dressing gown. Despite being a strong swimmer, police quickly determined there were no suspicious circumstances. Yet no one has been able to explain how or why she came to enter the creek.\n\nLouisa’s brother Tass has always doubted the findings and is desperate for answers.\n\nOver a decade after Louisa’s death, Private Investigator Julia Robson embarks on a fresh investigation and explores the full story of Louisa’s short life and the events leading up to her tragic passing. Together with Producer Clare McGrath, they uncover a gripping narrative full of intrigue. From an international kidnapping, a daring escape and a family’s desperate bid to stay together, it all unravels into a downward spiral exacerbated by a toxic relationship, all the while revealing flaws in a family violence support system that desperately needs fixing.\n\nListen now: https://casefilepresents.com/troubled-waters",
+      "shortDescription": "",
+      "trackId": 1000659196151,
+      "trackName": "Casefile Presents: Troubled Waters",
+      "releaseDate": "2024-06-16T21:10:48Z",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "previewUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8524937.mp3?modified=1718610398&sid=4940872&source=rss",
+      "episodeUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8524937.mp3?modified=1718610398&sid=4940872&source=rss",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/63/26/a7/6326a7d0-2ea3-d779-8ff5-42b3721c4df4/mza_18306376809461819779.jpg/60x60bb.jpg",
+      "artistViewUrl": "https://itunes.apple.com/us/artist/casefile-presents/1533870296?mt=2&uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/casefile-presents-troubled-waters/id998568017?i=1000659196151&uo=4",
+      "country": "USA",
+      "kind": "podcast-episode",
+      "wrapperType": "podcastEpisode"
+    },
+    {
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/98/4f/55/984f558f-2fa4-0420-c19d-5caf2501a8cd/mza_18238690138886724845.jpg/600x600bb.jpg",
+      "collectionViewUrl": "https://itunes.apple.com/us/podcast/casefile-true-crime/id998568017?mt=2&uo=4",
+      "trackTimeMillis": 2484000,
+      "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/98/4f/55/984f558f-2fa4-0420-c19d-5caf2501a8cd/mza_18238690138886724845.jpg/160x160bb.jpg",
+      "closedCaptioning": "none",
+      "artistIds": [
+        1533870296
+      ],
+      "collectionId": 998568017,
+      "collectionName": "Casefile True Crime",
+      "episodeFileExtension": "mp3",
+      "episodeContentType": "audio",
+      "genres": [
+        {
+          "name": "True Crime",
+          "id": "1488"
+        }
+      ],
+      "episodeGuid": "tag:audioboom.com,2024-06-15:/posts/8524592",
+      "description": "*** Content warnings: Domestic violence, suicide ***\nDutch national Mark van Dongen met South African Berlinah Wallace in 2010 in Bristol, England. After 5 years together, Mark decided he wanted to end the relationship. He finally broke it off in August 2015 when he met someone new. \n\nWhen Berlinah Wallace refused to accept Mark’s decision, she became so consumed with anger and jealousy that she did the unthinkable. Her actions lead to devastating consequences.\n\n---\n\nNarration – Anonymous Host\nResearch & writing – Holly Boyd\nCreative direction – Milly Raso\nProduction and music – Mike Migas\nMusic – Andrew D.B. Joslyn\n\nSign up for Casefile Premium:\n\n\nApple Premium\nSpotify Premium\nPatreon\n\nFor all credits and sources, please visit https://casefilepodcast.com/case-288-mark-van-dongen",
+      "shortDescription": "",
+      "trackId": 1000659096455,
+      "trackName": "Case 288: Mark Van Dongen",
+      "releaseDate": "2024-06-15T07:42:59Z",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "previewUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8524592.mp3?modified=1718439474&sid=4940872&source=rss",
+      "episodeUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8524592.mp3?modified=1718439474&sid=4940872&source=rss",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/98/4f/55/984f558f-2fa4-0420-c19d-5caf2501a8cd/mza_18238690138886724845.jpg/60x60bb.jpg",
+      "artistViewUrl": "https://itunes.apple.com/us/artist/casefile-presents/1533870296?mt=2&uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/case-288-mark-van-dongen/id998568017?i=1000659096455&uo=4",
+      "country": "USA",
+      "kind": "podcast-episode",
+      "wrapperType": "podcastEpisode"
+    },
+    {
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/2a/59/06/2a590687-a2d3-c253-43f0-31b5ec0c8e58/mza_16749850671350625393.jpg/600x600bb.jpg",
+      "collectionViewUrl": "https://itunes.apple.com/us/podcast/casefile-true-crime/id998568017?mt=2&uo=4",
+      "trackTimeMillis": 4246000,
+      "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/2a/59/06/2a590687-a2d3-c253-43f0-31b5ec0c8e58/mza_16749850671350625393.jpg/160x160bb.jpg",
+      "closedCaptioning": "none",
+      "artistIds": [
+        1533870296
+      ],
+      "collectionId": 998568017,
+      "collectionName": "Casefile True Crime",
+      "episodeFileExtension": "mp3",
+      "episodeContentType": "audio",
+      "genres": [
+        {
+          "name": "True Crime",
+          "id": "1488"
+        }
+      ],
+      "episodeGuid": "tag:audioboom.com,2024-06-05:/posts/8519059",
+      "description": "When Half and Susanne Zantop were found brutally stabbed to death in their Etna, New Hampshire home, friends, colleagues and investigators were all at a loss to understand it.\n\nThe married couple were both beloved professors at Dartmouth College, and no one could think of a reason why someone would want to harm them. But a crucial clue left at the crime scene would lead investigators directly to some unlikely suspects: two high school students with a deadly plan…\n\n---\n\nNarration – Anonymous Host\nResearch & writing – Erin Munro\nCreative direction – Milly Raso\nProduction and music – Mike Migas\nMusic – Andrew D.B. Joslyn\n\nSign up for Casefile Premium:\n\n\nApple Premium\nSpotify Premium\nPatreon\n\nFor all credits and sources, please visit casefilepodcast.com/case-287-half-susanne-zantop",
+      "shortDescription": "",
+      "trackId": 1000658651106,
+      "trackName": "Case 287: Half & Susanne Zantop",
+      "releaseDate": "2024-06-08T07:00:00Z",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "previewUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8519059.mp3?modified=1717618525&sid=4940872&source=rss",
+      "episodeUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8519059.mp3?modified=1717618525&sid=4940872&source=rss",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/2a/59/06/2a590687-a2d3-c253-43f0-31b5ec0c8e58/mza_16749850671350625393.jpg/60x60bb.jpg",
+      "artistViewUrl": "https://itunes.apple.com/us/artist/casefile-presents/1533870296?mt=2&uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/case-287-half-susanne-zantop/id998568017?i=1000658651106&uo=4",
+      "country": "USA",
+      "kind": "podcast-episode",
+      "wrapperType": "podcastEpisode"
+    },
+    {
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/e6/f7/96/e6f7969a-5e49-4bc1-9623-c78fb55e6b33/mza_8378129738394476020.jpg/600x600bb.jpg",
+      "collectionViewUrl": "https://itunes.apple.com/us/podcast/casefile-true-crime/id998568017?mt=2&uo=4",
+      "trackTimeMillis": 4662000,
+      "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/e6/f7/96/e6f7969a-5e49-4bc1-9623-c78fb55e6b33/mza_8378129738394476020.jpg/160x160bb.jpg",
+      "closedCaptioning": "none",
+      "artistIds": [
+        1533870296
+      ],
+      "collectionId": 998568017,
+      "collectionName": "Casefile True Crime",
+      "episodeFileExtension": "mp3",
+      "episodeContentType": "audio",
+      "genres": [
+        {
+          "name": "True Crime",
+          "id": "1488"
+        }
+      ],
+      "episodeGuid": "tag:audioboom.com,2024-06-01:/posts/8516849",
+      "description": "After two planes struck New York City’s World Trade Center on September 11 2001, Tania Head was one of the lucky few who managed to escape from above the impact zone of the South Tower. Saved by lauded 9/11 hero Welles Crowther, Tania’s incredible and heartbreaking story of survival became an inspiration. Triumphing through trauma, she became the face of a support group called The Survivors’ Network. Yet, as Tania’s fame grew, she became uncharacteristically anxious. Was there more to her story?\n\n---\n\nNarration – Anonymous Host\nResearch & writing – Milly Raso\nCreative direction – Milly Raso\nProduction and music – Mike Migas\nMusic – Andrew D.B. Joslyn\n\nSign up for Casefile Premium:\n\n\nApple Premium\nSpotify Premium\nPatreon\n\nFor all credits and sources, please visit casefilepodcast.com/case-286-the-survivors-network",
+      "shortDescription": "",
+      "trackId": 1000658650985,
+      "trackName": "Case 286: The Survivors' Network",
+      "releaseDate": "2024-06-01T08:11:10Z",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "previewUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8516849.mp3?modified=1717229569&sid=4940872&source=rss",
+      "episodeUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8516849.mp3?modified=1717229569&sid=4940872&source=rss",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/e6/f7/96/e6f7969a-5e49-4bc1-9623-c78fb55e6b33/mza_8378129738394476020.jpg/60x60bb.jpg",
+      "artistViewUrl": "https://itunes.apple.com/us/artist/casefile-presents/1533870296?mt=2&uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/case-286-the-survivors-network/id998568017?i=1000658650985&uo=4",
+      "country": "USA",
+      "kind": "podcast-episode",
+      "wrapperType": "podcastEpisode"
+    },
+    {
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/69/af/77/69af771d-296b-13c0-7526-aacf1b9114bc/mza_16183108617128628327.jpg/600x600bb.jpg",
+      "collectionViewUrl": "https://itunes.apple.com/us/podcast/casefile-true-crime/id998568017?mt=2&uo=4",
+      "trackTimeMillis": 3608000,
+      "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/69/af/77/69af771d-296b-13c0-7526-aacf1b9114bc/mza_16183108617128628327.jpg/160x160bb.jpg",
+      "closedCaptioning": "none",
+      "artistIds": [
+        1533870296
+      ],
+      "collectionId": 998568017,
+      "collectionName": "Casefile True Crime",
+      "episodeFileExtension": "mp3",
+      "episodeContentType": "audio",
+      "genres": [
+        {
+          "name": "True Crime",
+          "id": "1488"
+        }
+      ],
+      "episodeGuid": "tag:audioboom.com,2024-05-25:/posts/8511410",
+      "description": "*** Content warnings: Domestic violence ***\n\nWhen freelance writer Louise Ellis disappeared after leaving her Ottawa home on April 22 1995, the person leading the search for her was her devoted partner, Brett Morgan. But Brett’s criminal background made investigators suspicious and he found himself feeling more like a suspect than a victim.\n\nWhen he was approached by an aspiring private investigator named Marie Parent, the case suddenly took a very different turn…\n\n---\n\nNarration – Anonymous Host\nResearch & writing – Erin Munro\nCreative direction – Milly Raso\nProduction and music – Mike Migas\nMusic – Andrew D.B. Joslyn\n\nSign up for Casefile Premium:\n\n\nApple Premium\nSpotify Premium\nPatreon\n\nFor all credits and sources, please visit casefilepodcast.com/case-285-louise-ellis",
+      "shortDescription": "",
+      "trackId": 1000658651063,
+      "trackName": "Case 285: Louise Ellis",
+      "releaseDate": "2024-05-25T06:45:21Z",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "previewUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8511410.mp3?modified=1716619597&sid=4940872&source=rss",
+      "episodeUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8511410.mp3?modified=1716619597&sid=4940872&source=rss",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/69/af/77/69af771d-296b-13c0-7526-aacf1b9114bc/mza_16183108617128628327.jpg/60x60bb.jpg",
+      "artistViewUrl": "https://itunes.apple.com/us/artist/casefile-presents/1533870296?mt=2&uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/case-285-louise-ellis/id998568017?i=1000658651063&uo=4",
+      "country": "USA",
+      "kind": "podcast-episode",
+      "wrapperType": "podcastEpisode"
+    },
+    {
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/8b/da/7d/8bda7d05-38de-899b-d8bf-db5be114685e/mza_14698849782528639557.jpg/600x600bb.jpg",
+      "collectionViewUrl": "https://itunes.apple.com/us/podcast/casefile-true-crime/id998568017?mt=2&uo=4",
+      "trackTimeMillis": 2571000,
+      "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/8b/da/7d/8bda7d05-38de-899b-d8bf-db5be114685e/mza_14698849782528639557.jpg/160x160bb.jpg",
+      "closedCaptioning": "none",
+      "artistIds": [
+        1533870296
+      ],
+      "collectionId": 998568017,
+      "collectionName": "Casefile True Crime",
+      "episodeFileExtension": "mp3",
+      "episodeContentType": "audio",
+      "genres": [
+        {
+          "name": "True Crime",
+          "id": "1488"
+        }
+      ],
+      "episodeGuid": "tag:audioboom.com,2024-05-18:/posts/8507623",
+      "description": "*** Content warnings: Animal cruelty, gun violence ***\n\n43-year-old Graham Backhouse lived a peaceful life with his wife and children on Widden Hill Farm in Horton, England. But in 1984, a campaign of harassment directed at Graham left him fearing for his safety. \n\nWhen his wife Margaret Backhouse becomes the victim of a targeted attack, investigators consider who could have a motive to hurt the loving couple. The focus soon turns on a neighbour, Colyn Beadle-Taylor, but all is not what it seems.\n\n---\n\nNarration – Anonymous Host\nResearch & writing – Holly Boyd\nCreative direction – Milly Raso\nProduction and music – Mike Migas\nMusic – Andrew D.B. Joslyn\n\nSign up for Casefile Premium:\n\n\nApple Premium\nSpotify Premium\nPatreon\n\nFor all credits and sources, please visit https://casefilepodcast.com/case-284-widden-hill-farm",
+      "shortDescription": "",
+      "trackId": 1000655987057,
+      "trackName": "Case 284: Widden Hill Farm",
+      "releaseDate": "2024-05-18T07:16:34Z",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "previewUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8507623.mp3?modified=1716016645&sid=4940872&source=rss",
+      "episodeUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8507623.mp3?modified=1716016645&sid=4940872&source=rss",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/8b/da/7d/8bda7d05-38de-899b-d8bf-db5be114685e/mza_14698849782528639557.jpg/60x60bb.jpg",
+      "artistViewUrl": "https://itunes.apple.com/us/artist/casefile-presents/1533870296?mt=2&uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/case-284-widden-hill-farm/id998568017?i=1000655987057&uo=4",
+      "country": "USA",
+      "kind": "podcast-episode",
+      "wrapperType": "podcastEpisode"
+    },
+    {
+      "artworkUrl600": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/9d/5e/4e/9d5e4e61-7e6b-703b-1ad0-233041d0c296/mza_46899794785344865.jpg/600x600bb.jpg",
+      "collectionViewUrl": "https://itunes.apple.com/us/podcast/casefile-true-crime/id998568017?mt=2&uo=4",
+      "trackTimeMillis": 4445000,
+      "artworkUrl160": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/9d/5e/4e/9d5e4e61-7e6b-703b-1ad0-233041d0c296/mza_46899794785344865.jpg/160x160bb.jpg",
+      "closedCaptioning": "none",
+      "artistIds": [
+        1533870296
+      ],
+      "collectionId": 998568017,
+      "collectionName": "Casefile True Crime",
+      "episodeFileExtension": "mp3",
+      "episodeContentType": "audio",
+      "genres": [
+        {
+          "name": "True Crime",
+          "id": "1488"
+        }
+      ],
+      "episodeGuid": "tag:audioboom.com,2024-05-11:/posts/8503803",
+      "description": "When Dutch friends Kris Kremers and Lisanne Froon set out for a six-week adventure in Panama in 2014, they were ready for the trip of a lifetime. But after failing to show up for a planned tour in the mountain town of Boquete, search parties sprung into action.\n\nHad the two young women gotten lost while hiking the popular Pianista trail, or was something more sinister at play?\n\n---\n\nNarration – Anonymous Host\nResearch & writing – Elsha McGill\nCreative direction – Milly Raso\nProduction and music – Mike Migas\nMusic – Andrew D.B. Joslyn\n\nSign up for Casefile Premium:\n\n\nApple Premium\nSpotify Premium\nPatreon\n\nFor all credits and sources, please visit casefilepodcast.com/case-283-kris-kremers-lisanne-froon",
+      "shortDescription": "",
+      "trackId": 1000658650950,
+      "trackName": "Case 283: Kris Kremers & Lisanne Froon",
+      "releaseDate": "2024-05-11T07:28:16Z",
+      "feedUrl": "https://audioboom.com/channels/4940872.rss",
+      "previewUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8503803.mp3?modified=1715412583&sid=4940872&source=rss",
+      "episodeUrl": "https://pscrb.fm/rss/p/pdst.fm/e/chtbl.com/track/4E942/dts.podtrac.com/redirect.mp3/audioboom.com/posts/8503803.mp3?modified=1715412583&sid=4940872&source=rss",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/9d/5e/4e/9d5e4e61-7e6b-703b-1ad0-233041d0c296/mza_46899794785344865.jpg/60x60bb.jpg",
+      "artistViewUrl": "https://itunes.apple.com/us/artist/casefile-presents/1533870296?mt=2&uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "trackViewUrl": "https://podcasts.apple.com/us/podcast/case-283-kris-kremers-lisanne-froon/id998568017?i=1000658650950&uo=4",
+      "country": "USA",
+      "kind": "podcast-episode",
+      "wrapperType": "podcastEpisode"
+    }
+  ]
+}

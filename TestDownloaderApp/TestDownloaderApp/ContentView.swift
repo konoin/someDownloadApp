@@ -46,7 +46,6 @@ struct ContentView: View {
                 .listStyle(.plain)
                 
                 .onAppear {
-                    print("_______________________________________")
                     mainViewModel.updateHistoryItems(with: items)
                     mainViewModel.checkFile(historyItems: Array(items))
                 }
