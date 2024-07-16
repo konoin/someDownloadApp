@@ -33,9 +33,9 @@ struct ContentView: View {
                                        downloadButtonPressed: {
                                 addToParallel(episode)
                                 toggleDownload(for: episode)},
-                                addToQueueButtonPressed: {
-                                    togleSequential(for: episode)
-                                }
+                                       addToQueueButtonPressed: {
+                                togleSequential(for: episode)
+                            }
                             )
                             .environmentObject(mainViewModel)
                         }
@@ -48,6 +48,9 @@ struct ContentView: View {
                 .onAppear {
                     mainViewModel.updateHistoryItems(with: items)
                     mainViewModel.checkFile(historyItems: Array(items))
+                    
+                    UIApplication.shared.windows.first?.rootViewController?.view.accessibilityIdentifier = "firstContentView"
+                    
                 }
                 
                 .safeAreaInset(edge: .top, content: {
@@ -59,6 +62,7 @@ struct ContentView: View {
                     NavigationLink{
                         DownloadList(parallelEpisodes: parallelEpisodes)
                             .environmentObject(mainViewModel)
+                            .accessibilityIdentifier("SpeedInfo")
                     } label: {
                         VStack {
                             Image(systemName: "gear")
@@ -69,10 +73,12 @@ struct ContentView: View {
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                     
+                    
                     NavigationLink {
                         HistoryView()
                             .environment(\.managedObjectContext, viewContext)
                             .environmentObject(mainViewModel)
+                            .accessibilityIdentifier("HistoryView")
                     } label: {
                         VStack {
                             Image(systemName: "arrow.down.circle")
@@ -82,11 +88,10 @@ struct ContentView: View {
                         }
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
-                    
                 }
             }
         }
-
+        
         .onChange(of: scenePhase) { newPhase in
             switch newPhase {
             case .inactive:
@@ -98,7 +103,8 @@ struct ContentView: View {
             }
             
             
-         }
+        }
+        .accessibilityIdentifier("ContentView")
     }
 }
 

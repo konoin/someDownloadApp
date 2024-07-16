@@ -17,6 +17,7 @@ struct TestDownloaderAppApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistentController.container.viewContext)
                 .environmentObject(mainViewModel)
+                .accessibilityIdentifier("MainView")
                 .task {
                     try? await mainViewModel.fetchPodcast()
                 }

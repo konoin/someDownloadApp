@@ -21,6 +21,7 @@ final class TestDownloaderAppTests: XCTestCase {
     var cancellables: Set<AnyCancellable>!
     
     override func setUp() {
+        super.setUp()
         mainViewModel = MainViewModel()
         downloadManager = DownloadManager()
         setUpPersistentContainer()
