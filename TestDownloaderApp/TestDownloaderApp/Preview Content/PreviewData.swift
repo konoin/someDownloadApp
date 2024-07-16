@@ -139,6 +139,23 @@ struct DownloadStateTransformer {
             return "checkmark.circle.fill"
         }
     }
+    
+    var identifier: String {
+        switch downloadState {
+        case .inProgress:
+            "inProgress"
+        case .inQueue:
+            "inQueue"
+        case .downloaded:
+            "downloaded"
+        case .idle:
+            "idle"
+        case .paused:
+            "paused"
+        case .sendRequest:
+            "sendRequest"
+        }
+    }
 }
 
 extension Array where Element == History {

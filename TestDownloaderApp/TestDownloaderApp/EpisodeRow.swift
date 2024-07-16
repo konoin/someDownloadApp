@@ -31,16 +31,22 @@ struct EpisodeRow: View {
                 Spacer()
                 
                 if convertItems(items: items).isEpisodeDownloaded(title: episode.title) {
-                    VStack {
+                    VStack(spacing: 0) {
                         Image(systemName: "checkmark.circle.fill")
                             .frame(maxWidth: 24, maxHeight: 24)
                             .foregroundColor(.white)
-                            .padding(12)
+                        Text("Done")
+                            .font(.system(size: 10))
+                            .foregroundColor(.white)
                     }
+                    .padding(12)
                     .background(.blue)
                     .cornerRadius(16)
+                    .accessibility(addTraits: .isButton)
+                    .accessibilityIdentifier("Done")
                 } else {
                     DownloadButtons(downloadButtonPressed: downloadButtonPressed, addToQueueButtonPressed: addToQueueButtonPressed, episode: episode)
+                        .accessibilityIdentifier(DownloadStateTransformer(downloadState: episode.downloadState).identifier)
                 }
             }
             
@@ -119,7 +125,6 @@ struct DownloadButtons: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
-                
                 Button {
                     addToQueueButtonPressed()
                 } label: {
