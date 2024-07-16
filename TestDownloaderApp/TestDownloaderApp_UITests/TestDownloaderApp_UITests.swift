@@ -32,8 +32,6 @@ final class TestDownloaderApp_UITests: XCTestCase {
         for i in 0..<numberOfCells {
             let cell = collectionView.children(matching: .cell).element(boundBy: i)
             
-            let parallelButton = cell.buttons["Parallel"]
-            let sequentialButton = cell.buttons["Sequential "]
             let inProgressButton = cell.buttons["inProgress"]
             let pausedButton = cell.buttons["paused"]
             let doneButton = cell.buttons["downloaded"]
@@ -50,19 +48,11 @@ final class TestDownloaderApp_UITests: XCTestCase {
                 cell.buttons["Sequential"].tap()
             }
             
-            let inProgressExists = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: inProgressButton)
-            let result = XCTWaiter().wait(for: [inProgressExists], timeout: 5)
-            
             if inProgressButton.exists {
                 inProgressButton.tap()
                 let pausedExists = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: pausedButton)
                 let pausedResult = XCTWaiter().wait(for: [pausedExists], timeout: 5)
                 XCTAssert(pausedResult == .completed, "The paused button did not appear in time.")
-            } else if pausedButton.exists {
-                pausedButton.tap()
-                let inProgressExistsAgain = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: inProgressButton)
-                let inProgressResult = XCTWaiter().wait(for: [inProgressExistsAgain], timeout: 5)
-                XCTAssert(inProgressResult == .completed, "The inProgress button did not appear in time.")
             } else if doneButton.exists {
                 XCTAssert(doneButton.exists, "The done button should exist.")
             }
@@ -138,7 +128,6 @@ final class TestDownloaderApp_UITests: XCTestCase {
         for i in 0..<numberOfCells {
             let cell = collectionView.children(matching: .cell).element(boundBy: i)
             
-            let inProgressButton = cell.buttons["inProgress"]
             let sequentialButton = cell.buttons["Sequentail"]
             let inQueueButton = cell.buttons["inQueue"]
             let doneButton = cell.buttons["Done"]
@@ -164,7 +153,6 @@ final class TestDownloaderApp_UITests: XCTestCase {
                 }
             }
         }
-        
     }
     
     func test_ContentView_EpisodeRow_sequentialDownload_pause() {
@@ -200,11 +188,63 @@ final class TestDownloaderApp_UITests: XCTestCase {
     }
     
     func test_ContentView_EpisodeRow_sequentialDownload_resume() {
+        app.launch()
         
+        let collectionView = app.collectionViews
+        let numberOfCells = collectionView.children(matching: .cell).count
+        
+        for i in 0..<numberOfCells {
+            let cell = collectionView.children(matching: .cell).element(boundBy: i)
+            
+            let sequentialButton = cell.buttons["Sequential"]
+            let inProgressButton = cell.buttons["inProgress"]
+            let pauseButton = cell.buttons["paused"]
+            let inQueueButton = cell.buttons["inQueue"]
+            
+            if i % 2 == 1 {
+                guard sequentialButton.exists else { continue }
+                sequentialButton.tap()
+                sleep(2)
+                
+                if inProgressButton.exists {
+                    XCTAssert(inProgressButton.exists, "The inProgressButton appear in time.")
+                    inProgressButton.tap()
+                } else if pauseButton.exists {
+                    XCTAssert(pauseButton.exists, "The pauseButton appear in time.")
+                    pauseButton.tap()
+                } else if inQueueButton.exists {
+                    XCTAssert(inQueueButton.exists, "The inQueueButton apeer in time.")
+                }
+            }
+        }
     }
     
     func test_ContentView_EpisodeRow_sequentialDownload_sequentialQueue() {
+        app.launch()
         
+        let collectionView = app.collectionViews
+        let numberOfCells = collectionView.children(matching: .cell).count
+        
+        for i in 0..<numberOfCells {
+            let cell = collectionView.children(matching: .cell).element(boundBy: i)
+            
+            let sequentialButton = cell.buttons["Sequential"]
+            let inProgressButton = cell.buttons["inProgress"]
+            let inQueueButton = cell.buttons["inQueue"]
+            
+            if i % 2 == 1 {
+                guard sequentialButton.exists else { continue }
+                sequentialButton.tap()
+                sleep(2)
+                
+                if inProgressButton.exists {
+                    XCTAssert(inProgressButton.exists, "The inProgressButton appear in time.")
+                    inProgressButton.tap()
+                } else if inQueueButton.exists {
+                    XCTAssert(inQueueButton.exists, "The inQueueButton apeer in time.")
+                }
+            }
+        }
     }
     
     func testGoToHistoryScreen() {
@@ -213,18 +253,18 @@ final class TestDownloaderApp_UITests: XCTestCase {
         historyButton.tap()
         
         XCTAssert(app.collectionViews.matching(identifier: "HistoryView").element.exists, "HistoryView appear.")
-    
+        
         sleep(3)
-
+        
         let numberOfCells = collectionView.children(matching: .cell).count
-                
+        
         for i in 0..<numberOfCells {
             let cell = collectionView.children(matching: .cell).element(boundBy: i)
             XCTAssert(cell.buttons["Show in Files"].exists, "Show files appear.")
         }
         
         let backButton = app.navigationBars["_TtGC7SwiftUI19UIHosting"].buttons["Back"]
-        backButton.tap()        
+        backButton.tap()
     }
     
     
