@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 import Combine
 
 struct EpisodeRow: View {
     
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
+//    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
     
-    var items: FetchedResults<History>
+    @Query(sort: [SortDescriptor(\History.title)]) private var items: [History]
     
     var episode: Episode
     let downloadButtonPressed: () -> Void
@@ -30,7 +31,7 @@ struct EpisodeRow: View {
                 }
                 Spacer()
                 
-                if convertItems(items: items).isEpisodeDownloaded(title: episode.title) {
+                if items.isEpisodeDownloaded(title: episode.title) {
                     VStack(spacing: 0) {
                         Image(systemName: "checkmark.circle.fill")
                             .frame(maxWidth: 24, maxHeight: 24)
@@ -72,9 +73,9 @@ struct EpisodeRow: View {
 
 private extension EpisodeRow {
     
-    func convertItems(items: FetchedResults<History>) -> [History] {
-        return Array(items)
-    }
+//    func convertItems(items: FetchedResults<History>) -> [History] {
+//        return Array(items)
+//    }
     
     var details: String? {
         return episode.date.formatted(date: .long, time: .omitted)

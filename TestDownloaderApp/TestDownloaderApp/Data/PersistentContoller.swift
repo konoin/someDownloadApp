@@ -6,84 +6,67 @@
 //
 
 import CoreData
+import SwiftData
 
 class PersistenceController: NSObject {
     
     static let shared = PersistenceController()
     let container: NSPersistentContainer
     
-    override init() {
+    var swiftaDataModelContainer: ModelContainer?
+    
+    init(inMemory: Bool = true) {
         container = NSPersistentContainer(name: "DownloadHistory")
-        super.init()
         
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("TestDownloaderApp.sqlite")
-        let description = NSPersistentStoreDescription(url: paths)
-        container.persistentStoreDescriptions = [description]
+        if inMemory {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("TestDownloaderApp.sqlite")
+            let description = NSPersistentStoreDescription(url: paths)
+            container.persistentStoreDescriptions = [description]
+        }
+        
+        if let description = container.persistentStoreDescriptions.first {
+            description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        }
+        
+        var tempContainer: ModelContainer?
         
         container.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
-                print("Unresolved error \(error), \(error.userInfo)")
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             } else {
-                print("Persistent store loaded successfully: \(storeDescription)")
+                if let url = storeDescription.url {
+                    do {
+                        let config = ModelConfiguration(url: url)
+                        let scheme = Schema([History.self, EpisodeFileURL.self])
+                        
+                        tempContainer = try ModelContainer(for: scheme, configurations: config)
+                    } catch {
+                        let nsError = error as NSError
+                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                        
+                    }
+                }
             }
         }
-        
+        swiftaDataModelContainer = tempContainer
         container.viewContext.automaticallyMergesChangesFromParent = true
-        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
-    
-    func saveChanges() {
-        let context = container.viewContext
 
-        if context.hasChanges {
-            do {
-                try context.save()
-                print("Changes saved successfully.")
-            } catch {
-                print("Could not save changes to Core Data.", error.localizedDescription)
-            }
-        }
-    }
-    
-    func create(title: String, id: Int64, downloaded: Bool, date: Date, fileURL: String) {
-        let context = container.viewContext
-        let entity = History(context: context)
-        let fileUrl = EpisodeFileURL(context: context)
-
-        entity.title = title
-        entity.id = id
-        entity.downloaded = downloaded
-        entity.date = date
-        fileUrl.fileURL = fileURL
-        entity.fileURL = fileUrl
+    func createSwiftData(title: String, id: Int64, downloaded: Bool, date: Date, fileURL: String) {
+        guard let container = swiftaDataModelContainer else { return }
         
-        saveChanges()
-    }
-    
-    func read(predicateFormat: String? = nil, fetchLimit: Int? = nil) -> [History] {
-        var results: [History] = []
-        let request = NSFetchRequest<History>(entityName: "History")
+        let episodeURL = EpisodeFileURL(fileURL: fileURL)
+        let newEpisode = History(date: date, downloaded: downloaded, id: id, title: title, fileURL: episodeURL)
         
-        if let predicateFormat = predicateFormat {
-            request.predicate = NSPredicate(format: predicateFormat)
-        }
-        if let fetchLimit = fetchLimit {
-            request.fetchLimit = fetchLimit
-        }
-
-        do {
-            results = try container.viewContext.fetch(request)
-        } catch {
-            print("Could not fetch notes from Core Data.")
-        }
-
-        return results
+        let context = ModelContext(container)
+        
+        context.insert(newEpisode)
     }
     
-    func update(entity: History, title: String? = nil, downloaded: Bool? = nil, id: Int64? = nil, date: Date? = nil, fileURL: String? = nil) {
+    func updateSwiftData(entity: History, title: String? = nil, downloaded: Bool? = nil, fileURL: String? = nil) {
+        guard let container = swiftaDataModelContainer else { return }
         var hasChanges = false
-
+        
         if let title = title {
             entity.title = title
             hasChanges = true
@@ -94,28 +77,15 @@ class PersistenceController: NSObject {
             hasChanges = true
         }
         
-        if let id = id {
-            entity.id = id
-            hasChanges = true
-        }
-        
-        if let date = date {
-            entity.date = date
-            hasChanges = true
-        }
-        
         if let fileURL = fileURL {
             entity.fileURL?.fileURL = fileURL
             hasChanges = true
         }
-
+        
+        let context = ModelContext(container)
+        
         if hasChanges {
-            saveChanges()
+            context.insert(entity)
         }
-    }
-
-    func delete(_ entity: History) {
-        container.viewContext.delete(entity)
-        saveChanges()
     }
 }

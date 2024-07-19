@@ -6,17 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 import Combine
 
 struct ContentView: View {
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.scenePhase) private var scenePhase
-    
+    @Environment(\.modelContext) private var swiftDataContext
     @EnvironmentObject var mainViewModel: MainViewModel
     
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
-    var items: FetchedResults<History>
+//    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
+    @Query(sort: [SortDescriptor(\History.title)]) private var items: [History]
+//    var items: FetchedResults<History>
     
     @State private var selectedEpisodes: Set<Episode> = []
     @State var queueEpisodes: [Episode] = []
@@ -50,7 +52,6 @@ struct ContentView: View {
                     mainViewModel.checkFile(historyItems: Array(items))
                     
                     UIApplication.shared.windows.first?.rootViewController?.view.accessibilityIdentifier = "firstContentView"
-                    
                 }
                 
                 .safeAreaInset(edge: .top, content: {

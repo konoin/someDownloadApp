@@ -21,8 +21,6 @@
 		F309C15D2C22DF61000392AC /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A23352C09AEAD002FB475 /* HistoryView.swift */; };
 		F309C15E2C22DF64000392AC /* HistoryToHistoryMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462692C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift */; };
 		F309C15F2C22DF67000392AC /* PersistentContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A23392C0EF5D2002FB475 /* PersistentContoller.swift */; };
-		F309C1602C22DF6D000392AC /* EpisodeFileURL+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */; };
-		F309C1612C22DF70000392AC /* History+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314625E2C1879620055A255 /* History+CoreDataProperties.swift */; };
 		F309C1622C22DF73000392AC /* TestDownloaderAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13862BF259ED006E3F89 /* TestDownloaderAppApp.swift */; };
 		F309C1632C22DF81000392AC /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35C13A22BF4A917006E3F89 /* PreviewData.swift */; };
 		F309C1752C240F5C000392AC /* MockDownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F309C1742C240F5C000392AC /* MockDownloadSession.swift */; };
@@ -31,8 +29,6 @@
 		F3115ECB2C3AC4CB00A71B28 /* MainViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3115EC92C3ABF1500A71B28 /* MainViewModelProtocol.swift */; };
 		F3115EE72C3C12FA00A71B28 /* TestDownloaderApp_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3115EE62C3C12FA00A71B28 /* TestDownloaderApp_UITests.swift */; };
 		F3115EE92C3C12FA00A71B28 /* TestDownloaderApp_UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3115EE82C3C12FA00A71B28 /* TestDownloaderApp_UITestsLaunchTests.swift */; };
-		F31462622C1879620055A255 /* History+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314625E2C1879620055A255 /* History+CoreDataProperties.swift */; };
-		F31462642C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */; };
 		F31462682C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = F31462672C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel */; };
 		F314626A2C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462692C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift */; };
 		F31462722C1B182B0055A255 /* FilePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31462712C1B182B0055A255 /* FilePickerManager.swift */; };
@@ -56,6 +52,8 @@
 		F37A232B2C09A2A8002FB475 /* DownloadHistory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F37A23292C09A2A8002FB475 /* DownloadHistory.xcdatamodeld */; };
 		F37A23362C09AEAD002FB475 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A23352C09AEAD002FB475 /* HistoryView.swift */; };
 		F37A233A2C0EF5D2002FB475 /* PersistentContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37A23392C0EF5D2002FB475 /* PersistentContoller.swift */; };
+		F37E55742C48E8D80055702A /* EpisodeFileURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37E55722C48E8D80055702A /* EpisodeFileURL.swift */; };
+		F37E55752C48E8D80055702A /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37E55732C48E8D80055702A /* History.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,8 +82,6 @@
 		F3115EE62C3C12FA00A71B28 /* TestDownloaderApp_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDownloaderApp_UITests.swift; sourceTree = "<group>"; };
 		F3115EE82C3C12FA00A71B28 /* TestDownloaderApp_UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDownloaderApp_UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F314625C2C1878DA0055A255 /* DownloadHistory3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DownloadHistory3.xcdatamodel; sourceTree = "<group>"; };
-		F314625E2C1879620055A255 /* History+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "History+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EpisodeFileURL+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F31462672C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingV2ToV3.xcmappingmodel; sourceTree = "<group>"; };
 		F31462692C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryToHistoryMigrationPolicy.swift; sourceTree = "<group>"; };
 		F31462712C1B182B0055A255 /* FilePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePickerManager.swift; sourceTree = "<group>"; };
@@ -111,6 +107,8 @@
 		F37A23352C09AEAD002FB475 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		F37A23392C0EF5D2002FB475 /* PersistentContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentContoller.swift; sourceTree = "<group>"; };
 		F37A233B2C11D802002FB475 /* DownloadHistory2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DownloadHistory2.xcdatamodel; sourceTree = "<group>"; };
+		F37E55722C48E8D80055702A /* EpisodeFileURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeFileURL.swift; sourceTree = "<group>"; };
+		F37E55732C48E8D80055702A /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,14 +253,22 @@
 		F37A232C2C09A2B6002FB475 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				F314625E2C1879620055A255 /* History+CoreDataProperties.swift */,
-				F31462602C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift */,
+				F37E55762C48E93E0055702A /* SwiftData */,
 				F37A23292C09A2A8002FB475 /* DownloadHistory.xcdatamodeld */,
 				F31462672C187C7F0055A255 /* MappingV2ToV3.xcmappingmodel */,
 				F37A23392C0EF5D2002FB475 /* PersistentContoller.swift */,
 				F31462692C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		F37E55762C48E93E0055702A /* SwiftData */ = {
+			isa = PBXGroup;
+			children = (
+				F37E55722C48E8D80055702A /* EpisodeFileURL.swift */,
+				F37E55732C48E8D80055702A /* History.swift */,
+			);
+			path = SwiftData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -398,10 +404,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F309C1612C22DF70000392AC /* History+CoreDataProperties.swift in Sources */,
 				F309C15B2C22DF5C000392AC /* EpisodeRow.swift in Sources */,
 				F309C1752C240F5C000392AC /* MockDownloadSession.swift in Sources */,
-				F309C1602C22DF6D000392AC /* EpisodeFileURL+CoreDataProperties.swift in Sources */,
 				F309C15D2C22DF61000392AC /* HistoryView.swift in Sources */,
 				F309C1542C22DF1B000392AC /* Download.swift in Sources */,
 				F309C15A2C22DF5A000392AC /* Header.swift in Sources */,
@@ -440,8 +444,6 @@
 				F309C1762C240F6A000392AC /* MockDownloadSession.swift in Sources */,
 				F35C13AD2BF4D6F4006E3F89 /* DownloadList.swift in Sources */,
 				F31462722C1B182B0055A255 /* FilePickerManager.swift in Sources */,
-				F31462622C1879620055A255 /* History+CoreDataProperties.swift in Sources */,
-				F31462642C1879620055A255 /* EpisodeFileURL+CoreDataProperties.swift in Sources */,
 				F35C13A92BF4AD38006E3F89 /* Download.swift in Sources */,
 				F35C13A12BF4A10F006E3F89 /* Episode.swift in Sources */,
 				F35C13AB2BF4B6B5006E3F89 /* EpisodeRow.swift in Sources */,
@@ -450,6 +452,8 @@
 				F3115ECA2C3ABF1500A71B28 /* MainViewModelProtocol.swift in Sources */,
 				F35C13872BF259ED006E3F89 /* TestDownloaderAppApp.swift in Sources */,
 				F37A23362C09AEAD002FB475 /* HistoryView.swift in Sources */,
+				F37E55742C48E8D80055702A /* EpisodeFileURL.swift in Sources */,
+				F37E55752C48E8D80055702A /* History.swift in Sources */,
 				F314626A2C1880C50055A255 /* HistoryToHistoryMigrationPolicy.swift in Sources */,
 				F35C13A62BF4AB05006E3F89 /* Header.swift in Sources */,
 				F35C13952BF25A09006E3F89 /* MainViewModel.swift in Sources */,

@@ -108,7 +108,7 @@ class DownloadManager: ObservableObject {
         
         for historyItem in historyItems {
             if historyItem.title == episode.title {
-                dataService.update(entity: historyItem, title: episode.title, downloaded: true)
+                dataService.updateSwiftData(entity: historyItem, title: episode.title, downloaded: true)
             }
         }
         
@@ -142,9 +142,9 @@ class DownloadManager: ObservableObject {
         guard let historyItems = historyItems else { return }
         
         if let history = historyItems.first(where: { $0.id == Int64(episode.id) }) {
-            dataService.update(entity: history, downloaded: true, fileURL: generateFileUrl(episode: episode))
+            dataService.updateSwiftData(entity: history, downloaded: true, fileURL: generateFileUrl(episode: episode))
         } else {
-            dataService.create(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date(), fileURL: generateFileUrl(episode: episode))
+            dataService.createSwiftData(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date(), fileURL: generateFileUrl(episode: episode))
         }
     }
     
@@ -163,13 +163,9 @@ class DownloadManager: ObservableObject {
             let sanitizedEpisodeName = episode.title.replacingOccurrences(of: " ", with: "")
             let filePath = folderPath.appendingPathComponent("\(sanitizedEpisodeName).mp3").path
             
-            
-            
-            print("Checking file at path:", filePath)
             for historyItem in historyItams {
                 if historyItem.title == episode.title && historyItem.downloaded {
                     if FileManager.default.fileExists(atPath: filePath) {
-                        print("File exists for episode: \(episode.title)")
                     } else {
                         for history in historyItams {
                             if history.id == Int64(episode.id) {
@@ -177,7 +173,7 @@ class DownloadManager: ObservableObject {
                                 podcast?[episode.id]?.progress = 0.0
                                 podcast?[episode.id]?.downloadState = .idle
                                 podcast?[episode.id]?.downloadQueue = .idle
-                                dataService.update(entity: history, downloaded: false, fileURL: "deleted")
+                                dataService.updateSwiftData(entity: history, downloaded: false, fileURL: "deleted")
                             }
                         }
                     }

@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct TestDownloaderAppApp: App {
+
     var mainViewModel = MainViewModel()
     let persistentController = PersistenceController.shared
+    
     
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistentController.container.viewContext)
+                .modelContainer(persistentController.swiftaDataModelContainer!)
                 .environmentObject(mainViewModel)
                 .accessibilityIdentifier("MainView")
                 .task {
@@ -23,4 +27,15 @@ struct TestDownloaderAppApp: App {
                 }
         }
     }
+    
+//    init() {
+//        let scheme = Schema([History.self, EpisodeFileURL.self])
+//        let config = ModelConfiguration("History", schema: scheme)
+//        )
+//        do {
+//            container = try ModelContainer {
+//                for" "
+//            }
+//        }
+//    }
 }
