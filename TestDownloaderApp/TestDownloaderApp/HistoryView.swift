@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HistoryView: View {
     
@@ -14,8 +15,9 @@ struct HistoryView: View {
     @EnvironmentObject var mainViewModel: MainViewModel
     @Environment(\.scenePhase) private var scenePhase
     
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
-    private var items: FetchedResults<History>
+//    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
+    //    private var items: FetchedResults<History>
+    @Query private var items: [History]
     
     var body: some View {
         List {
@@ -25,13 +27,13 @@ struct HistoryView: View {
                 ForEach(items, id: \.self) { item in
                     HStack {
                         VStack(alignment: .leading) {
-                            Text(item.title ?? "not working")
-                            Text("\(item.date?.formatted(date: .long, time: .shortened) ?? Date().formatted(date: .long, time: .shortened))")
-                            if (item.fileURL != nil) {
-                                Text(item.fileURL?.fileURL ?? "file url missing")
-                            } else {
-                                Text("Deleted")
-                            }
+                            Text(item.title)
+                            Text("\(item.date.formatted(date: .long, time: .shortened))")
+//                            if (item.fileURL != nil) {
+                                Text(item.fileURL?.fileURL ?? "Deleted")
+//                            } else {
+//                                Text("Deleted")
+//                            }
                         }
                         Spacer()
                         if item.downloaded {

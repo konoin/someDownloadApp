@@ -55,8 +55,8 @@ extension MainViewModel {
         downloadManager.resumeDownload(for: episode)
     }
     
-    func updateHistoryItems(with items: FetchedResults<History>) {
-        self.historyItems = Array(items)
+    func updateHistoryItems(with items: [History]) {
+        self.historyItems = items
     }
     
     func checkFile(historyItems: [History]) {
