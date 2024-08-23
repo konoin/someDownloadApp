@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-protocol MainViewModelProtocol {
+protocol ContentViewViewModelProtocol {
     @MainActor
     func fetchPodcast() async
     
@@ -21,8 +21,4 @@ protocol MainViewModelProtocol {
     func pauseDownload(for episode: Episode)
     
     func resumeDownload(for episode: Episode)
-//    
-//    func updateHistoryItems(with items: FetchedResults<History>)
-//    
-//    func checkFile(historyItems: [History])
 }

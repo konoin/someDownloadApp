@@ -11,11 +11,8 @@ import Combine
 
 struct EpisodeRow: View {
     
-//    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
-    
-    @Query(sort: [SortDescriptor(\History.title)]) private var items: [History]
-    
     var episode: Episode
+    var items: [History]
     let downloadButtonPressed: () -> Void
     let addToQueueButtonPressed: () -> Void
     
@@ -73,10 +70,6 @@ struct EpisodeRow: View {
 
 private extension EpisodeRow {
     
-//    func convertItems(items: FetchedResults<History>) -> [History] {
-//        return Array(items)
-//    }
-    
     var details: String? {
         return episode.date.formatted(date: .long, time: .omitted)
         + " - " + episode.duration.formatted()
@@ -104,7 +97,7 @@ enum DownloadQueue {
 
 struct DownloadButtons: View {
     
-    @EnvironmentObject var mainViewModel: MainViewModel
+    @EnvironmentObject var mainViewModel: ContentViewViewModel
     
     let downloadButtonPressed: () -> Void
     let addToQueueButtonPressed: () -> Void

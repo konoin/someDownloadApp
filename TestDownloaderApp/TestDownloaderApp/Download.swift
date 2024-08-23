@@ -6,56 +6,52 @@
 //
 
 import Foundation
+import UIKit
 
 final class Download: NSObject {
-    let url: URL
-    let downloadSession: URLSession
-    var resumeData: Data?
     
     private var continuation: AsyncStream<Event>.Continuation?
+    var task: URLSessionDownloadTask?
     
-    private var checkContinuation: CheckedContinuation<(URL, URLSessionDownloadTask), Never>?
+    var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+    private var fileManager: CustomFileManagerFacade?
     private var previousBytesWritten: Int64 = 0
     private var totalBytesWritten: Int64 = 0
     private var startTime: Date?
     
-    lazy var task: URLSessionDownloadTask = {
-        let task = downloadSession.downloadTask(with: url)
-        task.delegate = self
-        
-        return task
-    }()
-    
-    init(url: URL, downloadSession: URLSession) {
-        self.url = url
-        self.downloadSession = downloadSession
-    }
-    
-    lazy var downloadTestSession: URLSession = {
-        let configuration = URLSessionConfiguration.background(withIdentifier: "com.test.download.session")
-        return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-    }()
-    
     var isDownloading: Bool {
-        task.state == .running
+        task?.state == .running
     }
     
     var events: AsyncStream<Event> {
         AsyncStream { continuation in
             self.continuation = continuation
-            self.task.resume()
+            self.task?.resume()
             continuation.onTermination = { @Sendable [weak self] _ in
-                self?.task.cancel()
+                self?.task?.cancel()
             }
         }
     }
     
+    init(url: URL) {
+        self.fileManager = ServiceLocator.shared.resolveOrCreate(CustomFileManagerFacade())
+        super.init()
+        let configuration = URLSessionConfiguration.background(withIdentifier: "com.background.test.\(UUID().uuidString)")
+        configuration.isDiscretionary = true
+        configuration.sessionSendsLaunchEvents = true
+        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+        let urlRequest = URLRequest(url: url)
+        self.task = session.downloadTask(with: urlRequest)
+        self.task?.resume()
+        
+    }
+    
     func pause() {
-        self.task.suspend()
+        self.task?.suspend()
     }
     
     func resume() {
-        self.task.resume()
+        self.task?.resume()
     }
 }
 
@@ -66,20 +62,25 @@ extension Download {
     }
 }
 
-extension Download: URLSessionDownloadDelegate {
+extension Download: URLSessionDelegate, URLSessionDownloadDelegate {
+    
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
-        let fileManager = FileManager.default
+        guard let fileManager = fileManager else { return }
         do {
-            let documentsDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            
+        let documentsDirectory = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            
             let destinationURL = documentsDirectory.appendingPathComponent(location.lastPathComponent)
             
             if fileManager.fileExists(atPath: destinationURL.path) {
                 try fileManager.removeItem(at: destinationURL)
             }
+            
             try fileManager.moveItem(at: location, to: destinationURL)
             
             continuation?.yield(.success(url: destinationURL, downloadTask: downloadTask))
+            
         } catch {
             print("Error while moving file: \(error.localizedDescription)")
         }
@@ -103,4 +104,22 @@ extension Download: URLSessionDownloadDelegate {
             continuation?.yield(.progress(currentBytes: totalBytesWritten, totalBytes: totalBytesExpectedToWrite, speed: 0))
         }
     }
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        if let error = error {
+            print("Download completed with error: \(error.localizedDescription)")
+        } else {
+            print("Download completed successfully.")
+        }
+    }
+    
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        DispatchQueue.main.async {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let completion = appDelegate.backgroundSessionCompletionHandler {
+                appDelegate.backgroundSessionCompletionHandler = nil
+                completion()
+            }
+        }
+    }
 }
+

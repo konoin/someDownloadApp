@@ -10,32 +10,26 @@ import SwiftData
 
 @main
 struct TestDownloaderAppApp: App {
-
-    var mainViewModel = MainViewModel()
-    let persistentController = PersistenceController.shared
     
+    init() {
+        _ = ServiceLocator.shared.resolveOrCreate(NotificationFacade())
+        _ = ServiceLocator.shared.resolveOrCreate(CustomFileManagerFacade())
+        _ = ServiceLocator.shared.resolveOrCreate(DataBaseService.value)
+    }
+    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    var contentViewViewModel = ContentViewViewModel()
+//    let persistentController = PersistenceController.shared
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistentController.container.viewContext)
-                .modelContainer(persistentController.swiftaDataModelContainer!)
-                .environmentObject(mainViewModel)
+                .modelContainer(SwiftDataModelConfiguration.shared.container)
+                .environmentObject(contentViewViewModel)
                 .accessibilityIdentifier("MainView")
                 .task {
-                    try? await mainViewModel.fetchPodcast()
+                    try? await contentViewViewModel.fetchPodcast()
                 }
         }
     }
-    
-//    init() {
-//        let scheme = Schema([History.self, EpisodeFileURL.self])
-//        let config = ModelConfiguration("History", schema: scheme)
-//        )
-//        do {
-//            container = try ModelContainer {
-//                for" "
-//            }
-//        }
-//    }
 }

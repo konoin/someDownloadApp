@@ -37,7 +37,7 @@ class MockDownloadManager: MainViewModelProtocol {
     func downloadEpisode(_ episode: Episode, downloadQueue: DownloadQueue) async {
         self.mockPodcast = Podcast.test
         guard testDownloads[episode.url] == nil else { return }
-        let configuration = URLSessionConfiguration.default
+        let configuration = URLSessionConfiguration.background(withIdentifier: "com.test.background")
         let downloadSession = URLSession(configuration: configuration, delegate: nil, delegateQueue: .main)
         let download = Download(url: episode.url, downloadSession: downloadSession)
         testDownloads[episode.url] = download

@@ -7,37 +7,58 @@
 
 import Foundation
 
-class DownloadManager: ObservableObject {
+class DownloadManager: NSObject, ObservableObject, URLSessionDelegate {
+    
     @Published var podcast: Podcast?
-    private var downloadSession: URLSession
     private var downloads: [URL: Download] = [:]
     private var downloadQueue: [Episode] = []
     private var isDownloading: Bool = false
     var historyItems: [History]?
-    let dataService = PersistenceController.shared
+//    let dataService = PersistenceController.shared
     
-    init() {
-        let configuration = URLSessionConfiguration.default
-        self.downloadSession = URLSession(configuration: configuration, delegate: nil, delegateQueue: .main)
-    }
+    private lazy var fileManager: CustomFileManagerFacade = ServiceLocator.shared.resolveOrCreate(CustomFileManagerFacade())
+
     
+    private lazy var notificationManager: NotificationFacade = ServiceLocator.shared.resolveOrCreate(NotificationFacade())
+  
     @MainActor
     func fetchPodcast() async throws -> Podcast? {
         let url = URL(string: "https://itunes.apple.com/lookup?id=998568017&media=podcast&entity=podcastEpisode&limit=10")!
-        let (data, _) = try await URLSession.shared.data(from: url)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        podcast = try decoder.decode(Podcast.self, from: data)
-        if let items = historyItems {
-            checkFile(historyItams: items)
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            podcast = try decoder.decode(Podcast.self, from: data)
+            
+            if let items = historyItems {
+                checkFile(historyItams: items)
+            }
+        } catch {
+            print("Произошла ошибка: \(error)")
+            throw error // Перебросить ошибку, если нужно
         }
+        
         return podcast
     }
+    
+//    @MainActor
+//    func fetchPodcast() async throws -> Podcast? {
+//        let url = URL(string: "https://itunes.apple.com/lookup?id=998568017&media=podcast&entity=podcastEpisode&limit=10")!
+//        let (data, _) = try await URLSession.shared.data(from: url)
+//        let decoder = JSONDecoder()
+//        decoder.dateDecodingStrategy = .iso8601
+//        podcast = try decoder.decode(Podcast.self, from: data)
+//        if let items = historyItems {
+//            checkFile(historyItams: items)
+//        }
+//        return podcast
+//    }
     
     @MainActor
     func download(_ episode: Episode, downloadQueue: DownloadQueue) async throws {
         guard downloads[episode.url] == nil else { return }
-        let download = Download(url: episode.url, downloadSession: downloadSession)
+        let download = Download(url: episode.url)
         downloads[episode.url] = download
         podcast?[episode.id]?.isDownloading = true
         podcast?[episode.id]?.downloadState = .sendRequest
@@ -73,6 +94,7 @@ class DownloadManager: ObservableObject {
                 try await download(episode, downloadQueue: queue)
             } catch {
                 print("Failed to download:", error.localizedDescription)
+                isDownloading = false
             }
             
             isDownloading = false
@@ -97,9 +119,11 @@ class DownloadManager: ObservableObject {
         case let .progress(current, total, speed):
             podcast?[episode.id]?.downloadState = .inProgress
             podcast?[episode.id]?.update(currentBytes: current, totalBytes: total, speed: speed)
+            print(Double(current) / Double(total))
         case let .success(url, _):
             saveDownloadState(episode: episode)
             saveFile(for: episode, at: url)
+            notificationManager.notificationPost(name: .downloadCompleted, object: episode)
         }
     }
     
@@ -108,24 +132,14 @@ class DownloadManager: ObservableObject {
         
         for historyItem in historyItems {
             if historyItem.title == episode.title {
-                dataService.updateSwiftData(entity: historyItem, title: episode.title, downloaded: true)
+//                dataService.updateSwiftData(entity: historyItem, title: episode.title, downloaded: true)
             }
         }
         
         podcast?[episode.id]?.downloadState = .downloaded
         
         guard let directoryURL = podcast?.directoryURL else { return }
-        
-        let fileManager = FileManager.default
-        if !fileManager.fileExists(atPath: directoryURL.path) {
-            do {
-                try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
-                print("Directory created at: \(directoryURL)")
-            } catch {
-                print("Failed to create directory: \(error.localizedDescription)")
-                return
-            }
-        }
+        fileManager.createDirectoryIfNeeded(directoryURL: directoryURL.path)
         
         let sanitizedEpisodeName = episode.title.replacingOccurrences(of: " ", with: "")
         let fileURL = directoryURL.appendingPathComponent("\(sanitizedEpisodeName).mp3")
@@ -142,9 +156,10 @@ class DownloadManager: ObservableObject {
         guard let historyItems = historyItems else { return }
         
         if let history = historyItems.first(where: { $0.id == Int64(episode.id) }) {
-            dataService.updateSwiftData(entity: history, downloaded: true, fileURL: generateFileUrl(episode: episode))
+//            dataService.updateSwiftData(entity: history, downloaded: true, fileURL: generateFileUrl(episode: episode))
         } else {
-            dataService.createSwiftData(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date(), fileURL: generateFileUrl(episode: episode))
+//            dataService.createSwiftData(title: episode.title, id: Int64(episode.id), downloaded: true, date: Date(), fileURL: generateFileUrl(episode: episode))
+            podcast?[episode.id]?.progress = 1
         }
     }
     
@@ -173,7 +188,7 @@ class DownloadManager: ObservableObject {
                                 podcast?[episode.id]?.progress = 0.0
                                 podcast?[episode.id]?.downloadState = .idle
                                 podcast?[episode.id]?.downloadQueue = .idle
-                                dataService.updateSwiftData(entity: history, downloaded: false, fileURL: "deleted")
+//                                dataService.updateSwiftData(entity: history, downloaded: false, fileURL: "deleted")
                             }
                         }
                     }

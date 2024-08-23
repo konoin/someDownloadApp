@@ -9,7 +9,6 @@
 import Foundation
 import SwiftData
 
-
 @Model
 class EpisodeFileURL {
     var fileURL: String

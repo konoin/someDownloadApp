@@ -27,11 +27,11 @@ extension Podcast {
 
 extension [Episode] {
     static var preview: [Episode] {
-        Podcast.preview.episodes
+        Podcast.preview.episodes!
     }
     
     static var test: [Episode] {
-        Podcast.test.episodes
+        Podcast.test.episodes!
     }
 }
 

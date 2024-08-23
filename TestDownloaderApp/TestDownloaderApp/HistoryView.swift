@@ -10,14 +10,11 @@ import SwiftData
 
 struct HistoryView: View {
     
-    @StateObject private var filePicker = FilePickerManager()
-    @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject var mainViewModel: MainViewModel
     @Environment(\.scenePhase) private var scenePhase
+    @StateObject private var filePicker = FilePickerManager()
+    @EnvironmentObject var contentViewViewModel: ContentViewViewModel
     
-//    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
-    //    private var items: FetchedResults<History>
-    @Query private var items: [History]
+    var items: [History]
     
     var body: some View {
         List {
@@ -29,11 +26,7 @@ struct HistoryView: View {
                         VStack(alignment: .leading) {
                             Text(item.title)
                             Text("\(item.date.formatted(date: .long, time: .shortened))")
-//                            if (item.fileURL != nil) {
                                 Text(item.fileURL?.fileURL ?? "Deleted")
-//                            } else {
-//                                Text("Deleted")
-//                            }
                         }
                         Spacer()
                         if item.downloaded {
@@ -56,15 +49,11 @@ struct HistoryView: View {
             }
         }
         .listStyle(.plain)
-        .onAppear {
-            mainViewModel.checkFile(historyItems: Array(items))
-        }
-        .onChange(of: scenePhase) { newPhase in
-            mainViewModel.checkFile(historyItems: Array(items))
-         }
+//        .onAppear {
+//            contentViewViewModel.checkFile(historyItems: Array(items))
+//        }
+//        .onChange(of: scenePhase) { newPhase in
+//            contentViewViewModel.checkFile(historyItems: Array(items))
+//         }
     }
-}
-
-#Preview {
-    HistoryView()
 }

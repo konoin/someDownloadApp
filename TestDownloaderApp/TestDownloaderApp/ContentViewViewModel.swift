@@ -1,22 +1,24 @@
 //
-//  MainViewModel.swift
+//  ContentViewViewModel.swift
 //  TestDownloaderApp
 //
 //  Created by Mikita Palyka on 13.05.24.
 //
 
-import CoreData
+import SwiftData
 import Combine
 import SwiftUI
 
-final class MainViewModel: NSObject, ObservableObject, MainViewModelProtocol {
+final class ContentViewViewModel: NSObject, ObservableObject, ContentViewViewModelProtocol {
     @Published var podcast: Podcast?
+    @Published var testCompleted: Bool = false
     @Published var historyItems: [History] = []
     @Published var queueEpisodes: [Episode] = []
     @Published var parallelEpisodes: [Episode] = []
 
-    
     private var cancellables: Set<AnyCancellable> = []
+    
+    private lazy var dataService = HistoryService()
     
     private lazy var downloadManager: DownloadManager = {
         let manager = DownloadManager()
@@ -31,7 +33,7 @@ final class MainViewModel: NSObject, ObservableObject, MainViewModelProtocol {
 }
 
 //MARK: - DownlaodManager
-extension MainViewModel {
+extension ContentViewViewModel {
     @MainActor
     func fetchPodcast() async {
         podcast = try? await downloadManager.fetchPodcast()
@@ -55,11 +57,16 @@ extension MainViewModel {
         downloadManager.resumeDownload(for: episode)
     }
     
-    func updateHistoryItems(with items: [History]) {
-        self.historyItems = items
+    func updateHistoryItems() {
+        do {
+            historyItems = try dataService.fetch()
+            print("Successfully fetched history items.")
+        } catch {
+            print("Failed to fetch history items with error: \(error.localizedDescription)")
+        }
     }
     
-    func checkFile(historyItems: [History]) {
+    func checkFile() {
         downloadManager.checkFile(historyItams: historyItems)
     }
 }

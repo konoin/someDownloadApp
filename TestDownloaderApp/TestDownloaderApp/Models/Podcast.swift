@@ -12,17 +12,17 @@ struct Podcast {
     let title: String
     let artist: String
     let imageURL: URL
-    var episodes: [Episode]
+    var episodes: [Episode]?
 
     subscript(episodeID: Episode.ID) -> Episode? {
         get {
-            episodes.first { $0.id == episodeID }
+            episodes?.first { $0.id == episodeID }
         }
         set {
             guard let newValue,
-                  let index = episodes.firstIndex(where: { $0.id == episodeID })
+                  let index = episodes?.firstIndex(where: { $0.id == episodeID })
             else { return }
-            episodes[index] = newValue
+            episodes?[index] = newValue
         }
     }
 }

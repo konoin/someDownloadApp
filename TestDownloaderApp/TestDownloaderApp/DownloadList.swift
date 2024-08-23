@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct DownloadList: View {
-    @EnvironmentObject var mainViewModel: MainViewModel
+    @EnvironmentObject var mainViewModel: ContentViewViewModel
     
-//    var queueEpisodes: [Episode]
     var parallelEpisodes: [Episode]
     
     var body: some View {
@@ -51,7 +50,7 @@ extension DownloadList {
     func convertParallelEpisodes() -> [Episode] {
         var newArray: [Episode] = []
         for parallelEpisode in self.parallelEpisodes {
-            if ((mainViewModel.podcast?.episodes.contains(where: { $0.title == parallelEpisode.title })) != nil) {
+            if ((mainViewModel.podcast?.episodes?.contains(where: { $0.title == parallelEpisode.title })) != nil) {
                 newArray.append(parallelEpisode)
             }
         }

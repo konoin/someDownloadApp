@@ -10,15 +10,10 @@ import SwiftData
 import Combine
 
 struct ContentView: View {
-    @Environment(\.safeAreaInsets) private var safeAreaInsets
-    @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.scenePhase) private var scenePhase
-    @Environment(\.modelContext) private var swiftDataContext
-    @EnvironmentObject var mainViewModel: MainViewModel
     
-//    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \History.title, ascending: true)], animation: .default)
-    @Query(sort: [SortDescriptor(\History.title)]) private var items: [History]
-//    var items: FetchedResults<History>
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject var contentViewViewModel: ContentViewViewModel
     
     @State private var selectedEpisodes: Set<Episode> = []
     @State var queueEpisodes: [Episode] = []
@@ -28,10 +23,10 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 List {
-                    Header(podcast: mainViewModel.podcast)
-                    if let podcast = mainViewModel.podcast {
-                        ForEach(podcast.episodes) { episode in
-                            EpisodeRow(episode: episode,
+                    Header(podcast: contentViewViewModel.podcast)
+                    if let podcast = contentViewViewModel.podcast {
+                        ForEach(podcast.episodes!) { episode in
+                            EpisodeRow(episode: episode, items: contentViewViewModel.historyItems,
                                        downloadButtonPressed: {
                                 addToParallel(episode)
                                 toggleDownload(for: episode)},
@@ -39,7 +34,7 @@ struct ContentView: View {
                                 togleSequential(for: episode)
                             }
                             )
-                            .environmentObject(mainViewModel)
+                            .environmentObject(contentViewViewModel)
                         }
                     } else {
                         
@@ -48,10 +43,8 @@ struct ContentView: View {
                 .listStyle(.plain)
                 
                 .onAppear {
-                    mainViewModel.updateHistoryItems(with: items)
-                    mainViewModel.checkFile(historyItems: Array(items))
-                    
-                    UIApplication.shared.windows.first?.rootViewController?.view.accessibilityIdentifier = "firstContentView"
+                    contentViewViewModel.updateHistoryItems()
+                    contentViewViewModel.checkFile()
                 }
                 
                 .safeAreaInset(edge: .top, content: {
@@ -62,7 +55,7 @@ struct ContentView: View {
                 HStack {
                     NavigationLink{
                         DownloadList(parallelEpisodes: parallelEpisodes)
-                            .environmentObject(mainViewModel)
+                            .environmentObject(contentViewViewModel)
                             .accessibilityIdentifier("SpeedInfo")
                     } label: {
                         VStack {
@@ -76,9 +69,8 @@ struct ContentView: View {
                     
                     
                     NavigationLink {
-                        HistoryView()
-                            .environment(\.managedObjectContext, viewContext)
-                            .environmentObject(mainViewModel)
+                        HistoryView(items: contentViewViewModel.historyItems)
+                            .environmentObject(contentViewViewModel)
                             .accessibilityIdentifier("HistoryView")
                     } label: {
                         VStack {
@@ -93,32 +85,31 @@ struct ContentView: View {
             }
         }
         
-        .onChange(of: scenePhase) { newPhase in
-            switch newPhase {
-            case .inactive:
-                mainViewModel.checkFile(historyItems: Array(items))
-            case .active:
-                mainViewModel.checkFile(historyItems: Array(items))
-            case .background:
-                mainViewModel.checkFile(historyItems: Array(items))
-            }
-            
-            
-        }
+//        .onChange(of: scenePhase) { newPhase in
+//            switch newPhase {
+//            case .inactive:
+//                contentViewViewModel.checkFile(historyItems: Array(items))
+//            case .active:
+//                contentViewViewModel.checkFile(historyItems: Array(items))
+//            case .background:
+//                contentViewViewModel.checkFile(historyItems: Array(items))
+//            }
+//        }
         .accessibilityIdentifier("ContentView")
     }
 }
 
 private extension ContentView {
+    
     func toggleDownload(for episode: Episode) {
         if episode.isDownloading {
-            mainViewModel.pauseDownload(for: episode)
+            contentViewViewModel.pauseDownload(for: episode)
         } else {
             if episode.progress > 0 {
-                mainViewModel.resumeDownload(for: episode)
+                contentViewViewModel.resumeDownload(for: episode)
             } else {
                 Task {
-                    try? await mainViewModel.downloadEpisode(episode, downloadQueue: .parallel)
+                    try? await contentViewViewModel.downloadEpisode(episode, downloadQueue: .parallel)
                 }
             }
         }
@@ -126,10 +117,10 @@ private extension ContentView {
     
     private func togleSequential( for episode: Episode) {
         if episode.isDownloading {
-            mainViewModel.pauseDownload(for: episode)
+            contentViewViewModel.pauseDownload(for: episode)
         } else {
             if episode.progress > 0 {
-                mainViewModel.resumeDownload(for: episode)
+                contentViewViewModel.resumeDownload(for: episode)
             } else {
                 addToQueue(episode)
             }
@@ -151,9 +142,9 @@ private extension ContentView {
     }
     
     private func addToQueue(_ episode: Episode) {
-        mainViewModel.addEpisodeToQueue(episode, queue: .sequential)
-        if !mainViewModel.queueEpisodes.contains(episode) {
-            mainViewModel.queueEpisodes.append(episode)
+        contentViewViewModel.addEpisodeToQueue(episode, queue: .sequential)
+        if !contentViewViewModel.queueEpisodes.contains(episode) {
+            contentViewViewModel.queueEpisodes.append(episode)
         }
     }
 }

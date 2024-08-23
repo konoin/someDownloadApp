@@ -8,12 +8,15 @@
 import XCTest
 import CoreData
 import Combine
-//import SwiftUI
+import SwiftUI
+import SwiftData
 @testable import TestDownloaderApp
 
 final class TestDownloaderAppTests: XCTestCase {
     
-    var mainViewModel: MainViewModel!
+    @Query(sort: [SortDescriptor(\History.title)]) private var items: [History]
+    
+    var mainViewModel: ContentViewViewModel!
     var downloadManager: DownloadManager!
     var mockDownloadManager: MockDownloadManager!
     var mockEpisode: Episode!
@@ -22,7 +25,7 @@ final class TestDownloaderAppTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        mainViewModel = MainViewModel()
+        mainViewModel = ContentViewViewModel()
         downloadManager = DownloadManager()
         setUpPersistentContainer()
         mockDownloadManager = MockDownloadManager()
@@ -150,13 +153,14 @@ final class TestDownloaderAppTests: XCTestCase {
             XCTFail("Failed to save context: \(error)")
         }
         
-        let fetchRequest = NSFetchRequest<History>(entityName: "History")
+//        let fetchRequest = Query(sort)
+//        NSFetchRequest<History>(entityName: "History")
         
         do {
-            let testArray = try context.fetch(fetchRequest)
-            XCTAssertEqual(testArray.count, 1)
+//            let testArray = try context.fetch(items)
+            XCTAssertEqual(items.count, 1)
             
-            mainViewModel.checkFile(historyItems: testArray)
+            mainViewModel.checkFile(historyItems: items)
         } catch {
             XCTFail("Failed to fetch entity: \(error)")
         }
